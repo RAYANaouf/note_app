@@ -1,0 +1,11 @@
+essential 2 color of  icons :
+rgba(253, 0, 2, 1)   #FF0002
+rgba(0, 36,255,1)    #0024FF
+
+
+pie chart #0024FF
+          #5C17A4
+          #81127F
+          #C1093F
+          #FD0004
+          
