@@ -47,7 +47,7 @@
         android:layout_marginBottom="25dp"
         app:strokeColor="#400024FF"
         app:strokeWidth="1.5dp"
-        app:cardCornerRadius="35dp"
+        app:cardCornerRadius="25dp"
         app:cardElevation="8dp"
         android:outlineSpotShadowColor="#0024FF"
         app:layout_constraintBottom_toBottomOf="parent"

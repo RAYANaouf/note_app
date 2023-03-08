@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.ActivityMainBinding
 import com.example.notes_app.modul.MyViewModul
+import com.example.notes_app.ui.dialog.AddCategoryDialogFragment
 import com.example.notes_app.ui.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
@@ -61,6 +62,11 @@ class MainActivity : AppCompatActivity() {
             R.id.main_menu_share->{
 
             }
+            R.id.main_menu_add_category->{
+                var dialogFragment = AddCategoryDialogFragment.newInstance()
+                dialogFragment.show(supportFragmentManager,null)
+
+            }
             R.id.main_menu_setting->{
 
             }
@@ -70,6 +76,9 @@ class MainActivity : AppCompatActivity() {
         }
         return true
     }
+
+
+
 }
 
 
