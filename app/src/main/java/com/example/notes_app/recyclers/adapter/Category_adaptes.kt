@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModul
 import com.example.notes_app.modul.data_classes.Category
+import com.example.notes_app.ui.dialog.OnClickNavigator
 import com.google.android.material.imageview.ShapeableImageView
 
 class Category_adaptes : RecyclerView.Adapter<Category_adaptes.Holder> {
@@ -17,12 +18,14 @@ class Category_adaptes : RecyclerView.Adapter<Category_adaptes.Holder> {
     private var m_viewModul:MyViewModul
     private var m_owner : LifecycleOwner
     private var m_categories : ArrayList<Category> = ArrayList()
+    private var m_onClickNavigator : OnClickNavigator
 
 
-    constructor(owner: LifecycleOwner , myViewModul : MyViewModul){
+    constructor(owner: LifecycleOwner , myViewModul : MyViewModul , onClickNavigator: OnClickNavigator){
         this.m_viewModul = myViewModul
         this.m_owner = owner
         getCategories()
+        m_onClickNavigator = onClickNavigator
     }
 
     fun getCategories(){
@@ -40,6 +43,9 @@ class Category_adaptes : RecyclerView.Adapter<Category_adaptes.Holder> {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_category,null,false)
 
         view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+        view.setOnClickListener {
+            m_onClickNavigator.onClick_to_notesFragment()
+        }
 
         return Holder(view , this)
     }

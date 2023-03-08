@@ -101,6 +101,7 @@
         android:paddingStart="5dp"
         android:text="add category"
         android:textSize="16dp"
+        android:textColor="@color/gray8"
 
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/addCategoryDialog_add_img"

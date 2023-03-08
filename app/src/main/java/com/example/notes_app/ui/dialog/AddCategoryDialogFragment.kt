@@ -1,29 +1,63 @@
 package com.example.notes_app.ui.dialog
 
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.Manifest
+import android.content.Context
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.example.notes_app.R
 import com.example.notes_app.databinding.DialogAddCategoryBinding
+import com.example.notes_app.ui.activities.MainActivity2
 
 
 class AddCategoryDialogFragment : DialogFragment() {
 
     //view binding
     private lateinit var binding : DialogAddCategoryBinding
+    private lateinit var m_onClickNavigator : OnClickNavigator
+    private lateinit var m_uri : Uri
 
     private var state = 1
 
+    //permission
+    private var external_storage_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if (it){
+            Toast.makeText(requireContext() , "read external storage" , Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(requireContext() , "cant read " , Toast.LENGTH_LONG).show()
+        }
+    }
 
+    //get picture
+    val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            // Use the selected image URI to load the image into your ImageView or perform other operations with it.
+//            m_uri = uri
+        }
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnClickNavigator){
+            m_onClickNavigator = context
+        }
+    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
@@ -61,24 +95,67 @@ class AddCategoryDialogFragment : DialogFragment() {
                     binding.addCategoryDialogAddImg.background=resources.getDrawable(R.drawable.white_backgound_for_circle)
                     //change the button text and set the error text
                     binding.addCategoryDialogAddBtn.setText("retry")
-                    binding.addCategoryDialogAddBtn.setBackgroundColor(Color.RED)
+                    binding.addCategoryDialogAddBtn.setBackgroundColor(ContextCompat.getColor(requireContext() , R.color.color2))
 
                     binding.addCategoryDialogHintTv.setText("set the title / description ")
                     state = 0
                 }
                 else{
                     //do what you need with add button
+                    m_onClickNavigator.onClick_addCategory(binding.addCategoryDialogCategoryTitleTv.text.toString() , binding.addCategoryDialogCategoryDescriptionTv.text.toString())
                 }
             }
             else{
-                //reset add icon change : icon + background
-                binding.addCategoryDialogAddImg.setImageResource(R.drawable.add_icon)
-                binding.addCategoryDialogAddImg.background=resources.getDrawable(R.drawable.white_border_gray_background_for_circle)
-                //change the button text and set the error text
-                binding.addCategoryDialogAddBtn.setText("add")
-                binding.addCategoryDialogAddBtn.setBackgroundColor(Color("#0024FF"))
+                if ( !binding.addCategoryDialogCategoryTitleTv.text.toString().equals("") || !binding.addCategoryDialogCategoryDescriptionTv.text.toString().equals("")){
+                    //reset add icon change : icon + background
+                    binding.addCategoryDialogAddImg.setImageResource(R.drawable.add_icon)
+                    binding.addCategoryDialogAddImg.background=resources.getDrawable(R.drawable.white_border_gray_background_for_circle)
+                    //change the button text and set the error text
+                    binding.addCategoryDialogAddBtn.setText("add")
+                    binding.addCategoryDialogAddBtn.setBackgroundColor(ContextCompat.getColor(requireContext() , R.color.color1))
 
+                    binding.addCategoryDialogHintTv.setText("Add Category")
+                    binding.addCategoryDialogHintTv.setTextColor(ContextCompat.getColor(requireContext() , R.color.gray8))
+                    state = 1
+                }
             }
         }
+
+        binding.addCategoryDialogAddImg.setOnClickListener {
+
+
+            when{
+                ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ->{
+                    Toast.makeText(requireContext() , "granted" , Toast.LENGTH_LONG).show()
+
+                    var uri = m_onClickNavigator.onClickGetPicture()
+                    Toast.makeText(requireContext() , "uri : ${uri.toString()}" , Toast.LENGTH_LONG).show()
+                    binding.addCategoryDialogAddImg.setImageURI(uri)
+
+                }
+                else->{
+                    external_storage_permission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    Toast.makeText(requireContext() , "not granted ( denied )" , Toast.LENGTH_LONG).show()
+                }
+            }
+
+
+//            startActivity(Intent(activity , MainActivity2::class.java))
+        }
     }
+
+//    fun getPermission(){
+//        when{
+//            ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ->{
+//
+//            }
+//            else->{
+//                external_storage_permission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+//            }
+//        }
+//    }
+
+
+
+
 }

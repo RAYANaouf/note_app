@@ -1,5 +1,6 @@
 package com.example.notes_app.ui.fragments
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -23,6 +24,7 @@ import com.example.notes_app.modul.data_classes.Note
 import com.example.notes_app.modul.room_database.MyDatabase
 import com.example.notes_app.recyclers.adapter.Category_adaptes
 import com.example.notes_app.recyclers.item_decoration.CategoryDecoration
+import com.example.notes_app.ui.dialog.OnClickNavigator
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -38,9 +40,13 @@ class MainFragment : Fragment() {
     private lateinit var binding  : FragmentMainBinding
     private lateinit var m_viewModel : MyViewModul
     private lateinit var m_categories : List<Category>
+    private lateinit var m_onClickNavigator : OnClickNavigator
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnClickNavigator){
+            m_onClickNavigator = context
+        }
 
     }
 
@@ -62,7 +68,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        var adapter = Category_adaptes(this, m_viewModel)
+        var adapter = Category_adaptes(this, m_viewModel , m_onClickNavigator)
         binding.categoryRecycler.adapter = adapter
         binding.categoryRecycler.layoutManager= LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),3f))
