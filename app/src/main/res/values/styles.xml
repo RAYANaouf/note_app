@@ -8,8 +8,15 @@
         <item name="cornerSizeTopRight">0dp</item>
     </style>
 
-    <style name="img_20persent_radiud">
+    <style name="img_20percent_radius">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">20%</item>
+    </style>
+
+    <style name="img_50percent_radius">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="strokeColor">@color/black</item>
+        <item name="strokeWidth">3dp</item>
     </style>
 </resources>

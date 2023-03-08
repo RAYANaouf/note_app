@@ -1,9 +1,12 @@
 package com.example.notes_app.ui.activities
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.ActivityMainBinding
@@ -65,7 +68,6 @@ class MainActivity : AppCompatActivity() {
             R.id.main_menu_add_category->{
                 var dialogFragment = AddCategoryDialogFragment.newInstance()
                 dialogFragment.show(supportFragmentManager,null)
-
             }
             R.id.main_menu_setting->{
 

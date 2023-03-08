@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/dialog_add_category_shape"
+
+        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/addCategoryDialog_categoryTitle_tv"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="50dp"
+            android:hint="the title of category"
+            android:maxLines="1"
+            android:textColor="@color/gray8"
+            android:textColorHint="@color/gray6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/addCategoryDialog_categoryDescription_tv"
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+
+            android:layout_marginEnd="20dp"
+            android:hint="here is the description of your new category"
+            android:maxLines="5"
+            android:minLines="2"
+
+            android:textColorHint="@color/gray5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryTitle_tv" />
+
+        <Button
+            android:id="@+id/addCategoryDialog_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="add"
+            app:layout_constraintEnd_toEndOf="@+id/addCategoryDialog_categoryDescription_tv"
+            app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryDescription_tv" />
+
+        <Button
+            android:id="@+id/addCategoryDialog_cancel_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cancel"
+            android:backgroundTint="@color/gray5"
+
+            app:layout_constraintBottom_toBottomOf="@+id/addCategoryDialog_add_btn"
+            app:layout_constraintStart_toStartOf="@+id/addCategoryDialog_categoryDescription_tv"
+            app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryDescription_tv" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/addCategoryDialog_add_img"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/add_icon"
+
+
+        android:background="@drawable/white_border_gray_background_for_circle"
+
+        app:layout_constraintBottom_toTopOf="@+id/container2"
+        app:layout_constraintEnd_toEndOf="@+id/container2"
+        app:layout_constraintStart_toStartOf="@+id/container2"
+        app:layout_constraintTop_toTopOf="@+id/container2"/>
+
+    <TextView
+        android:id="@+id/addCategoryDialog_hint_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="5dp"
+        android:text="add category"
+        android:textSize="16dp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/addCategoryDialog_add_img"
+        app:layout_constraintStart_toStartOf="@+id/addCategoryDialog_add_img"
+        app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_add_img" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
