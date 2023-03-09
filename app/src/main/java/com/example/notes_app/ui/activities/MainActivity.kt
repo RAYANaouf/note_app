@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var m_viewModul:MyViewModul
-    private lateinit var m_uri : Uri
+    private  var m_uri : Uri? = null
 
     //permission
     private var external_storage_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -35,11 +35,6 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
         }else{
             Toast.makeText(baseContext , "false" , Toast.LENGTH_LONG).show()
         }
-    }
-
-    //get img
-    private var getContent = registerForActivityResult(ActivityResultContracts.GetContent()){
-
     }
 
 
@@ -104,9 +99,6 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
     }
 
     override fun onClickGetPicture(): Uri? {
-
-        getContent.launch("image/*")
-
         return null
     }
 
@@ -122,7 +114,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
         bitmap.compress(Bitmap.CompressFormat.PNG , 100 , byteArrayOutputStream)
         var byteArray = byteArrayOutputStream.toByteArray()
         var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
-        var id = (0 .. 10000000).random()
+        var id = (0 .. 850000).random()
         m_viewModul.addCategory(Category(id,img_string,name , des))
     }
 

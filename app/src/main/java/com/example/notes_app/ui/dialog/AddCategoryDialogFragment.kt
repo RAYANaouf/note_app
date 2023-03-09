@@ -25,9 +25,9 @@ class AddCategoryDialogFragment : DialogFragment() {
 
     //view binding
     private lateinit var binding : DialogAddCategoryBinding
+    //set onClickListener
     private lateinit var m_onClickNavigator : OnClickNavigator
-    private lateinit var m_uri : Uri
-
+    //set initial state for the dialog (normal =1 / error = 0)
     private var state = 1
 
     //permission
@@ -42,8 +42,7 @@ class AddCategoryDialogFragment : DialogFragment() {
     //get picture
     val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) {
-            // Use the selected image URI to load the image into your ImageView or perform other operations with it.
-//            m_uri = uri
+            binding.addCategoryDialogAddImg.setImageURI(uri)
         }
     }
 
@@ -126,36 +125,13 @@ class AddCategoryDialogFragment : DialogFragment() {
 
             when{
                 ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ->{
-                    Toast.makeText(requireContext() , "granted" , Toast.LENGTH_LONG).show()
-
-                    var uri = m_onClickNavigator.onClickGetPicture()
-                    Toast.makeText(requireContext() , "uri : ${uri.toString()}" , Toast.LENGTH_LONG).show()
-                    binding.addCategoryDialogAddImg.setImageURI(uri)
-
+                    getContent.launch("image/*")
                 }
                 else->{
                     external_storage_permission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    Toast.makeText(requireContext() , "not granted ( denied )" , Toast.LENGTH_LONG).show()
                 }
             }
-
-
-//            startActivity(Intent(activity , MainActivity2::class.java))
         }
     }
-
-//    fun getPermission(){
-//        when{
-//            ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ->{
-//
-//            }
-//            else->{
-//                external_storage_permission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-//            }
-//        }
-//    }
-
-
-
 
 }
