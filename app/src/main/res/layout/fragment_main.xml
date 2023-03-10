@@ -28,36 +28,50 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toTopOf="parent"-->
 <!--        app:layout_constraintVertical_bias="0.33999997" />-->
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/main_pieChart"
-        android:layout_width="160dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="parent" />
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_pieChart_container"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="25dp"
-        app:strokeColor="#400024FF"
-        app:strokeWidth="1.5dp"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="8dp"
-        android:outlineSpotShadowColor="#0024FF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/chart_background"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/main_pieChart"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_category_rv"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_pieChart">
+        app:layout_constraintTop_toBottomOf="@+id/main_pieChart_container" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/cardView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_pieChart_container"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:paddingTop="10dp"
@@ -128,7 +142,7 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView3"
-                    android:layout_width="80dp"
+                    android:layout_width="200dp"
                     android:layout_height="85dp"
                     android:layout_marginStart="16dp"
                     app:cardCornerRadius="14dp"
@@ -151,32 +165,32 @@
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/goal_img2"
-                            android:layout_width="55dp"
-                            android:layout_height="45dp"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:src="@drawable/c4"
                             android:scaleType="centerCrop"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            android:src="@drawable/c4"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:shapeAppearanceOverlay="@style/img_20percent_radius" />
+                            app:shapeAppearanceOverlay="@style/img_50percent_radius" />
 
                         <TextView
                             android:id="@+id/goal_name2"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
 
-                            android:gravity="center"
-                            android:paddingStart="3dp"
+                            android:gravity="start"
+                            android:paddingStart="10dp"
                             android:paddingEnd="3dp"
-                            android:textSize="14dp"
                             android:text="Stick to it "
                             android:textColor="@color/gray8"
+                            android:textSize="14dp"
                             android:textStyle="italic"
-                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@+id/goal_img2"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/goal_img2" />
+                            app:layout_constraintStart_toEndOf="@+id/goal_img2"
+                            app:layout_constraintTop_toTopOf="@+id/goal_img2" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -246,6 +260,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
 
+                android:background="#00ffffff"
+
                 android:layout_marginTop="12dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
@@ -253,7 +269,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

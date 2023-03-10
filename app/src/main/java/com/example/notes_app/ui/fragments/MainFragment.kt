@@ -19,8 +19,8 @@ import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.notes_app.R
 import com.example.notes_app.databinding.FragmentMainBinding
 import com.example.notes_app.modul.MyViewModul
-import com.example.notes_app.modul.data_classes.Category
-import com.example.notes_app.modul.data_classes.Note
+import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.MyDatabase
 import com.example.notes_app.recyclers.adapter.Category_adaptes
 import com.example.notes_app.recyclers.item_decoration.CategoryDecoration
@@ -171,7 +171,7 @@ class MainFragment : Fragment() {
         //set the data of the piechart  using pieData we just create
         binding.mainPieChart.data = pieData
         //set description of the graph
-        binding.mainPieChart.description.text = "notes Pie chart "
+        binding.mainPieChart.description.text = " "
         //set center title
         binding.mainPieChart.centerText = "Notes"
         //hide the lable

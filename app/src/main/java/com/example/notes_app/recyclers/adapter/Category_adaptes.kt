@@ -1,5 +1,8 @@
 package com.example.notes_app.recyclers.adapter
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +12,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModul
-import com.example.notes_app.modul.data_classes.Category
+import com.example.notes_app.modul.room_database.data_classes.Category
 import com.example.notes_app.ui.dialog.OnClickNavigator
 import com.google.android.material.imageview.ShapeableImageView
 
@@ -30,10 +33,15 @@ class Category_adaptes : RecyclerView.Adapter<Category_adaptes.Holder> {
 
     fun getCategories(){
         m_viewModul.getAllCategories().observe(m_owner){
-            for(i in 0..it.size-1){
-                m_categories.add(it[i])
-                notifyItemInserted(i)
+            m_categories = ArrayList()
+
+            if (it.size>3){
+                for (i in 3 .. it.size-1){
+                    m_categories.add(it[i])
+                }
+                notifyDataSetChanged()
             }
+
         }
     }
 
@@ -79,6 +87,9 @@ class Category_adaptes : RecyclerView.Adapter<Category_adaptes.Holder> {
         fun bind(cat : Category){
             name.setText(cat.name)
             description.setText("${cat.description}")
+            var byteArray = Base64.decode(cat.image , Base64.DEFAULT)
+            var bitmap_img = BitmapFactory.decodeByteArray(byteArray , 0 , byteArray.size)
+            shapeableImageView.setImageBitmap(bitmap_img)
         }
     }
 

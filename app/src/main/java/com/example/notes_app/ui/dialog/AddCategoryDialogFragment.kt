@@ -15,6 +15,8 @@ import android.content.Context
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.view.drawToBitmap
 import androidx.fragment.app.DialogFragment
 import com.example.notes_app.R
 import com.example.notes_app.databinding.DialogAddCategoryBinding
@@ -91,7 +93,7 @@ class AddCategoryDialogFragment : DialogFragment() {
                 if (binding.addCategoryDialogCategoryTitleTv.text.toString().equals("") || binding.addCategoryDialogCategoryDescriptionTv.text.toString().equals("")){
                     //set the error icon change : icon + background
                     binding.addCategoryDialogAddImg.setImageResource(R.drawable.error_icon)
-                    binding.addCategoryDialogAddImg.background=resources.getDrawable(R.drawable.white_backgound_for_circle)
+                    binding.addCategoryDialogAddImg.background=ColorDrawable(ContextCompat.getColor(requireContext() , R.color.white))
                     //change the button text and set the error text
                     binding.addCategoryDialogAddBtn.setText("retry")
                     binding.addCategoryDialogAddBtn.setBackgroundColor(ContextCompat.getColor(requireContext() , R.color.color2))
@@ -101,14 +103,17 @@ class AddCategoryDialogFragment : DialogFragment() {
                 }
                 else{
                     //do what you need with add button
-                    m_onClickNavigator.onClick_addCategory(binding.addCategoryDialogCategoryTitleTv.text.toString() , binding.addCategoryDialogCategoryDescriptionTv.text.toString())
+                    var bitmap_img = binding.addCategoryDialogAddImg.drawable.toBitmap()
+//                    Toast.makeText(context , "${bitmap_img.toString()}" , Toast.LENGTH_LONG).show()
+                    m_onClickNavigator.onClick_addCategory(binding.addCategoryDialogCategoryTitleTv.text.toString() , binding.addCategoryDialogCategoryDescriptionTv.text.toString() , bitmap_img)
+                    this.dialog?.dismiss()
                 }
             }
             else{
-                if ( !binding.addCategoryDialogCategoryTitleTv.text.toString().equals("") || !binding.addCategoryDialogCategoryDescriptionTv.text.toString().equals("")){
+                if ( !binding.addCategoryDialogCategoryTitleTv.text.toString().equals("") && !binding.addCategoryDialogCategoryDescriptionTv.text.toString().equals("")){
                     //reset add icon change : icon + background
                     binding.addCategoryDialogAddImg.setImageResource(R.drawable.add_icon)
-                    binding.addCategoryDialogAddImg.background=resources.getDrawable(R.drawable.white_border_gray_background_for_circle)
+                    binding.addCategoryDialogAddImg.background=ColorDrawable(ContextCompat.getColor(requireContext() , R.color.gray6))
                     //change the button text and set the error text
                     binding.addCategoryDialogAddBtn.setText("add")
                     binding.addCategoryDialogAddBtn.setBackgroundColor(ContextCompat.getColor(requireContext() , R.color.color1))

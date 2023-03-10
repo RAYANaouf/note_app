@@ -3,8 +3,8 @@ package com.example.notes_app.modul
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.example.notes_app.modul.data_classes.Category
-import com.example.notes_app.modul.data_classes.Note
+import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.DAO.CategoryDAO
 import com.example.notes_app.modul.room_database.DAO.NoteDAO
 import kotlinx.coroutines.GlobalScope

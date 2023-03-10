@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.ActivityMainBinding
 import com.example.notes_app.modul.MyViewModul
-import com.example.notes_app.modul.data_classes.Category
+import com.example.notes_app.modul.room_database.data_classes.Category
 import com.example.notes_app.ui.dialog.AddCategoryDialogFragment
 import com.example.notes_app.ui.dialog.OnClickNavigator
 import com.example.notes_app.ui.fragments.MainFragment
@@ -106,16 +106,15 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
 
     }
 
-    override fun onClick_addCategory(name : String , des : String) {
+    override fun onClick_addCategory(name : String , des : String , image : Bitmap ) {
 
-        var bitmap_drawable =  ContextCompat.getDrawable(baseContext , R.drawable.c0) as (BitmapDrawable)
-        var bitmap = bitmap_drawable.bitmap
+//        var bitmap_drawable =  ContextCompat.getDrawable(baseContext , R.drawable.c0) as (BitmapDrawable)
+        var bitmap = image
         var byteArrayOutputStream:ByteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG , 100 , byteArrayOutputStream)
         var byteArray = byteArrayOutputStream.toByteArray()
         var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
-        var id = (0 .. 850000).random()
-        m_viewModul.addCategory(Category(id,img_string,name , des))
+        m_viewModul.addCategory(Category(image = img_string, name = name , description = des))
     }
 
 }

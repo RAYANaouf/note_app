@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/gray2">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
 
@@ -79,16 +78,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/addCategoryDialog_add_img"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
 
         android:scaleType="centerCrop"
         android:src="@drawable/add_icon"
+        android:background="@color/gray6"
+        app:shapeAppearanceOverlay="@style/img_50percent_radius"
 
-
-        android:background="@drawable/white_border_gray_background_for_circle"
+        app:strokeWidth="4dp"
+        app:strokeColor="@color/white"
+        android:padding="4dp"
 
         app:layout_constraintBottom_toTopOf="@+id/container2"
         app:layout_constraintEnd_toEndOf="@+id/container2"

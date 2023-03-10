@@ -6,8 +6,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.notes_app.modul.data_classes.Category
-import com.example.notes_app.modul.data_classes.Note
+import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.DAO.CategoryDAO
 import com.example.notes_app.modul.room_database.DAO.NoteDAO
 import com.example.notes_app.modul.room_database.MyDatabase
