@@ -1,7 +1,6 @@
 package com.example.notes_app.ui.dialog
 
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,21 +11,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.Manifest
 import android.content.Context
+import android.graphics.Bitmap
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.drawToBitmap
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.DialogAddCategoryBinding
-import com.example.notes_app.ui.activities.MainActivity2
+import com.example.notes_app.modul.MyViewModel
+import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.ui.activities.OnClickNavigator
+import java.io.ByteArrayOutputStream
 
 
 class AddCategoryDialogFragment : DialogFragment() {
 
     //view binding
     private lateinit var binding : DialogAddCategoryBinding
+    //view model
+    private lateinit var m_viewModel : MyViewModel
     //set onClickListener
     private lateinit var m_onClickNavigator : OnClickNavigator
     //set initial state for the dialog (normal =1 / error = 0)
@@ -37,7 +42,7 @@ class AddCategoryDialogFragment : DialogFragment() {
         if (it){
             Toast.makeText(requireContext() , "read external storage" , Toast.LENGTH_LONG).show()
         }else{
-            Toast.makeText(requireContext() , "cant read " , Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext() , "cant access to your gallery (to get a picture)" , Toast.LENGTH_LONG).show()
         }
     }
 
@@ -63,6 +68,9 @@ class AddCategoryDialogFragment : DialogFragment() {
     ): View? {
 
         this.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        //set up view model
+        m_viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
         //set up the view binding
         binding = DialogAddCategoryBinding.inflate(inflater)
@@ -104,8 +112,13 @@ class AddCategoryDialogFragment : DialogFragment() {
                 else{
                     //do what you need with add button
                     var bitmap_img = binding.addCategoryDialogAddImg.drawable.toBitmap()
-//                    Toast.makeText(context , "${bitmap_img.toString()}" , Toast.LENGTH_LONG).show()
-                    m_onClickNavigator.onClick_addCategory(binding.addCategoryDialogCategoryTitleTv.text.toString() , binding.addCategoryDialogCategoryDescriptionTv.text.toString() , bitmap_img)
+
+                    //        var bitmap_drawable =  ContextCompat.getDrawable(baseContext , R.drawable.c0) as (BitmapDrawable)
+                    var byteArrayOutputStream = ByteArrayOutputStream()
+                    bitmap_img.compress(Bitmap.CompressFormat.PNG , 100 , byteArrayOutputStream)
+                    var byteArray = byteArrayOutputStream.toByteArray()
+                    var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
+                    m_viewModel.addCategory(Category(name=binding.addCategoryDialogCategoryTitleTv.text.toString() , description = binding.addCategoryDialogCategoryDescriptionTv.text.toString() , image = img_string ))
                     this.dialog?.dismiss()
                 }
             }

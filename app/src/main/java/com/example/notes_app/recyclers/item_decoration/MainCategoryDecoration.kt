@@ -3,19 +3,18 @@ package com.example.notes_app.recyclers.item_decoration
 import android.content.Context
 import android.graphics.Rect
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoryDecoration : RecyclerView.ItemDecoration {
+class MainCategoryDecoration : RecyclerView.ItemDecoration {
 
     private var m_context : Context
     private var m_l_r_margin : Float
-    private var m_t_margin : Float
+    private var m_t_b_margin : Float
 
-    constructor(context: Context , l_r_margin : Float, t_margin : Float){
+    constructor(context: Context, l_r_margin : Float, t_b_margin : Float){
         this.m_context = context
         this.m_l_r_margin = l_r_margin
-        this.m_t_margin = t_margin
+        this.m_t_b_margin = t_b_margin
     }
 
     override fun getItemOffsets(
@@ -28,10 +27,13 @@ class CategoryDecoration : RecyclerView.ItemDecoration {
 
         var position = parent.getChildAdapterPosition(view)
         var item_count = parent.adapter?.itemCount ?: 0
-
-        outRect.top = dpToPx(m_t_margin)
-        outRect.right = dpToPx(m_l_r_margin)
         outRect.left = dpToPx(m_l_r_margin)
+        outRect.top = dpToPx(m_t_b_margin)
+        outRect.bottom = dpToPx(m_t_b_margin)
+
+        if (position == item_count-1){
+            outRect.right = dpToPx(m_l_r_margin)
+        }
 
     }
 
@@ -39,7 +41,4 @@ class CategoryDecoration : RecyclerView.ItemDecoration {
         var px = (dp * m_context.resources.displayMetrics.density)
         return px.toInt()
     }
-
-
-
 }

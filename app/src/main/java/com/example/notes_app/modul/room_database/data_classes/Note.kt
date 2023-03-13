@@ -1,9 +1,10 @@
 package com.example.notes_app.modul.room_database.data_classes
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(foreignKeys = [ForeignKey(entity = Category::class , parentColumns = [ "id" ] , childColumns = ["cat_id"] ) ])
 class Note {
 
     @PrimaryKey

@@ -1,45 +1,31 @@
 package com.example.notes_app.ui.fragments
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
-import com.example.notes_app.R
 import com.example.notes_app.databinding.FragmentMainBinding
-import com.example.notes_app.modul.MyViewModul
-import com.example.notes_app.modul.room_database.data_classes.Category
-import com.example.notes_app.modul.room_database.data_classes.Note
-import com.example.notes_app.modul.room_database.MyDatabase
-import com.example.notes_app.recyclers.adapter.Category_adaptes
+import com.example.notes_app.modul.MyViewModel
+import com.example.notes_app.recyclers.adapter.Categories_adaptes
+import com.example.notes_app.recyclers.adapter.MainCategoriesAdapter
 import com.example.notes_app.recyclers.item_decoration.CategoryDecoration
-import com.example.notes_app.ui.dialog.OnClickNavigator
-import com.github.mikephil.charting.charts.PieChart
+import com.example.notes_app.recyclers.item_decoration.MainCategoryDecoration
+import com.example.notes_app.ui.activities.OnClickNavigator
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.ValueFormatter
-import kotlinx.coroutines.*
-import java.io.ByteArrayOutputStream
 
 
 class MainFragment : Fragment() {
 
     private lateinit var binding  : FragmentMainBinding
-    private lateinit var m_viewModel : MyViewModul
-    private lateinit var m_categories : List<Category>
+    private lateinit var m_viewModel : MyViewModel
     private lateinit var m_onClickNavigator : OnClickNavigator
 
     override fun onAttach(context: Context) {
@@ -56,7 +42,7 @@ class MainFragment : Fragment() {
     ): View? {
 
         //set the view model
-        m_viewModel = ViewModelProvider(this).get(MyViewModul::class.java)
+        m_viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
         //set the view binding
         binding  = FragmentMainBinding.inflate(inflater)
@@ -67,52 +53,30 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        var adapter = Category_adaptes(this, m_viewModel , m_onClickNavigator)
+        //set the6+
+        // category adapter
+        var adapter = Categories_adaptes(this, m_viewModel , object : Categories_adaptes.OnClickListener{
+            override fun onClick_category(cat_id: Int) {
+                m_onClickNavigator.onClick_to_notesFragment(cat_id)
+            }
+        })
         binding.categoryRecycler.adapter = adapter
         binding.categoryRecycler.layoutManager= LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),3f))
+        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
 
 
+        //set the main category adapter
+        var main_category_adapter = MainCategoriesAdapter(this , m_viewModel , object : MainCategoriesAdapter.OnClickListener{
+            override fun onClick_mainCategory(cat_id : Int) {
+                m_onClickNavigator.onClick_to_notesFragment(cat_id)
+            }
+        })
+        binding.mainCategoryRv.adapter = main_category_adapter
+        binding.mainCategoryRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        binding.mainCategoryRv.addItemDecoration(MainCategoryDecoration(requireContext() , 15f,5f))
 
-
-
-        m_viewModel.getAllCategories().observe(viewLifecycleOwner){
-            Toast.makeText(context , "the size : ${it.size}" , Toast.LENGTH_LONG).show()
-            if (it.size>=3)
-                setAllCategories(it)
-        }
 
         setPieChart()
-
-
-
-    }
-
-    fun setAllCategories(categories:List<Category>){
-
-
-        var cat = categories[0]
-        var byteArray_img : ByteArray = Base64.decode(cat.image , Base64.DEFAULT)
-        var bitmap_img = BitmapFactory.decodeByteArray(byteArray_img , 0 , byteArray_img.size)
-
-        binding.goalImg1.setImageBitmap(bitmap_img)
-        binding.goalName1.setText("${cat.name}")
-
-
-        cat = categories[1]
-        byteArray_img = Base64.decode(cat.image , Base64.DEFAULT)
-        bitmap_img = BitmapFactory.decodeByteArray(byteArray_img , 0 , byteArray_img.size)
-
-        binding.goalImg2.setImageBitmap(bitmap_img)
-        binding.goalName2.setText("${cat.name}")
-
-        cat = categories[2]
-        byteArray_img = Base64.decode(cat.image , Base64.DEFAULT)
-        bitmap_img = BitmapFactory.decodeByteArray(byteArray_img , 0 , byteArray_img.size)
-
-        binding.goalImg3.setImageBitmap(bitmap_img)
-        binding.goalName3.setText("${cat.name}")
 
     }
 
@@ -196,8 +160,9 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance() = MainFragment()
     }
+
+
 }

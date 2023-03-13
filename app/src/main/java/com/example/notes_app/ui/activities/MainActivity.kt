@@ -1,7 +1,5 @@
 package com.example.notes_app.ui.activities
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,23 +7,22 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.ActivityMainBinding
-import com.example.notes_app.modul.MyViewModul
-import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.ui.dialog.AddCategoryDialogFragment
-import com.example.notes_app.ui.dialog.OnClickNavigator
+import com.example.notes_app.ui.dialog.AddNoteDialogFragment
+import com.example.notes_app.ui.fragments.AboutUsFragment
 import com.example.notes_app.ui.fragments.MainFragment
-import java.io.ByteArrayOutputStream
-import java.util.Base64
-import kotlin.random.Random
+import com.example.notes_app.ui.fragments.NotesFragment
+import com.example.notes_app.ui.fragments.SettingFragment
 
-class MainActivity : AppCompatActivity() , OnClickNavigator {
+
+class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
     private lateinit var binding : ActivityMainBinding
-    private lateinit var m_viewModul:MyViewModul
+    private lateinit var m_viewModul:MyViewModel
     private  var m_uri : Uri? = null
 
     //permission
@@ -45,7 +42,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
         setContentView(binding.root)
 
         //set view model
-        m_viewModul = ViewModelProvider(this).get(MyViewModul::class.java)
+        m_viewModul = ViewModelProvider(this).get(MyViewModel::class.java)
 
         //set toolbar
         setAppBar()
@@ -62,9 +59,9 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
     }
 
     fun setMainFragment(){
-        var mainFragment = MainFragment.newInstance()
         var fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container , mainFragment)
+        fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance())
+            .addToBackStack(null)
         fragmentTransaction.commit()
 
     }
@@ -85,36 +82,43 @@ class MainActivity : AppCompatActivity() , OnClickNavigator {
 
             }
             R.id.main_menu_add_category->{
-                var dialogFragment = AddCategoryDialogFragment.newInstance()
-                dialogFragment.show(supportFragmentManager,null)
+                add_category()
             }
             R.id.main_menu_setting->{
-
+                var fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.fragment_container , SettingFragment.newInstance())
+                    .addToBackStack(null)
+                fragmentTransaction.commit()
             }
             R.id.main_menu_about_us->{
-
+                var fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.fragment_container , AboutUsFragment.newInstance())
+                    .addToBackStack(null)
+                fragmentTransaction.commit()
             }
         }
         return true
     }
 
-    override fun onClickGetPicture(): Uri? {
-        return null
+
+    override fun onClick_to_notesFragment(cat_id : Int) {
+        var fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container , NotesFragment.newInstance(cat_id))
+            .addToBackStack(null)
+            .commit()
+
     }
 
-    override fun onClick_to_notesFragment() {
 
+    //dialog viewer
+    override fun add_note(cat_id: Int) {
+        var dialogFragment = AddNoteDialogFragment.newInstance(cat_id)
+        dialogFragment.show(supportFragmentManager,null)
     }
 
-    override fun onClick_addCategory(name : String , des : String , image : Bitmap ) {
-
-//        var bitmap_drawable =  ContextCompat.getDrawable(baseContext , R.drawable.c0) as (BitmapDrawable)
-        var bitmap = image
-        var byteArrayOutputStream:ByteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG , 100 , byteArrayOutputStream)
-        var byteArray = byteArrayOutputStream.toByteArray()
-        var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
-        m_viewModul.addCategory(Category(image = img_string, name = name , description = des))
+    override fun add_category() {
+        var dialogFragment = AddCategoryDialogFragment.newInstance()
+        dialogFragment.show(supportFragmentManager,null)
     }
 
 }

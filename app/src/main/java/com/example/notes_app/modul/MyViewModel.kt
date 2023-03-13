@@ -5,12 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.notes_app.modul.room_database.data_classes.Category
 import com.example.notes_app.modul.room_database.data_classes.Note
-import com.example.notes_app.modul.room_database.DAO.CategoryDAO
-import com.example.notes_app.modul.room_database.DAO.NoteDAO
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-class MyViewModul : AndroidViewModel {
+class MyViewModel : AndroidViewModel {
 
     private var m_repo : Repository
 

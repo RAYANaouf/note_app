@@ -38,15 +38,14 @@
         <EditText
             android:id="@+id/addCategoryDialog_categoryDescription_tv"
             android:layout_width="0dp"
-
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-
             android:layout_marginEnd="20dp"
-            android:hint="here is the description of your new category"
+
+            android:hint="here is the description "
             android:maxLines="5"
-            android:minLines="2"
+            android:minLines="1"
 
             android:textColorHint="@color/gray5"
             app:layout_constraintEnd_toEndOf="parent"
