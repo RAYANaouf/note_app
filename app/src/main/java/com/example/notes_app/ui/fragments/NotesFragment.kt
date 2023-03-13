@@ -22,7 +22,7 @@ class NotesFragment : Fragment() {
     private lateinit var m_ViewModul : MyViewModel
     private lateinit var m_open_dialog : DialogViewer
 
-    private var m_catId : Int = 0
+    private var m_catId : Int = 1
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -62,7 +62,7 @@ class NotesFragment : Fragment() {
             m_open_dialog.add_note(m_catId)
         }
 
-        binding.notesFragmentNotesRv.adapter = NotesAdapter(this , m_ViewModul)
+        binding.notesFragmentNotesRv.adapter = NotesAdapter(this , m_ViewModul , m_catId)
         binding.notesFragmentNotesRv.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
     }
 

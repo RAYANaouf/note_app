@@ -24,8 +24,11 @@ class AddNoteDialogFragment : DialogFragment() {
     private lateinit var binding : DialogAddNoteBinding
     //view model
     private lateinit var m_viewModel : MyViewModel
-
+    //the category id
     private var m_catId : Int =0
+    //the status
+    private var m_status = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,9 +65,22 @@ class AddNoteDialogFragment : DialogFragment() {
         binding.addNoteDialogAddBtn.setOnClickListener {
             var name = binding.addNoteDialogTitleTv.text.toString()
             var description = binding.addNoteDialogDescriptionTv.text.toString()
-//            m_viewModel.addNote(Note())
+            m_viewModel.addNote(Note(title = name , content = description , cat_id = m_catId))
             this.dialog?.dismiss()
         }
+
+        binding.addNoteDialogChevronSiv.setOnClickListener {
+            if (m_status == 0){
+                binding.addNoteDialogParamVg.visibility = View.VISIBLE
+                m_status = 1
+            }
+            else{
+                binding.addNoteDialogParamVg.visibility = View.GONE
+                m_status = 0
+            }
+
+        }
+
     }
 
     companion object {
