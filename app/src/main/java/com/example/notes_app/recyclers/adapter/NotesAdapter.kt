@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.Note
+import org.w3c.dom.Text
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
 
@@ -42,19 +43,24 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
 
         var root : View
         var adapter : NotesAdapter
+        var name : TextView
         var description : TextView
         var amount : TextView
 
         constructor(itemView : View , adapter: NotesAdapter):super(itemView){
             this.root=itemView
             this.adapter=adapter
-            this.description = root.findViewById(R.id.category_description)
-            this.amount = root.findViewById(R.id.category_amount)
+            this.name = itemView.findViewById(R.id.categoryHolder_name)
+            this.description = root.findViewById(R.id.categoryHolder_description)
+            this.amount = root.findViewById(R.id.categoryHolder_amount)
         }
 
         fun bind(position : Int){
             amount.setText("${adapter.m_notes[position].cat_id}")
+            name.setText("${adapter.m_notes[position].title}")
+            description.setText("${adapter.m_notes[position].content}")
         }
+
     }
 
 

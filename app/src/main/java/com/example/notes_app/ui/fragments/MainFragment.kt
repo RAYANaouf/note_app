@@ -53,17 +53,6 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //set the6+
-        // category adapter
-        var adapter = Categories_adaptes(this, m_viewModel , object : Categories_adaptes.OnClickListener{
-            override fun onClick_category(cat_id: Int) {
-                m_onClickNavigator.onClick_to_notesFragment(cat_id)
-            }
-        })
-        binding.categoryRecycler.adapter = adapter
-        binding.categoryRecycler.layoutManager= LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
-        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
-
 
         //set the main category adapter
         var main_category_adapter = MainCategoriesAdapter(this , m_viewModel , object : MainCategoriesAdapter.OnClickListener{
@@ -74,6 +63,17 @@ class MainFragment : Fragment() {
         binding.mainCategoryRv.adapter = main_category_adapter
         binding.mainCategoryRv.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         binding.mainCategoryRv.addItemDecoration(MainCategoryDecoration(requireContext() , 15f,5f))
+
+
+        //set the category adapter
+        var adapter = Categories_adaptes(this, m_viewModel , object : Categories_adaptes.OnClickListener{
+            override fun onClick_category(cat_id: Int) {
+                m_onClickNavigator.onClick_to_notesFragment(cat_id)
+            }
+        })
+        binding.categoryRecycler.adapter = adapter
+        binding.categoryRecycler.layoutManager= LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
 
 
         setPieChart()

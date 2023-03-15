@@ -50,202 +50,58 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_category_rv"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
+        android:paddingStart="15dp"
+
+        android:text="main categories"
+        android:textColor="@color/gray8"
+        android:textSize="16dp"
+        android:textStyle="bold"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_pieChart_container" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_category_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingStart="15dp"
+
+        android:text="custom category"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/gray8"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_category_rv" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/category_recycler"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
 
-        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/main_category_rv"
         app:layout_constraintStart_toStartOf="@+id/main_category_rv"
-        app:layout_constraintTop_toBottomOf="@+id/main_category_rv" />
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:id="@+id/constraintLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="90dp"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardView2"-->
-<!--                    android:layout_width="80dp"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    app:cardCornerRadius="14dp"-->
-<!--                    app:strokeWidth="1dp"-->
-<!--                    app:strokeColor="@color/gray1"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/cardView3"-->
-<!--                    app:layout_constraintHorizontal_bias="0.5"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:id="@+id/constraintLayout3"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"-->
-<!--                        app:layout_constraintHorizontal_bias="0.5"-->
-<!--                        app:layout_constraintHorizontal_chainStyle="spread"-->
-<!--                        app:layout_constraintStart_toStartOf="parent">-->
-
-<!--                        <com.google.android.material.imageview.ShapeableImageView-->
-<!--                            android:id="@+id/goal_img1"-->
-<!--                            android:layout_width="55dp"-->
-<!--                            android:layout_height="45dp"-->
-<!--                            android:layout_marginTop="8dp"-->
-<!--                            android:scaleType="centerCrop"-->
-<!--                            android:src="@drawable/c1"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:shapeAppearanceOverlay="@style/img_20percent_radius" />-->
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/goal_name1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:paddingStart="3dp"-->
-<!--                            android:paddingEnd="3dp"-->
-<!--                            android:gravity="center"-->
-<!--                            android:text="Set Goal"-->
-<!--                            android:textSize="14dp"-->
-<!--                            android:textColor="@color/gray8"-->
-<!--                            android:textStyle="italic"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toBottomOf="@+id/goal_img1" />-->
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardView3"-->
-<!--                    android:layout_width="200dp"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    app:cardCornerRadius="14dp"-->
-<!--                    app:strokeWidth="1dp"-->
-<!--                    app:strokeColor="@color/gray1"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/cardView4"-->
-<!--                    app:layout_constraintHorizontal_bias="0.5"-->
-<!--                    app:layout_constraintStart_toEndOf="@+id/cardView2"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:id="@+id/constraintLayout2"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        app:layout_constraintEnd_toStartOf="@+id/constraintLayout4"-->
-<!--                        app:layout_constraintHorizontal_bias="0.5"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/constraintLayout3">-->
-
-
-<!--                        <com.google.android.material.imageview.ShapeableImageView-->
-<!--                            android:id="@+id/goal_img2"-->
-<!--                            android:layout_width="30dp"-->
-<!--                            android:layout_height="30dp"-->
-<!--                            android:layout_marginStart="8dp"-->
-<!--                            android:layout_marginTop="8dp"-->
-<!--                            android:scaleType="centerCrop"-->
-<!--                            android:src="@drawable/c4"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:shapeAppearanceOverlay="@style/img_50percent_radius" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/goal_name2"-->
-<!--                            android:layout_width="0dp"-->
-<!--                            android:layout_height="wrap_content"-->
-
-<!--                            android:gravity="start"-->
-<!--                            android:paddingStart="10dp"-->
-<!--                            android:paddingEnd="3dp"-->
-<!--                            android:text="Stick to it "-->
-<!--                            android:textColor="@color/gray8"-->
-<!--                            android:textSize="14dp"-->
-<!--                            android:textStyle="italic"-->
-<!--                            app:layout_constraintBottom_toBottomOf="@+id/goal_img2"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toEndOf="@+id/goal_img2"-->
-<!--                            app:layout_constraintTop_toTopOf="@+id/goal_img2" />-->
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
-
-<!--                <com.google.android.material.card.MaterialCardView-->
-<!--                    android:id="@+id/cardView4"-->
-<!--                    android:layout_width="80dp"-->
-<!--                    android:layout_height="85dp"-->
-<!--                    android:layout_marginStart="14dp"-->
-
-<!--                    app:cardCornerRadius="14dp"-->
-<!--                    app:strokeWidth="1dp"-->
-<!--                    app:strokeColor="@color/gray1"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintHorizontal_bias="0.5"-->
-<!--                    app:layout_constraintStart_toEndOf="@+id/cardView3"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:id="@+id/constraintLayout4"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        app:layout_constraintEnd_toEndOf="@+id/cardView2"-->
-<!--                        app:layout_constraintHorizontal_bias="0.5"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/constraintLayout2">-->
-
-<!--                        <com.google.android.material.imageview.ShapeableImageView-->
-<!--                            android:id="@+id/goal_img3"-->
-<!--                            android:layout_width="55dp"-->
-<!--                            android:layout_height="45dp"-->
-<!--                            android:layout_marginTop="8dp"-->
-<!--                            android:scaleType="centerCrop"-->
-<!--                            android:src="@drawable/c5"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:shapeAppearanceOverlay="@style/img_20percent_radius" />-->
-
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/goal_name3"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:gravity="center"-->
-<!--                            android:paddingStart="3dp"-->
-<!--                            android:paddingEnd="3dp"-->
-<!--                            android:text="Reach Goal"-->
-<!--                            android:textColor="@color/gray8"-->
-<!--                            android:textSize="14dp"-->
-<!--                            android:textStyle="italic"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                            app:layout_constraintEnd_toEndOf="parent"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toBottomOf="@+id/goal_img3" />-->
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                </com.google.android.material.card.MaterialCardView>-->
-
-
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

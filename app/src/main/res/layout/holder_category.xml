@@ -16,7 +16,7 @@
         android:paddingTop="5dp">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/category_logo"
+            android:id="@+id/categoryHolder_logo"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="5dp"
@@ -28,7 +28,7 @@
 
 
         <TextView
-            android:id="@+id/category_name"
+            android:id="@+id/categoryHolder_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -39,13 +39,13 @@
             android:textColor="@color/gray8"
             android:textSize="14dp"
             android:text="category's name"
-            app:layout_constraintEnd_toStartOf="@+id/category_amount"
+            app:layout_constraintEnd_toStartOf="@+id/categoryHolder_amount"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/category_logo"
+            app:layout_constraintStart_toEndOf="@+id/categoryHolder_logo"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/category_description"
+            android:id="@+id/categoryHolder_description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -56,13 +56,13 @@
             android:maxLines="2"
             android:paddingStart="5dp"
             android:text="descreption of the categories of the notes"
-            app:layout_constraintEnd_toStartOf="@+id/category_amount"
+            app:layout_constraintEnd_toStartOf="@+id/categoryHolder_amount"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/category_logo"
-            app:layout_constraintTop_toBottomOf="@+id/category_name" />
+            app:layout_constraintStart_toEndOf="@+id/categoryHolder_logo"
+            app:layout_constraintTop_toBottomOf="@+id/categoryHolder_name" />
 
         <TextView
-            android:id="@+id/category_amount"
+            android:id="@+id/categoryHolder_amount"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="10dp"

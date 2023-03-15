@@ -77,10 +77,10 @@ class Categories_adaptes : RecyclerView.Adapter<Categories_adaptes.Holder> {
         var amount : TextView
 
         constructor(itemView: View , adapter : Categories_adaptes) : super(itemView){
-            shapeableImageView = itemView.findViewById(R.id.category_logo)
-            name = itemView.findViewById(R.id.category_name)
-            description = itemView.findViewById(R.id.category_description)
-            amount = itemView.findViewById(R.id.category_amount)
+            shapeableImageView = itemView.findViewById(R.id.categoryHolder_logo)
+            name = itemView.findViewById(R.id.categoryHolder_name)
+            description = itemView.findViewById(R.id.categoryHolder_description)
+            amount = itemView.findViewById(R.id.categoryHolder_amount)
             this.m_adapter = adapter
             this.m_root = itemView
         }

@@ -115,7 +115,7 @@ class AddCategoryDialogFragment : DialogFragment() {
 
                     //        var bitmap_drawable =  ContextCompat.getDrawable(baseContext , R.drawable.c0) as (BitmapDrawable)
                     var byteArrayOutputStream = ByteArrayOutputStream()
-                    bitmap_img.compress(Bitmap.CompressFormat.PNG , 100 , byteArrayOutputStream)
+                    bitmap_img.compress(Bitmap.CompressFormat.JPEG , 5 , byteArrayOutputStream)
                     var byteArray = byteArrayOutputStream.toByteArray()
                     var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
                     m_viewModel.addCategory(Category(name=binding.addCategoryDialogCategoryTitleTv.text.toString() , description = binding.addCategoryDialogCategoryDescriptionTv.text.toString() , image = img_string ))
