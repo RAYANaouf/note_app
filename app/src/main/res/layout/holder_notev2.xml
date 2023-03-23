@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/noteHolder_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    app:strokeColor="@color/gray6"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/noteHolder_name_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:paddingBottom="5dp"
+
+            android:gravity="center_vertical"
+            android:hint="here is the title "
+            android:maxLength="15"
+            android:maxLines="1"
+
+            android:textColor="@color/gray10"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:ellipsize="end"
+
+            app:layout_constraintBottom_toBottomOf="@+id/noteHolder_separator_v"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/noteHolder_menu_siv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/noteHolder_separator_v"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+
+            android:background="@color/gray4"
+
+            app:layout_constraintBottom_toBottomOf="@+id/noteHolder_name_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noteHolder_name_tv" />
+
+        <TextView
+            android:id="@+id/noteHolder_content_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="5dp"
+
+            android:hint="here is the title "
+            android:lineHeight="16dp"
+            android:maxLines="6"
+
+            android:textColor="@color/gray6"
+            android:textSize="12dp"
+            android:ellipsize="end"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/noteHolder_separator_v" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/noteHolder_menu_siv"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+
+            android:layout_marginRight="5dp"
+
+            android:src="@drawable/chevron_down_3"
+            app:layout_constraintBottom_toBottomOf="@+id/noteHolder_name_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/noteHolder_name_tv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

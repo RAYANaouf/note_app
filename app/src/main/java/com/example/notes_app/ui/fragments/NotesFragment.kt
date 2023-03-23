@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notes_app.databinding.FragmentNotesBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.recyclers.adapter.NotesAdapter
+import com.example.notes_app.recyclers.item_decoration.NoteDecoration
 import com.example.notes_app.ui.activities.DialogViewer
 
 public const val ARG_CAT_ID="cat_id"
@@ -64,6 +65,7 @@ class NotesFragment : Fragment() {
 
         binding.notesFragmentNotesRv.adapter = NotesAdapter(this , m_ViewModul , m_catId)
         binding.notesFragmentNotesRv.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        binding.notesFragmentNotesRv.addItemDecoration(NoteDecoration(requireContext() , 5f , 5f))
     }
 
     companion object {

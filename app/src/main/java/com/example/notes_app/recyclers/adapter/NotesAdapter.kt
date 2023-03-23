@@ -27,7 +27,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
 
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_category , null , false)
+        var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_notev2 , null , false)
         return Holder(view , this )
     }
 
@@ -44,21 +44,18 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
         var root : View
         var adapter : NotesAdapter
         var name : TextView
-        var description : TextView
-        var amount : TextView
+        var content : TextView
 
         constructor(itemView : View , adapter: NotesAdapter):super(itemView){
             this.root=itemView
             this.adapter=adapter
-            this.name = itemView.findViewById(R.id.categoryHolder_name)
-            this.description = root.findViewById(R.id.categoryHolder_description)
-            this.amount = root.findViewById(R.id.categoryHolder_amount)
+            this.name = itemView.findViewById(R.id.noteHolder_name_tv)
+            this.content = root.findViewById(R.id.noteHolder_content_tv)
         }
 
         fun bind(position : Int){
-            amount.setText("${adapter.m_notes[position].cat_id}")
             name.setText("${adapter.m_notes[position].title}")
-            description.setText("${adapter.m_notes[position].content}")
+            content.setText("${adapter.m_notes[position].content}")
         }
 
     }
