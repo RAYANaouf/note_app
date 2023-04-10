@@ -1,6 +1,7 @@
 package com.example.notes_app.ui.fragments
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.recyclers.adapter.NotesAdapter
 import com.example.notes_app.recyclers.item_decoration.NoteDecoration
 import com.example.notes_app.ui.activities.DialogViewer
+import com.example.notes_app.ui.activities.OnClickNavigator
 
 public const val ARG_CAT_ID="cat_id"
 
@@ -22,6 +24,7 @@ class NotesFragment : Fragment() {
     private lateinit var binding : FragmentNotesBinding
     private lateinit var m_ViewModul : MyViewModel
     private lateinit var m_open_dialog : DialogViewer
+    private lateinit var m_onClickNavigator : OnClickNavigator
 
     private var m_catId : Int = 1
 
@@ -30,7 +33,12 @@ class NotesFragment : Fragment() {
         if(context is DialogViewer){
             m_open_dialog = context
         }
+        if(context is OnClickNavigator){
+            m_onClickNavigator = context
+        }
     }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +68,8 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.notesFragmentAddFab.setOnClickListener {
-            m_open_dialog.add_note(m_catId)
+//            m_open_dialog.add_note(m_catId)
+            m_onClickNavigator.onClick_to_addNoteFragment(m_catId)
         }
 
         binding.notesFragmentNotesRv.adapter = NotesAdapter(this , m_ViewModul , m_catId)

@@ -5,4 +5,5 @@ import android.net.Uri
 
 interface OnClickNavigator {
     fun onClick_to_notesFragment(cat_id : Int)
+    fun onClick_to_addNoteFragment(cat_id : Int)
 }

@@ -40,7 +40,8 @@ class AddCategoryDialogFragment : DialogFragment() {
     //permission
     private var external_storage_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
         if (it){
-            Toast.makeText(requireContext() , "read external storage" , Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext() , "read external storage is allowed " , Toast.LENGTH_LONG).show()
+            getContent.launch("image/*")
         }else{
             Toast.makeText(requireContext() , "cant access to your gallery (to get a picture)" , Toast.LENGTH_LONG).show()
         }

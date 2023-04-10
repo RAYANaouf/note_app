@@ -1,5 +1,6 @@
 package com.example.notes_app.ui.activities
 
+import android.app.AlarmManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,10 +14,7 @@ import com.example.notes_app.databinding.ActivityMainBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.ui.dialog.AddCategoryDialogFragment
 import com.example.notes_app.ui.dialog.AddNoteDialogFragment
-import com.example.notes_app.ui.fragments.AboutUsFragment
-import com.example.notes_app.ui.fragments.MainFragment
-import com.example.notes_app.ui.fragments.NotesFragment
-import com.example.notes_app.ui.fragments.SettingFragment
+import com.example.notes_app.ui.fragments.*
 
 
 class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
@@ -50,7 +48,10 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         //set MainFragment
         setMainFragment()
 
+        
+
     }
+    
 
 
 
@@ -106,7 +107,16 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         fragmentTransaction.replace(R.id.fragment_container , NotesFragment.newInstance(cat_id))
             .addToBackStack(null)
             .commit()
+    }
 
+    override fun onClick_to_addNoteFragment(cat_id : Int) {
+        var fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container , AddNoteFragment.newInstance(cat_id))
+            .addToBackStack(null)
+            .commit()
+
+//        var dialogFragment = AddNoteDialogFragment.newInstance(cat_id)
+//        dialogFragment.show(supportFragmentManager , null)
     }
 
 

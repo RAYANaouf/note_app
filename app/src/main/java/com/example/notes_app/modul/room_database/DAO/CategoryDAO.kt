@@ -23,6 +23,4 @@ interface CategoryDAO {
     @Query("select * from Category")
     fun getAllCategories() : LiveData<List<Category>>
 
-
-
 }

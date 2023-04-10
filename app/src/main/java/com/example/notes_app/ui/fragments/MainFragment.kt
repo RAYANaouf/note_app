@@ -33,7 +33,6 @@ class MainFragment : Fragment() {
         if (context is OnClickNavigator){
             m_onClickNavigator = context
         }
-
     }
 
     override fun onCreateView(
