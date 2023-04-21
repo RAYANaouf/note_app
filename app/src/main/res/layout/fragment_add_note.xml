@@ -39,6 +39,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
+                    android:background="@drawable/addnote_edittext_background"
+
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:hint="here is the title "
@@ -54,6 +56,8 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
 
+                app:hintAnimationEnabled="false"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
@@ -62,7 +66,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
 
-                    android:hint="here is the the note's content "/>
+                    app:counterEnabled="true"
+                    app:counterMaxLength="1500"
+
+                    android:background="@drawable/addnote_content_edittext_background"
+
+                    android:hint="note"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
