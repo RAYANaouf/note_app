@@ -6,91 +6,223 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.AddNoteFragment">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
 
-        android:layout_marginBottom="10dp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toTopOf="@id/btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
-                android:layout_width="0dp"
-
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-
-                android:layout_marginEnd="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:background="@drawable/addnote_edittext_background"
-
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:hint="here is the title "
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="10dp"
-
-                app:hintAnimationEnabled="false"
-
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    app:counterEnabled="true"
-                    app:counterMaxLength="1500"
-
-                    android:background="@drawable/addnote_content_edittext_background"
-
-                    android:hint="note"/>
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn"
+    <TextView
+        android:id="@+id/addNoteFragment_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text=" 5 : 26 : 2023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addNoteFragment_noteTitle_til"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintWidth_max="330dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintWidth_percent="0.85"
 
-        android:text="add"
+        android:autofillHints="creditCardExpirationDay"
+        android:textColorHint="@color/gray7"
+        app:boxBackgroundMode="none"
+        app:hintTextColor="@color/gray7"
 
+        app:layout_constraintStart_toStartOf="@+id/addNoteFragment_time_tv"
+        app:layout_constraintTop_toBottomOf="@+id/addNoteFragment_time_tv">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addNoteFragment_noteTitle_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@android:color/transparent"
+            android:firstBaselineToTopHeight="25dp"
+            android:hint="note's title"
+            android:inputType="textLongMessage"
+            android:lastBaselineToBottomHeight="10dp"
+            android:lineHeight="20dp"
+            android:lines="1"
+            android:maxLines="1"
+            android:textSize="22dp"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/addNoteFragment_titlebar_v"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+
+        android:background="@color/gray8"
+
+        app:layout_constraintBottom_toBottomOf="@+id/addNoteFragment_noteTitle_til"
+        app:layout_constraintStart_toStartOf="@+id/addNoteFragment_noteTitle_til"
+        app:layout_constraintTop_toTopOf="@+id/addNoteFragment_noteTitle_til" />
+
+
+    <!--         *******************    separator   ******************             -->
+
+    <View
+        android:id="@+id/addNoteFragment_titleContentSeparetor_v"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+
+        android:visibility="visible"
+
+        android:background="@color/gray4"
+        app:layout_constraintEnd_toEndOf="@+id/fragmentAddNote_noteContents_rv"
+        app:layout_constraintStart_toStartOf="@+id/fragmentAddNote_noteContents_rv"
+        app:layout_constraintTop_toBottomOf="@id/addNoteFragment_noteTitle_til" />
+
+    <!--         ***********************************************             -->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fragmentAddNote_noteContents_rv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="16dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addNoteFragment_titleContentSeparetor_v" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+
+        android:background="@color/gray5"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <ImageView
+            android:id="@+id/addNoteFragment_addNoteContent_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/add_content_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <ImageView
+            android:id="@+id/addNoteFragment_addCheckBox_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/checklist_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/addNoteFragment_addNoteContent_iv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/addNoteFragment_attachFile_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/attach_file_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/addNoteFragment_addCheckBox_iv"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <ImageView
+            android:id="@+id/addNoteFragment_addAlarm_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/add_alarm_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/addNoteFragment_attachFile_iv"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <ImageView
+            android:id="@+id/addNoteFragment_setStyle_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/style_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/addNoteFragment_addAlarm_iv"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <ImageView
+            android:id="@+id/addNoteFragment_setColor_iv"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/color_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/addNoteFragment_setStyle_iv"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/addNoteFragment_colorBadge_siv"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+
+            android:background="@color/gray3"
+            app:shapeAppearanceOverlay="@style/Circular"
+
+            app:layout_constraintBottom_toTopOf="@+id/addNoteFragment_setColor_iv"
+            app:layout_constraintEnd_toEndOf="@+id/addNoteFragment_setColor_iv"
+            app:layout_constraintStart_toEndOf="@+id/addNoteFragment_setColor_iv"
+            app:layout_constraintTop_toTopOf="@+id/addNoteFragment_setColor_iv" />
+
+        <ImageView
+            android:id="@+id/addNoteFragment_done_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+
+            android:src="@drawable/done_icon"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

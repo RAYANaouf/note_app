@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.util.Base64
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.room.Database
 import androidx.room.Room
@@ -14,19 +13,22 @@ import com.example.notes_app.R
 import com.example.notes_app.modul.room_database.data_classes.Category
 import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.DAO.CategoryDAO
+import com.example.notes_app.modul.room_database.DAO.NoteContentDAO
 import com.example.notes_app.modul.room_database.DAO.NoteDAO
+import com.example.notes_app.modul.room_database.data_classes.NoteContent
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-@Database(entities = arrayOf(Category::class , Note::class) , version = 1 , exportSchema = false)
+@Database(entities = arrayOf(Category::class , Note::class , NoteContent::class) , version = 1 , exportSchema = false)
 abstract class MyDatabase: RoomDatabase() {
 
 
 
     abstract fun noteDAO():NoteDAO
     abstract fun categoryDAO():CategoryDAO
+    abstract fun noteContentDAO():NoteContentDAO
 
     companion object{
         // Singleton prevents multiple instances of database opening at the
@@ -50,7 +52,7 @@ abstract class MyDatabase: RoomDatabase() {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java,
-                        "note_databaseV15"
+                        "note_databaseV22"
                     ).addCallback(sRoomDatabaseCallback).build()
                 INSTANCE = instance
                 }

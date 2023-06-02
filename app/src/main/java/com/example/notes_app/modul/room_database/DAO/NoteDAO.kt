@@ -8,7 +8,7 @@ import com.example.notes_app.modul.room_database.data_classes.Note
 interface NoteDAO {
 
     @Insert
-    fun addNote(note: Note)
+    fun addNote(note: Note):Long
 
     @Delete
     fun deleteNote(note : Note)

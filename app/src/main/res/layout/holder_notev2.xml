@@ -13,30 +13,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <TextView
+            android:id="@+id/noteHolder_date_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+
+            android:text="mm/dd/yy"
+            android:textSize="10dp"
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/noteHolder_name_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:paddingBottom="5dp"
+            android:ellipsize="end"
 
             android:gravity="center_vertical"
             android:hint="here is the title "
             android:maxLength="15"
             android:maxLines="1"
 
+            android:paddingBottom="5dp"
             android:textColor="@color/gray10"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:ellipsize="end"
 
             app:layout_constraintBottom_toBottomOf="@+id/noteHolder_separator_v"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/noteHolder_menu_siv"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/noteHolder_date_tv" />
 
         <View
             android:id="@+id/noteHolder_separator_v"
@@ -80,13 +94,13 @@
             android:id="@+id/noteHolder_menu_siv"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:layout_marginTop="15dp"
 
             android:layout_marginRight="5dp"
 
             android:src="@drawable/chevron_down_3"
-            app:layout_constraintBottom_toBottomOf="@+id/noteHolder_name_tv"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/noteHolder_name_tv" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

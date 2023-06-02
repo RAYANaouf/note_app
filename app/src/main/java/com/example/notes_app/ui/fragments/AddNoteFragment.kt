@@ -1,19 +1,102 @@
 package com.example.notes_app.ui.fragments
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes_app.R
 import com.example.notes_app.databinding.FragmentAddNoteBinding
-import com.example.notes_app.ui.activities.OnClickNavigator
+import com.example.notes_app.modul.MyViewModel
+import com.example.notes_app.modul.room_database.data_classes.Note
+import com.example.notes_app.modul.room_database.data_classes.NoteContent
+import com.example.notes_app.recyclers.adapter.NoteContentAdapter
+import com.example.notes_app.recyclers.item_decoration.NoteContentDecoration
+import com.example.notes_app.ui.bottomSheet.ModalBottomSheet
+import com.example.notes_app.ui.dialog.AddTasksDialog
+import com.example.notes_app.ui.dialog.ImageViewer
+import com.example.notes_app.ui.interfaces.AddTaskInterface
+import com.example.notes_app.ui.interfaces.OnClickNavigator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import me.jfenn.colorpickerdialog.dialogs.ColorPickerDialog
+import me.jfenn.colorpickerdialog.interfaces.OnColorPickedListener
+import me.jfenn.colorpickerdialog.views.picker.ImagePickerView
+import java.util.*
 
-class AddNoteFragment : Fragment() {
 
-    private var cat_id: Int? = null
+class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<ColorPickerDialog> {
+
+    //binding view-model navigator(to get back into notes-fragment)
     private lateinit var binding : FragmentAddNoteBinding
+    private lateinit var m_viewModel : MyViewModel
+    private lateinit var m_navigator : OnClickNavigator
+
+
+    //cat_id arrayOfContent
+    private var cat_id: Int = 0
+    private lateinit var m_contents : ArrayList<NoteContent>
+    //calendar & date
+    private val m_calendar = Calendar.getInstance()
+    private val m_date     = "${m_calendar[Calendar.MONTH]+1}/${m_calendar[Calendar.DAY_OF_MONTH]}/${m_calendar[Calendar.YEAR]}"
+    //color
+    private var m_color = 0
+    //the adapter
+    private lateinit var m_adapter : NoteContentAdapter
+
+
+    //permission
+    private var external_storage_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if (it){
+            Toast.makeText(requireContext() , "read external storage is allowed " , Toast.LENGTH_LONG).show()
+            getContent.launch("image/*")
+        }else{
+            Toast.makeText(requireContext() , "cant access to your gallery (to get a picture)" , Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private var post_notification_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if (it){
+            Toast.makeText(requireContext() , "post notification is allowed " , Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(requireContext() , "the notification would appear " , Toast.LENGTH_LONG).show()
+        }
+    }
+
+    //get picture
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        if (uri != null) {
+            val imageStream = requireActivity().contentResolver.openInputStream(uri)
+            val imageData = imageStream?.readBytes()
+
+            if (imageData!=null){
+                val base64Image = android.util.Base64.encodeToString(imageData,android.util.Base64.DEFAULT)
+                m_adapter.addItem(NoteContent( type = 2 , cont = base64Image))
+            }
+
+        }
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnClickNavigator){
+            m_navigator = context
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +104,7 @@ class AddNoteFragment : Fragment() {
         arguments?.let {
             cat_id = it.getInt(ARG_CAT_ID)
         }
+
     }
 
     override fun onCreateView(
@@ -28,14 +112,134 @@ class AddNoteFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        //set up the view model
+        m_viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
         // set the binding
         binding = FragmentAddNoteBinding.inflate(inflater)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        m_contents = ArrayList()
+        //set adapters
+        var onClickListener = object : OnClickListener{
+            override fun OnCickImage(img : String) {
+                ImageViewer.newInstance(img).show(childFragmentManager,"")
+            }
+
+        }
+        m_adapter = NoteContentAdapter(m_contents , requireContext(),onClickListener)
+        binding.fragmentAddNoteNoteContentsRv.adapter = m_adapter
+        binding.fragmentAddNoteNoteContentsRv.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
+        binding.fragmentAddNoteNoteContentsRv.addItemDecoration(NoteContentDecoration(requireContext(),m_adapter))
+
+
+        //set time
+        binding.addNoteFragmentTimeTv.setText(m_date)
+
+        //set all onclicks
+        setAllOnclicks()
+    }
+
+
+    private fun setAllOnclicks(){
+
+        /*********************************************  done btn  *********************************************/
+        binding.addNoteFragmentDoneIv.setOnClickListener {
+
+            if (!check()){
+                Toast.makeText(requireContext() , "you forgot the title " , Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = "")).await()
+                var contents = m_adapter.get_all_item()
+
+                for (i in 0 until m_adapter.get_contentSize()){
+                    contents[i].note_id = noteId
+                    m_viewModel.addNoteContent( contents[i] )
+                }
+                m_navigator.onClick_to_notesFragment(cat_id)
+
+            }
+        }
+
+        /*********************************************  content btn  *********************************************/
+
+        binding.addNoteFragmentAddNoteContentIv.setOnClickListener {
+            m_adapter.addItem(NoteContent( type = 0  , cont = ""))
+        }
+
+
+        /*********************************************  checkbox btn  *********************************************/
+
+        binding.addNoteFragmentAddCheckBoxIv.setOnClickListener {
+            var addtasksDialog = AddTasksDialog.newInstance()
+            addtasksDialog.show(childFragmentManager , "")
+        }
+
+        /*********************************************  attach file  btn  *********************************************/
+
+        binding.addNoteFragmentAttachFileIv.setOnClickListener {
+
+            when{
+                ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ->{
+                    getContent.launch("image/*")
+                }
+                else->{
+                    external_storage_permission.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                }
+            }
+        }
+
+        /*********************************************  alarm   btn  *********************************************/
+
+        binding.addNoteFragmentAddAlarmIv.setOnClickListener {
+
+
+            when{
+                ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED ->{
+                    Toast.makeText(requireContext() , "post notification is allowed ", Toast.LENGTH_LONG).show()
+                }
+                else->{
+                    Toast.makeText(requireContext() , "the app need notification permission to post notification at the time " , Toast.LENGTH_LONG).show()
+                    post_notification_permission.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+
+            var bottomSheet = ModalBottomSheet()
+            bottomSheet.setStyle(DialogFragment.STYLE_NORMAL , R.style.ModalBottomSheetDialog)
+            bottomSheet.show(childFragmentManager , "")
+
+
+        }
+
+        binding.addNoteFragmentSetColorIv.setOnClickListener {
+            var colorPickerDialog = ColorPickerDialog()
+                .withColor(Color.BLUE)
+                .withListener(this)
+                .withPresets(Color.RED, Color.GREEN, Color.BLUE)
+                .withPicker(ImagePickerView::class.java)
+                .show(childFragmentManager , "color picker")
+
+
+
+        }
+    }
+
+
+
+    fun check():Boolean{
+
+        if (binding.addNoteFragmentNoteTitleTiet.text.toString()=="" ){
+            return false
+        }
+        return true
     }
 
     companion object {
@@ -47,4 +251,26 @@ class AddNoteFragment : Fragment() {
                 }
             }
     }
+
+    override fun addTask(text : String ) {
+        m_adapter.addItem(NoteContent(type = 1 , cont = "$text"))
+    }
+
+
+    interface OnClickListener{
+        fun OnCickImage(img : String)
+    }
+
+    override fun onColorPicked(pickerView: ColorPickerDialog?, color: Int) {
+     m_color = color
+
+        binding.addNoteFragmentTitlebarV.setBackgroundColor(m_color)
+        binding.addNoteFragmentTimeTv.setTextColor(m_color)
+        binding.addNoteFragmentColorBadgeSiv.setBackgroundColor(m_color)
+        var lighter_version = ColorUtils.blendARGB(color, Color.WHITE, 0.7f)
+        binding.addNoteFragmentTitleContentSeparetorV.setBackgroundColor(lighter_version)
+
+    }
+
+
 }

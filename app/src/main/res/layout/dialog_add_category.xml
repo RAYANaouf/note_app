@@ -13,7 +13,6 @@
 
         android:background="@drawable/dialog_add_category_shape"
 
-        android:paddingBottom="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,15 +21,18 @@
         <EditText
             android:id="@+id/addCategoryDialog_categoryTitle_tv"
             android:layout_width="0dp"
-
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginTop="80dp"
             android:layout_marginEnd="50dp"
+
+            android:inputType="textImeMultiLine"
             android:hint="the title of category"
             android:maxLines="1"
             android:textColor="@color/gray8"
             android:textColorHint="@color/gray6"
+
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -52,26 +54,70 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryTitle_tv" />
 
-        <Button
-            android:id="@+id/addCategoryDialog_add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="add"
-            app:layout_constraintEnd_toEndOf="@+id/addCategoryDialog_categoryDescription_tv"
+        <!-- **************************            separator              ***********************  -->
+
+        <View
+            android:id="@+id/contentButtonsSeparator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+
+            android:layout_marginTop="15dp"
+
+            android:background="@color/gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryDescription_tv" />
 
-        <Button
-            android:id="@+id/addCategoryDialog_cancel_btn"
+        <!-- ************************************************************************************  -->
+
+        <TextView
+            android:id="@+id/addCategoryDialog_cancel_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="cancel"
-            android:backgroundTint="@color/gray5"
+            android:layout_height="50dp"
+            app:layout_constrainedWidth="true"
 
-            app:layout_constraintBottom_toBottomOf="@+id/addCategoryDialog_add_btn"
-            app:layout_constraintStart_toStartOf="@+id/addCategoryDialog_categoryDescription_tv"
-            app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryDescription_tv" />
+            android:textColor="#FF0002"
+            android:text="Cancel"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
 
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contentButtonsSeparator"
+            app:layout_constraintWidth_percent="0.5" />
+
+
+        <!-- **************************            separator              ***********************  -->
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+
+            android:background="@color/gray3"
+
+            app:layout_constraintBottom_toBottomOf="@+id/addCategoryDialog_add_tv"
+            app:layout_constraintEnd_toStartOf="@+id/addCategoryDialog_add_tv"
+            app:layout_constraintStart_toEndOf="@+id/addCategoryDialog_cancel_tv"
+            app:layout_constraintTop_toBottomOf="@+id/contentButtonsSeparator" />
+
+        <!-- ************************************************************************************  -->
+
+        <TextView
+            android:id="@+id/addCategoryDialog_add_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            app:layout_constrainedWidth="true"
+
+            android:textColor="#0024FF"
+            android:text="Add"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+
+            app:layout_constraintStart_toEndOf="@+id/addCategoryDialog_cancel_tv"
+            app:layout_constraintTop_toBottomOf="@+id/contentButtonsSeparator"
+            app:layout_constraintWidth_percent="0.5" />
 
 
 

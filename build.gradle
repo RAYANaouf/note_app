@@ -2,6 +2,11 @@
 buildscript {
     ext.kotlin_version = '1.5.31'
 
+    repositories {
+        // Existing repositories...
+        maven { url 'https://jitpack.io' } // Add this line
+    }
+
 }
 plugins {
     id 'com.android.application' version '7.4.1' apply false

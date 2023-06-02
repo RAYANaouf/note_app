@@ -1,7 +1,8 @@
 essential 2 color of  icons :
-rgba(253, 0, 2, 1)   #FF0002
-rgba(0, 36,255,1)    #0024FF
+rgba(253, 0, 2, 1)   #FF0002  --> red
+rgba(0, 36,255,1)    #0024FF  --> blue
 
+main gray --> #EDEBEA
 
 pie chart #0024FF
           #5C17A4

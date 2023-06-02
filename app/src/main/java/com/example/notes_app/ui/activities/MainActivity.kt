@@ -1,21 +1,30 @@
 package com.example.notes_app.ui.activities
 
 import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.ActivityMainBinding
 import com.example.notes_app.modul.MyViewModel
+import com.example.notes_app.receivers.AlarmReceiver
 import com.example.notes_app.ui.dialog.AddCategoryDialogFragment
-import com.example.notes_app.ui.dialog.AddNoteDialogFragment
 import com.example.notes_app.ui.fragments.*
+import com.example.notes_app.ui.interfaces.DialogViewer
+import com.example.notes_app.ui.interfaces.OnClickNavigator
+import java.util.*
 
+
+const val ACTION_ALARM = "com.example.your_app.ACTION_ALARM"
 
 class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
@@ -35,6 +44,11 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //status bar color
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = Color.WHITE
+
         //set binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -48,7 +62,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         //set MainFragment
         setMainFragment()
 
-        
+
 
     }
     
@@ -122,8 +136,8 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
     //dialog viewer
     override fun add_note(cat_id: Int) {
-        var dialogFragment = AddNoteDialogFragment.newInstance(cat_id)
-        dialogFragment.show(supportFragmentManager,null)
+//        var dialogFragment = AddNoteDialogFragment.newInstance(cat_id)
+//        dialogFragment.show(supportFragmentManager,null)
     }
 
     override fun add_category() {
@@ -132,5 +146,3 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     }
 
 }
-
-

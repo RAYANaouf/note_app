@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.Category
-import com.example.notes_app.ui.activities.OnClickNavigator
 import com.google.android.material.imageview.ShapeableImageView
 
 class Categories_adaptes : RecyclerView.Adapter<Categories_adaptes.Holder> {
@@ -74,13 +73,11 @@ class Categories_adaptes : RecyclerView.Adapter<Categories_adaptes.Holder> {
         var shapeableImageView : ShapeableImageView
         var name : TextView
         var description : TextView
-        var amount : TextView
 
         constructor(itemView: View , adapter : Categories_adaptes) : super(itemView){
             shapeableImageView = itemView.findViewById(R.id.categoryHolder_logo)
             name = itemView.findViewById(R.id.categoryHolder_name)
             description = itemView.findViewById(R.id.categoryHolder_description)
-            amount = itemView.findViewById(R.id.categoryHolder_amount)
             this.m_adapter = adapter
             this.m_root = itemView
         }

@@ -22,7 +22,7 @@ import com.example.notes_app.R
 import com.example.notes_app.databinding.DialogAddCategoryBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.Category
-import com.example.notes_app.ui.activities.OnClickNavigator
+import com.example.notes_app.ui.interfaces.OnClickNavigator
 import java.io.ByteArrayOutputStream
 
 
@@ -93,19 +93,18 @@ class AddCategoryDialogFragment : DialogFragment() {
 
 
     fun setOnClicks(){
-        binding.addCategoryDialogCancelBtn.setOnClickListener {
+        binding.addCategoryDialogCancelTv.setOnClickListener {
             this.dialog?.dismiss()
         }
 
-        binding.addCategoryDialogAddBtn.setOnClickListener {
+        binding.addCategoryDialogAddTv.setOnClickListener {
             if (state == 1){
                 if (binding.addCategoryDialogCategoryTitleTv.text.toString().equals("") || binding.addCategoryDialogCategoryDescriptionTv.text.toString().equals("")){
                     //set the error icon change : icon + background
                     binding.addCategoryDialogAddImg.setImageResource(R.drawable.error_icon)
                     binding.addCategoryDialogAddImg.background=ColorDrawable(ContextCompat.getColor(requireContext() , R.color.white))
                     //change the button text and set the error text
-                    binding.addCategoryDialogAddBtn.setText("retry")
-                    binding.addCategoryDialogAddBtn.setBackgroundColor(ContextCompat.getColor(requireContext() , R.color.color2))
+                    binding.addCategoryDialogAddTv.setText("retry")
 
                     binding.addCategoryDialogHintTv.setText("set the title / description ")
                     state = 0
@@ -116,7 +115,7 @@ class AddCategoryDialogFragment : DialogFragment() {
 
                     //        var bitmap_drawable =  ContextCompat.getDrawable(baseContext , R.drawable.c0) as (BitmapDrawable)
                     var byteArrayOutputStream = ByteArrayOutputStream()
-                    bitmap_img.compress(Bitmap.CompressFormat.JPEG , 5 , byteArrayOutputStream)
+                    bitmap_img.compress(Bitmap.CompressFormat.JPEG , 25 , byteArrayOutputStream)
                     var byteArray = byteArrayOutputStream.toByteArray()
                     var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
                     m_viewModel.addCategory(Category(name=binding.addCategoryDialogCategoryTitleTv.text.toString() , description = binding.addCategoryDialogCategoryDescriptionTv.text.toString() , image = img_string ))
@@ -129,8 +128,7 @@ class AddCategoryDialogFragment : DialogFragment() {
                     binding.addCategoryDialogAddImg.setImageResource(R.drawable.add_icon)
                     binding.addCategoryDialogAddImg.background=ColorDrawable(ContextCompat.getColor(requireContext() , R.color.gray6))
                     //change the button text and set the error text
-                    binding.addCategoryDialogAddBtn.setText("add")
-                    binding.addCategoryDialogAddBtn.setBackgroundColor(ContextCompat.getColor(requireContext() , R.color.color1))
+                    binding.addCategoryDialogAddTv.setText("add")
 
                     binding.addCategoryDialogHintTv.setText("Add Category")
                     binding.addCategoryDialogHintTv.setTextColor(ContextCompat.getColor(requireContext() , R.color.gray8))
@@ -141,6 +139,7 @@ class AddCategoryDialogFragment : DialogFragment() {
 
         binding.addCategoryDialogAddImg.setOnClickListener {
 
+            state = 1
 
             when{
                 ContextCompat.checkSelfPermission(requireActivity().baseContext , Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ->{

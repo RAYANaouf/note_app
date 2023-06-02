@@ -45,17 +45,20 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
         var adapter : NotesAdapter
         var name : TextView
         var content : TextView
+        var date    : TextView
 
         constructor(itemView : View , adapter: NotesAdapter):super(itemView){
             this.root=itemView
             this.adapter=adapter
             this.name = itemView.findViewById(R.id.noteHolder_name_tv)
             this.content = root.findViewById(R.id.noteHolder_content_tv)
+            this.date    = root.findViewById(R.id.noteHolder_date_tv)
         }
 
         fun bind(position : Int){
             name.setText("${adapter.m_notes[position].title}")
             content.setText("${adapter.m_notes[position].content}")
+            date.setText("${adapter.m_notes[position].date}")
         }
 
     }

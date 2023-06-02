@@ -19,4 +19,22 @@
         <item name="strokeColor">@color/white</item>
         <item name="strokeWidth">5dp</item>
     </style>
+
+    <style name="ModalBottomSheetDialog" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
+    </style>
+
+    .Base_Theme_Material3_Light_BottomSheetDialog
+
+    <style name="ModalBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="background">@drawable/bottom_sheet_alarm</item>
+    </style>
+    
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+
+
+
+
 </resources>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetAddAlarm_container_coorl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        >
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bottom_sheet_alarm">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="30dp"
+
+                android:src="@drawable/slide_bar"
+                android:scaleType="centerCrop"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+
+                android:src="@drawable/add_alarm_blue"
+
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bottomSheetAddAlarm_time_til"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:boxBackgroundColor="@color/gray1"
+                app:hintTextColor="@color/gray3"
+
+
+
+                app:layout_constraintBottom_toTopOf="@+id/view6"
+                app:layout_constraintEnd_toStartOf="@+id/bottomSheetAddAlarm_date_til"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bottomSheetAddAlarm_time_tiet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:inputType="none"
+                    android:focusable="false"
+
+                    android:hint="time"
+                    android:text="HH/MM/SS"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bottomSheetAddAlarm_date_til"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:boxBackgroundColor="@color/gray1"
+
+                app:layout_constraintBottom_toTopOf="@+id/view6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/bottomSheetAddAlarm_time_til"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bottomSheetAddAlarm_date_tiet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:inputType="none"
+                    android:focusable="false"
+
+                    android:hint="date"
+                    android:text="MM/DD/YY"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--*******************     separator      ************************-->
+
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="0dp"
+
+                android:layout_height="2dp"
+
+                android:background="@color/gray3"
+                app:layout_constraintBottom_toTopOf="@+id/view4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <!--********************* *********************************************-->
+
+            <TextView
+                android:id="@+id/bottomSheetAddAlarm_cancel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+
+                android:text="Cancel"
+                android:textColor="#FF0002"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="2dp"
+
+                android:layout_height="0dp"
+
+                android:background="@color/gray3"
+                app:layout_constraintBottom_toBottomOf="@+id/bottomSheetAddAlarm_cancel_tv"
+                app:layout_constraintEnd_toEndOf="@+id/bottomSheetAddAlarm_cancel_tv"
+                app:layout_constraintStart_toEndOf="@+id/bottomSheetAddAlarm_cancel_tv"
+                app:layout_constraintTop_toTopOf="@+id/bottomSheetAddAlarm_cancel_tv" />
+
+            <TextView
+                android:id="@+id/bottomSheetAddAlarm_done_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:text="done"
+
+                android:textColor="#0024FF"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,16 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.notes_app.R
 import com.example.notes_app.databinding.FragmentMainBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.recyclers.adapter.Categories_adaptes
 import com.example.notes_app.recyclers.adapter.MainCategoriesAdapter
 import com.example.notes_app.recyclers.item_decoration.CategoryDecoration
 import com.example.notes_app.recyclers.item_decoration.MainCategoryDecoration
-import com.example.notes_app.ui.activities.OnClickNavigator
+import com.example.notes_app.ui.interfaces.OnClickNavigator
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -33,7 +36,8 @@ class MainFragment : Fragment() {
         if (context is OnClickNavigator){
             m_onClickNavigator = context
         }
-    }
+}
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,17 +75,19 @@ class MainFragment : Fragment() {
             }
         })
         binding.categoryRecycler.adapter = adapter
-        binding.categoryRecycler.layoutManager= LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+        binding.categoryRecycler.layoutManager= StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
 
 
         setPieChart()
+
 
     }
 
     fun setPieChart(){
 
         var list : ArrayList<PieEntry> = ArrayList()
+
 
 
 //        for (cat in m_categories){

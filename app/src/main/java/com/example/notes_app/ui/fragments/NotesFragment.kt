@@ -1,7 +1,6 @@
 package com.example.notes_app.ui.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,8 +13,8 @@ import com.example.notes_app.databinding.FragmentNotesBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.recyclers.adapter.NotesAdapter
 import com.example.notes_app.recyclers.item_decoration.NoteDecoration
-import com.example.notes_app.ui.activities.DialogViewer
-import com.example.notes_app.ui.activities.OnClickNavigator
+import com.example.notes_app.ui.interfaces.DialogViewer
+import com.example.notes_app.ui.interfaces.OnClickNavigator
 
 public const val ARG_CAT_ID="cat_id"
 

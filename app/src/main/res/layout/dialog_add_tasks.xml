@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp">
+
+    <ImageView
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:padding="5dp"
+
+        android:src="@drawable/task_list"
+        android:background="@drawable/add_list_task_dialog_icon__white_rounded_corner"
+
+        android:elevation="3dp"
+
+        android:outlineAmbientShadowColor="@android:color/transparent"
+        android:outlineSpotShadowColor="@android:color/transparent"
+
+        app:layout_constraintBottom_toTopOf="@+id/materialCardView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+
+        android:background="@color/white"
+        app:cardCornerRadius="16dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
+
+                android:src="@drawable/checkbox_1"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/addTaskDialog_taskText_et"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="40dp"
+                android:ems="10"
+
+                android:hint="Name"
+                android:inputType="text|textImeMultiLine"
+                android:maxLines="2"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <!-- **************************            separator              ***********************  -->
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="30dp"
+
+                android:background="@color/gray3"
+                app:layout_constraintBottom_toTopOf="@+id/view2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addTaskDialog_taskText_et" />
+
+            <!-- ************************************************************************************  -->
+
+            <TextView
+                android:id="@+id/addTaskDialog_cancel_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+
+
+                android:gravity="center"
+                android:text="Cancel"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#FF0002"
+                app:layout_constrainedWidth="true"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent="0.5" />
+
+
+            <!-- **************************            separator              ***********************  -->
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+
+                android:background="@color/gray3"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/addTaskDialog_add_tv"
+                app:layout_constraintStart_toEndOf="@+id/addTaskDialog_cancel_tv"
+                app:layout_constraintTop_toTopOf="@+id/addTaskDialog_cancel_tv" />
+
+            <!-- *************************************************************************************  -->
+
+            <TextView
+                android:id="@+id/addTaskDialog_add_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+
+                android:gravity="center"
+                android:text="Add "
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="#0024FF"
+
+                app:layout_constrainedWidth="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/addTaskDialog_cancel_tv"
+                app:layout_constraintWidth_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
