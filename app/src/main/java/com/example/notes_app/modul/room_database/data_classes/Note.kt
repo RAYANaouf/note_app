@@ -13,11 +13,17 @@ class Note {
     var date    : String
     var title   : String
     var content : String
+    var icon : Int
+    var color   : Int
+    var theme   : Int
 
-    constructor(id : Int = 0 , cat_id : Int  , date : String  = "MM/DD/YY", title : String , content : String ){
+    constructor(id : Int = 0 , cat_id : Int  , date : String  = "MM/DD/YY", color : Int = 0 , icon : Int=0 , theme : Int = 0,  title : String , content : String ){
         this.id      = id
         this.cat_id  = cat_id
         this.date    = date
+        this.color   = color
+        this.icon = icon
+        this.theme   = theme
         this.title   = title
         this.content = content
     }

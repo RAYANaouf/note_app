@@ -1,14 +1,19 @@
 package com.example.notes_app.recyclers.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.Note
+import com.google.android.material.card.MaterialCardView
+import com.google.android.material.imageview.ShapeableImageView
 import org.w3c.dom.Text
 
 class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
@@ -41,24 +46,35 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
 
     class Holder : RecyclerView.ViewHolder{
 
-        var root : View
+        var root : MaterialCardView
         var adapter : NotesAdapter
         var name : TextView
         var content : TextView
         var date    : TextView
+        var separator : View
+        var icon : ShapeableImageView
 
         constructor(itemView : View , adapter: NotesAdapter):super(itemView){
-            this.root=itemView
-            this.adapter=adapter
-            this.name = itemView.findViewById(R.id.noteHolder_name_tv)
-            this.content = root.findViewById(R.id.noteHolder_content_tv)
-            this.date    = root.findViewById(R.id.noteHolder_date_tv)
+            this.root=itemView.findViewById(R.id.noteHolder_root_mcv)
+            this.adapter   =adapter
+            this.name      = itemView.findViewById(R.id.noteHolder_name_tv)
+            this.content   = root.findViewById(R.id.noteHolder_content_tv)
+            this.date      = root.findViewById(R.id.noteHolder_date_tv)
+            this.separator = root.findViewById(R.id.noteHolder_separator_v)
+            this.icon      = root.findViewById(R.id.noteHolder_icon_siv)
         }
 
         fun bind(position : Int){
             name.setText("${adapter.m_notes[position].title}")
             content.setText("${adapter.m_notes[position].content}")
             date.setText("${adapter.m_notes[position].date}")
+            root.setStrokeColor(adapter.m_notes[position].color)
+
+            var lighter_version = ColorUtils.blendARGB(adapter.m_notes[position].color, Color.WHITE, 0.7f)
+
+            separator.setBackgroundColor(lighter_version)
+
+            icon.setImageResource(adapter.m_notes[position].icon)
         }
 
     }

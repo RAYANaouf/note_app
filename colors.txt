@@ -1,6 +1,8 @@
 essential 2 color of  icons :
 rgba(253, 0, 2, 1)   #FF0002  --> red
 rgba(0, 36,255,1)    #0024FF  --> blue
+rgba(36,234,144,1) #24EA90 --> green (alt blue)
+
 
 main gray --> #EDEBEA
 

@@ -52,7 +52,7 @@ abstract class MyDatabase: RoomDatabase() {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java,
-                        "note_databaseV22"
+                        "note_databaseV25"
                     ).addCallback(sRoomDatabaseCallback).build()
                 INSTANCE = instance
                 }

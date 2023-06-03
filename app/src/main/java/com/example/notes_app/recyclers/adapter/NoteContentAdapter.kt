@@ -8,7 +8,9 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -40,20 +42,13 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
 
-        if (viewType<0){
-            var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_add_note_content,null,false)
+        if(viewType == -1){
+            var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_des_note_content,null,false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-            var viewholder = AddHoldre(view , this)
-
-            viewholder.view.setOnClickListener {
-
-                this.addItem(NoteContent( type = 0 ,  cont = ""))
-            }
-
+            var viewholder = DesHoldre(view , this)
             return viewholder
         }
-
-        else if(viewType == 0 ) {
+        if(viewType == 0 ) {
             var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_note_content_text,null,false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
             var viewholder = TextHolder(view , this)
@@ -76,24 +71,18 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /*******************         to get the count           ********************/
 
     override fun getItemCount(): Int {
-        if (contents.size == 0){
-            return 1
-        }
-        else {
-            return contents.size
-        }
-
-    }
-
-    public fun get_contentSize():Int{
         return contents.size
+
     }
 
 
     /********************           on bind method             ********************/
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        if (holder is TextHolder){
+        if(holder is DesHoldre){
+            holder.bind(position)
+        }
+        else if (holder is TextHolder){
             holder.text.setText(contents[position].cont)
             var textWatcher = object : TextWatcher{
                 override fun beforeTextChanged(
@@ -136,12 +125,7 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     /*******************         set the view type         ********************/
     override fun getItemViewType(position: Int): Int {
-        if(contents.size==0){
-            return -1
-        }
-        else{
-            return contents[position].type
-        }
+        return contents[position].type
 
     }
 
@@ -180,12 +164,16 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     /*******************         the holder inner class         ********************/
-    class AddHoldre : RecyclerView.ViewHolder{
-        var view : ConstraintLayout
+    class DesHoldre : RecyclerView.ViewHolder{
+        var des : EditText
         var adapter : NoteContentAdapter
         constructor(itemView : View , adapter : NoteContentAdapter):super(itemView){
-            view = itemView.findViewById<ConstraintLayout>(R.id.addNoteContentHolder_addContent_cl)
+            des = itemView.findViewById(R.id.holderDesNoteContent_des_tv)
             this.adapter =adapter
+        }
+
+        fun bind(pos : Int){
+            des.setText(adapter.contents[pos].cont)
         }
     }
 

@@ -24,7 +24,7 @@ class NoteContentDecoration: RecyclerView.ItemDecoration {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        if(m_adapter.get_contentSize() == 0){
+        if(m_adapter.getItemCount() == 0){
             outRect.left = dpToPx(30f)
             outRect.right = dpToPx(30f)
             outRect.top   = dpToPx(10f)

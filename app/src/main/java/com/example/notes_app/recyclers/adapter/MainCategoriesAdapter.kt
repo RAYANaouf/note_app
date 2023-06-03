@@ -83,14 +83,10 @@ class MainCategoriesAdapter : RecyclerView.Adapter<MainCategoriesAdapter.Holder>
     fun getCategories(){
         m_viewModul.getAllCategories().observe(m_owner){
             m_mainCategories = ArrayList()
-
-            if (it.size>=3){
-                for (i in 0 .. 3-1){
-                    m_mainCategories.add(it[i])
-                }
-                notifyDataSetChanged()
+            for (i in 0 until it.size){
+                m_mainCategories.add(it[i])
             }
-
+            notifyDataSetChanged()
         }
     }
 

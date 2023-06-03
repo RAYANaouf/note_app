@@ -13,8 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="12dp"
-        android:text=" 5 : 26 : 2023"
+        android:text=" mm : dd : yy"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/addNoteFragment_emoji_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+
+        android:src="@drawable/emoji1"
+
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -103,7 +115,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
 
         android:background="@color/gray5"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -112,8 +124,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_addNoteContent_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/add_content_icon"
@@ -126,8 +138,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_addCheckBox_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/checklist_icon"
@@ -138,8 +150,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_attachFile_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/attach_file_icon"
@@ -147,13 +159,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/addNoteFragment_addCheckBox_iv"
             app:layout_constraintTop_toTopOf="parent"
-
             />
 
         <ImageView
             android:id="@+id/addNoteFragment_addAlarm_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/add_alarm_icon"
@@ -166,8 +177,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_setStyle_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/style_icon"
@@ -180,8 +191,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_setColor_iv"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/color_icon"
@@ -194,8 +205,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/addNoteFragment_colorBadge_siv"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
 
             android:background="@color/gray3"
             app:shapeAppearanceOverlay="@style/Circular"
@@ -207,9 +218,11 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_done_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginEnd="10dp"
+
 
             android:src="@drawable/done_icon"
 

@@ -24,8 +24,6 @@
         <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
     </style>
 
-    .Base_Theme_Material3_Light_BottomSheetDialog
-
     <style name="ModalBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
         <item name="background">@drawable/bottom_sheet_alarm</item>
     </style>
@@ -33,6 +31,8 @@
     <style name="Circular">
         <item name="cornerSize">50%</item>
     </style>
+
+
 
 
 

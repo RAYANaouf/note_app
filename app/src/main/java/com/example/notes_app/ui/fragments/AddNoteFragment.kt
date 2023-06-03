@@ -25,6 +25,7 @@ import com.example.notes_app.modul.room_database.data_classes.NoteContent
 import com.example.notes_app.recyclers.adapter.NoteContentAdapter
 import com.example.notes_app.recyclers.item_decoration.NoteContentDecoration
 import com.example.notes_app.ui.bottomSheet.ModalBottomSheet
+import com.example.notes_app.ui.dialog.AddEmojiDialog
 import com.example.notes_app.ui.dialog.AddTasksDialog
 import com.example.notes_app.ui.dialog.ImageViewer
 import com.example.notes_app.ui.interfaces.AddTaskInterface
@@ -38,7 +39,7 @@ import me.jfenn.colorpickerdialog.views.picker.ImagePickerView
 import java.util.*
 
 
-class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<ColorPickerDialog> {
+class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<ColorPickerDialog> , SetEmoji {
 
     //binding view-model navigator(to get back into notes-fragment)
     private lateinit var binding : FragmentAddNoteBinding
@@ -52,8 +53,9 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     //calendar & date
     private val m_calendar = Calendar.getInstance()
     private val m_date     = "${m_calendar[Calendar.MONTH]+1}/${m_calendar[Calendar.DAY_OF_MONTH]}/${m_calendar[Calendar.YEAR]}"
-    //color
+    //color && icon
     private var m_color = 0
+    private var m_icon = 0
     //the adapter
     private lateinit var m_adapter : NoteContentAdapter
 
@@ -89,8 +91,6 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
         }
     }
-
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnClickNavigator){
@@ -125,6 +125,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
         super.onViewCreated(view, savedInstanceState)
 
         m_contents = ArrayList()
+        m_contents.add(NoteContent(type = 0 , cont = ""))
         //set adapters
         var onClickListener = object : OnClickListener{
             override fun OnCickImage(img : String) {
@@ -157,10 +158,10 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
             }
 
             CoroutineScope(Dispatchers.IO).launch {
-                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = "")).await()
+                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = "")).await()
                 var contents = m_adapter.get_all_item()
 
-                for (i in 0 until m_adapter.get_contentSize()){
+                for (i in 0 until m_adapter.getItemCount()){
                     contents[i].note_id = noteId
                     m_viewModel.addNoteContent( contents[i] )
                 }
@@ -230,6 +231,10 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
 
         }
+
+        binding.addNoteFragmentEmojiIv.setOnClickListener {
+            AddEmojiDialog.nesInstance(this).show(childFragmentManager , "emoji")
+        }
     }
 
 
@@ -257,10 +262,6 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     }
 
 
-    interface OnClickListener{
-        fun OnCickImage(img : String)
-    }
-
     override fun onColorPicked(pickerView: ColorPickerDialog?, color: Int) {
      m_color = color
 
@@ -272,5 +273,19 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
     }
 
+    interface OnClickListener{
+        fun OnCickImage(img : String)
+    }
 
+    override fun onSet(res: Int) {
+        binding.addNoteFragmentEmojiIv.setImageResource(res)
+        m_icon = res
+    }
+
+
+}
+
+
+interface SetEmoji{
+    fun onSet(res:Int)
 }

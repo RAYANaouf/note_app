@@ -1,27 +1,24 @@
 package com.example.notes_app.ui.activities
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.databinding.ActivityMainBinding
 import com.example.notes_app.modul.MyViewModel
-import com.example.notes_app.receivers.AlarmReceiver
 import com.example.notes_app.ui.dialog.AddCategoryDialogFragment
 import com.example.notes_app.ui.fragments.*
 import com.example.notes_app.ui.interfaces.DialogViewer
 import com.example.notes_app.ui.interfaces.OnClickNavigator
-import java.util.*
 
 
 const val ACTION_ALARM = "com.example.your_app.ACTION_ALARM"
@@ -45,9 +42,18 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //status bar color
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = Color.WHITE
+
+        // Set status bar color and icon color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val window = window
+            window.statusBarColor = Color.TRANSPARENT
+
+            // Set status bar icons to be light (dark icons)
+            val decorView = window.decorView
+            var flags = decorView.systemUiVisibility
+            flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            decorView.systemUiVisibility = flags
+        }
 
         //set binding
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,6 +67,12 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
         //set MainFragment
         setMainFragment()
+
+        //set the drawer && navigator
+        drawer_navigator_setUp()
+
+        //set onclicks
+        setOnClicks()
 
 
 
@@ -76,9 +88,19 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     fun setMainFragment(){
         var fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance())
-            .addToBackStack(null)
         fragmentTransaction.commit()
 
+    }
+
+    fun drawer_navigator_setUp(){
+        binding.mainActivityNavigatorNv.itemIconTintList = null
+    }
+
+
+    fun setOnClicks(){
+        binding.mainActivityAccountIv.setOnClickListener {
+            binding.mainActivityDrawerDl.openDrawer(GravityCompat.START)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -119,26 +141,19 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     override fun onClick_to_notesFragment(cat_id : Int) {
         var fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container , NotesFragment.newInstance(cat_id))
-            .addToBackStack(null)
+            .addToBackStack("notes")
             .commit()
     }
 
     override fun onClick_to_addNoteFragment(cat_id : Int) {
         var fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container , AddNoteFragment.newInstance(cat_id))
-            .addToBackStack(null)
+            .addToBackStack("add")
             .commit()
-
-//        var dialogFragment = AddNoteDialogFragment.newInstance(cat_id)
-//        dialogFragment.show(supportFragmentManager , null)
     }
 
 
     //dialog viewer
-    override fun add_note(cat_id: Int) {
-//        var dialogFragment = AddNoteDialogFragment.newInstance(cat_id)
-//        dialogFragment.show(supportFragmentManager,null)
-    }
 
     override fun add_category() {
         var dialogFragment = AddCategoryDialogFragment.newInstance()

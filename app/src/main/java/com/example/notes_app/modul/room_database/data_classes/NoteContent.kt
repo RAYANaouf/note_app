@@ -15,7 +15,7 @@ class NoteContent {
     var glonal_count : Int
     var cont : String
 
-    constructor(id : Int = 0  , note_id : Long = 0 ,type : Int , type_count : Int = 0 , glonal_count : Int =0 , cont:String){
+    constructor(id : Int = 0  , note_id : Long = 0 ,type : Int , type_count : Int = 0 , glonal_count : Int =0 , cont:String = ""){
         this.id = id
         this.note_id = note_id
         this.type = type

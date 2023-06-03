@@ -12,7 +12,7 @@
 
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:textColorHint="@color/gray5"
-        app:boxStrokeColor="@color/gray5"
+        app:boxBackgroundMode="none"
         app:hintTextColor="@color/gray5"
 
         app:layout_constraintBottom_toBottomOf="parent"

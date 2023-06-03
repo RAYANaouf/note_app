@@ -2,12 +2,12 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/noteHolder_root"
+    android:id="@+id/noteHolder_root_mcv"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
     app:strokeColor="@color/gray6"
-    app:strokeWidth="0dp">
+    app:strokeWidth="1.7dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -91,7 +91,7 @@
 
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/noteHolder_menu_siv"
+            android:id="@+id/noteHolder_icon_siv"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginTop="15dp"

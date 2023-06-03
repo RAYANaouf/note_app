@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="profile">
+        <menu >
+            <item android:title="Home"
+                android:icon="@drawable/home"/>
+            <item android:title="task"
+                android:icon="@drawable/checked_task"/>
+            <item android:title="Calendar"
+                android:icon="@drawable/calendar"/>
+        </menu>
+    </item>
+
+    <item android:title="tools">
+        <menu>
+            <item android:title="AI Assists"
+                android:icon="@drawable/ai"/>
+        </menu>
+    </item>
+    <item android:title="other">
+        <menu>
+            <item android:title="theme"
+                android:icon="@drawable/theme"/>
+            <item android:title="contact us"
+                android:icon="@drawable/contact"/>
+            <item android:title="about us"
+                android:icon="@drawable/about_us"/>
+        </menu>
+    </item>
+
+</menu>
