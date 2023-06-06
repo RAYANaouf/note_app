@@ -15,13 +15,15 @@ import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.DAO.CategoryDAO
 import com.example.notes_app.modul.room_database.DAO.NoteContentDAO
 import com.example.notes_app.modul.room_database.DAO.NoteDAO
+import com.example.notes_app.modul.room_database.DAO.UserDAO
 import com.example.notes_app.modul.room_database.data_classes.NoteContent
+import com.example.notes_app.modul.room_database.data_classes.User
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-@Database(entities = arrayOf(Category::class , Note::class , NoteContent::class) , version = 1 , exportSchema = false)
+@Database(entities = arrayOf(Category::class , Note::class , NoteContent::class , User::class) , version = 1 , exportSchema = false)
 abstract class MyDatabase: RoomDatabase() {
 
 
@@ -29,6 +31,7 @@ abstract class MyDatabase: RoomDatabase() {
     abstract fun noteDAO():NoteDAO
     abstract fun categoryDAO():CategoryDAO
     abstract fun noteContentDAO():NoteContentDAO
+    abstract fun UserDAO(): UserDAO
 
     companion object{
         // Singleton prevents multiple instances of database opening at the
@@ -52,7 +55,7 @@ abstract class MyDatabase: RoomDatabase() {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java,
-                        "note_databaseV25"
+                        "note_databaseV30"
                     ).addCallback(sRoomDatabaseCallback).build()
                 INSTANCE = instance
                 }

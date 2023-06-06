@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.notes_app.modul.room_database.data_classes.Category
 import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.data_classes.NoteContent
+import com.example.notes_app.modul.room_database.data_classes.User
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -80,6 +81,17 @@ class MyViewModel : AndroidViewModel {
 
     fun getAllNoteContents(noteId : Int): LiveData<List<NoteContent>>{
         return m_repo.getAllNoteContents(noteId)
+    }
+
+    suspend fun getUserByEmail( userEmail : String): User {
+        var user = GlobalScope.async {
+            m_repo.getUserByMail(userEmail)
+        }.await()
+        return user;
+    }
+
+    fun addUser(user : User){
+        m_repo.addUser(user)
     }
 
 

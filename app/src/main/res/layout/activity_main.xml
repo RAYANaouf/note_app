@@ -14,7 +14,7 @@
         android:id="@+id/mainActivity_drawer_cordl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
+
         >
 
         <com.google.android.material.appbar.AppBarLayout
@@ -39,11 +39,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <ImageView
-                            android:id="@+id/mainActivity_account_iv"
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/mainActivity_account_siv"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
                             android:src="@drawable/user"
+                            app:shapeAppearanceOverlay="@style/Circular"
                             android:layout_marginStart="20dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

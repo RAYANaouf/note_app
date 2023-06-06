@@ -42,13 +42,13 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
 
-        if(viewType == -1){
+        if(viewType == 0){
             var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_des_note_content,null,false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
             var viewholder = DesHoldre(view , this)
             return viewholder
         }
-        if(viewType == 0 ) {
+        else if(viewType == -1 ) {
             var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_note_content_text,null,false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
             var viewholder = TextHolder(view , this)
@@ -81,27 +81,10 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         if(holder is DesHoldre){
             holder.bind(position)
+
         }
         else if (holder is TextHolder){
-            holder.text.setText(contents[position].cont)
-            var textWatcher = object : TextWatcher{
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-
-                }
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    contents[holder.adapterPosition].cont=s.toString()
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-
-            }
-            holder.text.addTextChangedListener (textWatcher)
+            holder.bind(position)
         }
 
         else if (holder is CheckboxHolder){
@@ -126,7 +109,6 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     /*******************         set the view type         ********************/
     override fun getItemViewType(position: Int): Int {
         return contents[position].type
-
     }
 
     /***********************  my functions  ***********************************/
@@ -173,7 +155,32 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         fun bind(pos : Int){
+
             des.setText(adapter.contents[pos].cont)
+            if (adapter.contents[pos].cont=="" && pos>0){
+                des.hint = "sent : $pos"
+            }
+
+            var textWatcher = object : TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    adapter.contents[adapterPosition].cont=s.toString()
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+            }
+            des.removeTextChangedListener(textWatcher)
+            des.addTextChangedListener (textWatcher)
+
         }
     }
 
@@ -183,6 +190,39 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         constructor(itemView : View , adapter : NoteContentAdapter):super(itemView){
             text = itemView.findViewById(R.id.noteContentTextHolder_text_tiet)
             this.adapter =adapter
+        }
+
+        fun bind(pos :Int){
+
+
+            if(adapter.contents[pos].cont==""){
+                text.hint = "sentences : $pos"
+            }else{
+                text.setText(adapter.contents[pos].cont)
+            }
+
+
+            var textWatcher = object : TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    adapter.contents[adapterPosition].cont=s.toString()
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+            }
+            text.addTextChangedListener (textWatcher)
+
+
+
         }
     }
 

@@ -3,18 +3,21 @@
 
     <item android:title="profile">
         <menu >
-            <item android:title="Home"
+            <item android:id="@+id/navMenu_home"
+                android:title="Home"
                 android:icon="@drawable/home"/>
             <item android:title="task"
                 android:icon="@drawable/checked_task"/>
-            <item android:title="Calendar"
+            <item android:id="@+id/navMenu_calendar"
+                android:title="Calendar"
                 android:icon="@drawable/calendar"/>
         </menu>
     </item>
 
     <item android:title="tools">
         <menu>
-            <item android:title="AI Assists"
+            <item android:id="@+id/navMenu_AI"
+                android:title="AI Assists"
                 android:icon="@drawable/ai"/>
         </menu>
     </item>

@@ -28,6 +28,7 @@ import com.example.notes_app.ui.bottomSheet.ModalBottomSheet
 import com.example.notes_app.ui.dialog.AddEmojiDialog
 import com.example.notes_app.ui.dialog.AddTasksDialog
 import com.example.notes_app.ui.dialog.ImageViewer
+import com.example.notes_app.ui.dialog.ThemeDialog
 import com.example.notes_app.ui.interfaces.AddTaskInterface
 import com.example.notes_app.ui.interfaces.OnClickNavigator
 import kotlinx.coroutines.CoroutineScope
@@ -53,12 +54,21 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     //calendar & date
     private val m_calendar = Calendar.getInstance()
     private val m_date     = "${m_calendar[Calendar.MONTH]+1}/${m_calendar[Calendar.DAY_OF_MONTH]}/${m_calendar[Calendar.YEAR]}"
-    //color && icon
+    //color && icon && content
     private var m_color = 0
-    private var m_icon = 0
+    private var m_icon = R.drawable.emoji4
+    private var m_cont = ""
     //the adapter
     private lateinit var m_adapter : NoteContentAdapter
 
+    /******************  activity  lanchers   *************************/
+    private var post_notification_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
+        if (it){
+            Toast.makeText(requireContext() , "post notification is allowed " , Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(requireContext() , "the notification would appear " , Toast.LENGTH_LONG).show()
+        }
+    }
 
     //permission
     private var external_storage_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -67,14 +77,6 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
             getContent.launch("image/*")
         }else{
             Toast.makeText(requireContext() , "cant access to your gallery (to get a picture)" , Toast.LENGTH_LONG).show()
-        }
-    }
-
-    private var post_notification_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
-        if (it){
-            Toast.makeText(requireContext() , "post notification is allowed " , Toast.LENGTH_LONG).show()
-        }else{
-            Toast.makeText(requireContext() , "the notification would appear " , Toast.LENGTH_LONG).show()
         }
     }
 
@@ -91,6 +93,10 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
         }
     }
+
+    /********************************************************************************/
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnClickNavigator){
@@ -131,7 +137,6 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
             override fun OnCickImage(img : String) {
                 ImageViewer.newInstance(img).show(childFragmentManager,"")
             }
-
         }
         m_adapter = NoteContentAdapter(m_contents , requireContext(),onClickListener)
         binding.fragmentAddNoteNoteContentsRv.adapter = m_adapter
@@ -157,15 +162,20 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
                 return@setOnClickListener
             }
 
+
             CoroutineScope(Dispatchers.IO).launch {
-                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = "")).await()
                 var contents = m_adapter.get_all_item()
+                m_cont = contents[0].cont
+
+                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = m_cont)).await()
+
 
                 for (i in 0 until m_adapter.getItemCount()){
                     contents[i].note_id = noteId
                     m_viewModel.addNoteContent( contents[i] )
                 }
-                m_navigator.onClick_to_notesFragment(cat_id)
+
+                requireActivity().supportFragmentManager.popBackStack()
 
             }
         }
@@ -220,6 +230,8 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
         }
 
+        /*********************************************  color   btn  *********************************************/
+
         binding.addNoteFragmentSetColorIv.setOnClickListener {
             var colorPickerDialog = ColorPickerDialog()
                 .withColor(Color.BLUE)
@@ -232,8 +244,17 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
         }
 
+        /*********************************************  emoji   btn  *********************************************/
+
+
         binding.addNoteFragmentEmojiIv.setOnClickListener {
             AddEmojiDialog.nesInstance(this).show(childFragmentManager , "emoji")
+        }
+
+        /*********************************************  theme   btn  *********************************************/
+
+        binding.addNoteFragmentSetStyleIv.setOnClickListener {
+            ThemeDialog.newInstance().show(childFragmentManager,"themeDialog")
         }
     }
 

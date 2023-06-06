@@ -15,19 +15,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0.8"
+        android:alpha="0.9"
         app:shapeAppearanceOverlay="@style/background_style_img" />
 
-<!--    <com.google.android.material.imageview.ShapeableImageView-->
-<!--        android:id="@+id/MainFragment_account"-->
-<!--        android:layout_width="65dp"-->
-<!--        android:layout_height="65dp"-->
-<!--        android:src="@drawable/user"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/MainFragment_background"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.33999997" />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_pieChart_container"
@@ -45,8 +35,12 @@
             android:id="@+id/main_pieChart"
             android:layout_width="160dp"
             android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050000012" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -57,7 +51,7 @@
         android:layout_marginTop="20dp"
         android:paddingStart="15dp"
 
-        android:text="main categories"
+        android:text="best days"
         android:textColor="@color/gray8"
         android:textSize="16dp"
         android:textStyle="bold"
@@ -85,7 +79,7 @@
         android:layout_marginTop="15dp"
         android:paddingStart="15dp"
 
-        android:text="custom category"
+        android:text="my daily notes"
         android:textSize="16dp"
         android:textStyle="bold"
         android:textColor="@color/gray8"

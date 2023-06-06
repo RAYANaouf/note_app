@@ -15,6 +15,7 @@ import com.example.notes_app.R
 import com.example.notes_app.databinding.FragmentMainBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.recyclers.adapter.Categories_adaptes
+import com.example.notes_app.recyclers.adapter.DailyAdapter
 import com.example.notes_app.recyclers.adapter.MainCategoriesAdapter
 import com.example.notes_app.recyclers.item_decoration.CategoryDecoration
 import com.example.notes_app.recyclers.item_decoration.MainCategoryDecoration
@@ -69,18 +70,29 @@ class MainFragment : Fragment() {
 
 
         //set the category adapter
-        var adapter = Categories_adaptes(this, m_viewModel , object : Categories_adaptes.OnClickListener{
-            override fun onClick_category(cat_id: Int) {
-                m_onClickNavigator.onClick_to_notesFragment(cat_id)
+//        var adapter = Categories_adaptes(this, m_viewModel , object : Categories_adaptes.OnClickListener{
+//            override fun onClick_category(cat_id: Int) {
+//                m_onClickNavigator.onClick_to_notesFragment(cat_id)
+//            }
+//        })
+        var adapter = DailyAdapter(object : DailyAdapterListener{
+            override fun onClick() {
+                m_onClickNavigator.onClick_to_addNoteFragment(0)
             }
+
         })
+
         binding.categoryRecycler.adapter = adapter
-        binding.categoryRecycler.layoutManager= StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
+        binding.categoryRecycler.layoutManager= LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
+//        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
 
 
         setPieChart()
 
+
+    }
+
+    fun setUserData(){
 
     }
 
@@ -164,9 +176,15 @@ class MainFragment : Fragment() {
         }
     }
 
+
+
     companion object {
         @JvmStatic
         fun newInstance() = MainFragment()
+    }
+
+    interface DailyAdapterListener{
+        fun onClick()
     }
 
 
