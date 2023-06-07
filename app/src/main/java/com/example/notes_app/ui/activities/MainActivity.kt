@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
                 var img_string = m_user.photo
                 var img_byteArray = Base64.decode(img_string , Base64.DEFAULT)
                 var img_bitmap = BitmapFactory.decodeByteArray(img_byteArray , 0 , img_byteArray.size)
-                binding.mainActivityAccountIv.setImageBitmap(img_bitmap)
+                binding.mainActivityAccountSiv.setImageBitmap(img_bitmap)
             }
         }
     }

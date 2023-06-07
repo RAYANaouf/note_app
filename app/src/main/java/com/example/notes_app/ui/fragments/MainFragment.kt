@@ -107,19 +107,18 @@ class MainFragment : Fragment() {
 //        }
         //charge the list
 
-        list.add(PieEntry(100f,"goal"))
-        list.add(PieEntry(89f,"to do"))
-        list.add(PieEntry(20f,"to learn"))
-        list.add(PieEntry(50f,"to build"))
-        list.add(PieEntry(35f,"else"))
+
+        list.add(PieEntry(100f,"spring"))
+        list.add(PieEntry(89f,"summer"))
+        list.add(PieEntry(20f,"Autumn"))
+        list.add(PieEntry(50f,"winter"))
 
         //creat the pieDataSet
-        var pieDataset = PieDataSet(list,"list")
+        var pieDataset = PieDataSet(list,"")
 
         //set colors to the pie chart  ==> two steps (2)
         //1. create a list of colors
         var colors = listOf(Color.parseColor("#0024FF"),
-            Color.parseColor("#5C17A4"),
             Color.parseColor("#81127F"),
             Color.parseColor("#C1093F"),
             Color.parseColor("#FD0004"),
