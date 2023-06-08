@@ -82,8 +82,8 @@ class LogginActivity : AppCompatActivity() {
                         m_binding.progressBar.visibility=View.INVISIBLE
                         m_binding.logginActivityNextBtn.visibility=View.VISIBLE
                     }else{
+                        m_connHandler.connecting(m_binding.logginActivityUserMailTiet.text.toString())
                         var intent = Intent(baseContext,MainActivity::class.java)
-                        intent.putExtra("email",user.email)
                         startActivity(intent)
                         finish()
                     }

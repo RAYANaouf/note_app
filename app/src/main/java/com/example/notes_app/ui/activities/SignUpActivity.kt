@@ -3,6 +3,8 @@ package com.example.notes_app.ui.activities
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -19,6 +21,7 @@ import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.NoteContent
 import com.example.notes_app.modul.room_database.data_classes.User
 import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -49,6 +52,10 @@ class SignUpActivity : AppCompatActivity() {
             val imageData = imageStream?.readBytes()
 
             if (imageData!=null){
+//                var imageBitmap = BitmapFactory.decodeByteArray(imageData , 0 , imageData.size)
+//                var imageByteArrayOutputStream = ByteArrayOutputStream()
+//                imageBitmap.compress(Bitmap.CompressFormat.PNG , 20 , imageByteArrayOutputStream)
+//                var imageByteArray = imageByteArrayOutputStream.toByteArray()
                 val base64Image = android.util.Base64.encodeToString(imageData,android.util.Base64.DEFAULT)
                 m_photo = base64Image
             }
@@ -110,6 +117,7 @@ class SignUpActivity : AppCompatActivity() {
 
             var intent  = Intent (applicationContext , MainActivity::class.java)
             startActivity(intent)
+            finish()
 
         }
 
@@ -143,6 +151,10 @@ class SignUpActivity : AppCompatActivity() {
         }
         else if (m_binding.SignUpActivityPasswordTiet.editableText.length < 8){
             Toast.makeText(this,"your password should be more that 8 characters" , Toast.LENGTH_LONG).show()
+            return false
+        }
+        else if(m_photo==""){
+            Toast.makeText(this,"enter an image " , Toast.LENGTH_LONG).show()
             return false
         }
 

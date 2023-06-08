@@ -36,9 +36,8 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
     //accounts handler
     private lateinit var m_accountHandler : RegesterHandler
-    //user email
+    //user email    && user  (get the user using email)
     private  var m_email = ""
-    //get the user using email
     private lateinit var m_user : User
 
 
@@ -66,8 +65,10 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             var intent = Intent(applicationContext , LogginActivity::class.java)
             startActivity(intent)
             finish()
-            return
-            Toast.makeText(applicationContext , "owwowwoww finish hem " , Toast.LENGTH_LONG).show()
+            return@onCreate
+        }else{
+            //set the email
+            m_email = m_accountHandler.conn_user()
         }
         /************************************************/
 
@@ -77,9 +78,6 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
         //set view model
         m_viewModul = ViewModelProvider(this).get(MyViewModel::class.java)
-
-        //set the email
-        m_email = m_accountHandler.conn_user()
 
 
         //set toolbar
@@ -119,14 +117,6 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             m_user =  async {
                 m_viewModul.getUserByEmail(m_email)
             }.await()
-
-            withContext(Dispatchers.Main){
-
-            }
-            if (m_user==null)
-                return@launch
-            if (m_user.photo=="")
-                return@launch
 
             withContext(Dispatchers.Main){
                 var img_string = m_user.photo

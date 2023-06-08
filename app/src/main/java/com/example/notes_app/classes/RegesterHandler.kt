@@ -35,6 +35,7 @@ class RegesterHandler {
     fun deconnecting(){
         m_editor.putBoolean(IS_CONNECTED,false)
         m_editor.putString(CONN_USER,"")
+        m_editor.apply()
     }
 
     fun connecting(email : String ){
