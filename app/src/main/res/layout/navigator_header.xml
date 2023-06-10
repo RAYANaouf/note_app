@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/navigationHeader_image_iv"
         android:layout_width="match_parent"
         app:layout_constrainedHeight="true"
         app:layout_constraintHeight_max="240dp"

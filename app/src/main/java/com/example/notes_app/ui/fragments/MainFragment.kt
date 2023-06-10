@@ -75,12 +75,13 @@ class MainFragment : Fragment() {
 //                m_onClickNavigator.onClick_to_notesFragment(cat_id)
 //            }
 //        })
-        var adapter = DailyAdapter(object : DailyAdapterListener{
+        var adapter = DailyAdapter(
+            object : DailyAdapterListener{
             override fun onClick() {
-                m_onClickNavigator.onClick_to_addNoteFragment(0)
+                m_onClickNavigator.onClick_to_addNoteFragment(1)
             }
-
-        })
+        }
+            , requireContext(), m_viewModel)
 
         binding.categoryRecycler.adapter = adapter
         binding.categoryRecycler.layoutManager= LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
@@ -92,9 +93,6 @@ class MainFragment : Fragment() {
 
     }
 
-    fun setUserData(){
-
-    }
 
     fun setPieChart(){
 

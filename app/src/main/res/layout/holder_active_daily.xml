@@ -41,7 +41,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp">
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
                 android:id="@+id/materialRatingBar"
@@ -64,14 +65,14 @@
                 android:transformPivotY="10dp"
 
 
-                app:layout_constraintBottom_toBottomOf="@+id/shapeableImageView"
-                app:layout_constraintStart_toEndOf="@+id/shapeableImageView"
-                app:layout_constraintTop_toTopOf="@+id/shapeableImageView" />
+                app:layout_constraintBottom_toBottomOf="@+id/holderActiveDaily_photo_siv"
+                app:layout_constraintStart_toEndOf="@+id/holderActiveDaily_photo_siv"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/shapeableImageView"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:id="@+id/holderActiveDaily_photo_siv"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
 
@@ -87,7 +88,6 @@
                 android:id="@+id/ratingBarLabel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-5dp"
 
                 android:text="how is your day "
                 android:textColor="@color/gray6"
@@ -100,114 +100,16 @@
 
             <ImageView
                 android:id="@+id/imageView2"
-                android:layout_width="35dp"
+                android:layout_width="30dp"
 
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/emoji10" />
 
-            <View
-                android:id="@+id/siparator0"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="5dp"
 
-                android:background="@color/gray2"
-
-                app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBarLabel"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingBarLabel">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintWidth_percent="0.33">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/daily_book_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/separator1"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-
-                    android:background="@color/gray2"
-                    app:layout_constraintEnd_toEndOf="@+id/constraintLayout3" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
-                    app:layout_constraintWidth_percent="0.33">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/tag_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/separator2"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-
-                    android:background="@color/gray2"
-                    app:layout_constraintEnd_toStartOf="@+id/constraintLayout6" />
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:layout_constrainedWidth="true"
-                    app:layout_constraintStart_toEndOf="@+id/constraintLayout3"
-                    app:layout_constraintWidth_percent="0.33">
-
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/mic_icon"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

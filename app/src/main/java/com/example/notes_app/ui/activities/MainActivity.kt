@@ -7,9 +7,11 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -161,6 +163,9 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
             return@setNavigationItemSelectedListener true
         }
+
+        LayoutInflater.from(this).inflate(R.layout.navigator_header , null ).findViewById<ImageView>(R.id.navigationHeader_image_iv).setImageResource(R.drawable.emoji1)
+
     }
 
 
@@ -212,7 +217,11 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
     override fun onBackPressed() {
         var fm = supportFragmentManager
-        if (fm.backStackEntryCount>0){
+        if (fm.backStackEntryCount == 1){
+            m_page = "home"
+            fm.popBackStack()
+        }
+        else if (fm.backStackEntryCount>0){
             fm.popBackStack()
         }
         else{
