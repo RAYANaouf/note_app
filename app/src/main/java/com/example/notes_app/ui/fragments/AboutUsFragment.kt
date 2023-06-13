@@ -25,6 +25,11 @@ class AboutUsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireActivity().invalidateOptionsMenu()
+    }
+
     companion object {
 
         @JvmStatic

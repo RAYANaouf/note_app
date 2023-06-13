@@ -39,13 +39,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
+                        <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                            android:id="@+id/mainActivity_dayRate_mrb"
+                            style="@style/Widget.MaterialRatingBar.RatingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:indeterminateTint="@android:color/holo_orange_light"
+                            android:numStars="8"
+                            android:progressBackgroundTint="@android:color/holo_orange_light"
+                            android:progressTint="@android:color/holo_orange_light"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:secondaryProgressTint="@android:color/holo_orange_light"
+                            android:visibility="gone"
+
+                            app:layout_constraintBottom_toBottomOf="@+id/mainActivity_account_siv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/mainActivity_account_siv"
+                            app:layout_constraintTop_toTopOf="@+id/mainActivity_account_siv"
+                            tools:visibility="visible" />
+
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/mainActivity_account_siv"
                             android:layout_width="45dp"
                             android:layout_height="45dp"
+
+                            android:visibility="visible"
+
+                            android:scaleType="centerCrop"
                             android:src="@drawable/user"
                             app:shapeAppearanceOverlay="@style/Circular"
-                            android:layout_marginStart="30dp"
+                            android:layout_marginStart="25dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/mainActivity_return_siv"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+
+                            android:visibility="invisible"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/chevron_left_2"
+                            app:shapeAppearanceOverlay="@style/Circular"
+                            android:layout_marginStart="25dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />

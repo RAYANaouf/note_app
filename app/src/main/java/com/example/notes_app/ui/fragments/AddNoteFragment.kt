@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +40,7 @@ import me.jfenn.colorpickerdialog.interfaces.OnColorPickedListener
 import me.jfenn.colorpickerdialog.views.picker.ImagePickerView
 import java.util.*
 
+public const val ARG_RATING="rating"
 
 class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<ColorPickerDialog> , SetEmoji {
 
@@ -50,6 +52,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
     //cat_id arrayOfContent
     private var cat_id: Int = 0
+    private var m_rating : Float = 0F
     private lateinit var m_contents : ArrayList<NoteContent>
     //calendar & date
     private val m_calendar = Calendar.getInstance()
@@ -108,7 +111,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            cat_id = it.getInt(ARG_CAT_ID)
+            m_rating = it.getFloat(ARG_RATING)
         }
 
     }
@@ -144,13 +147,28 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
         binding.fragmentAddNoteNoteContentsRv.addItemDecoration(NoteContentDecoration(requireContext(),m_adapter))
 
 
-        //set time
-        binding.addNoteFragmentTimeTv.setText(m_date)
 
         //set all onclicks
         setAllOnclicks()
+        //set view
+        setView()
+
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireActivity().invalidateOptionsMenu()
+    }
+
+
+    fun setRate(rating : Float){
+        m_rating = rating
+    }
+    private fun setView(){
+        //set time
+        binding.addNoteFragmentTimeTv.setText(m_date)
+
+    }
 
     private fun setAllOnclicks(){
 
@@ -270,10 +288,10 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
     companion object {
         @JvmStatic
-        fun newInstance(cat_id: Int) =
+        fun newInstance(rating: Float) =
             AddNoteFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_CAT_ID, cat_id)
+                    putFloat(ARG_RATING, rating)
                 }
             }
     }

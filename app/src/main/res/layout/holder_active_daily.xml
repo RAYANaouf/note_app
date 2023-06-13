@@ -45,7 +45,7 @@
             android:paddingBottom="10dp">
 
             <me.zhanghai.android.materialratingbar.MaterialRatingBar
-                android:id="@+id/materialRatingBar"
+                android:id="@+id/holderActiveDaily_rateDay_mrb"
                 style="@style/Widget.MaterialRatingBar.RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,10 +93,10 @@
                 android:textColor="@color/gray6"
                 android:textSize="17dp"
 
-                app:layout_constraintBottom_toBottomOf="@+id/materialRatingBar"
-                app:layout_constraintEnd_toEndOf="@+id/materialRatingBar"
-                app:layout_constraintStart_toStartOf="@+id/materialRatingBar"
-                app:layout_constraintTop_toBottomOf="@+id/materialRatingBar" />
+                app:layout_constraintBottom_toBottomOf="@+id/holderActiveDaily_rateDay_mrb"
+                app:layout_constraintEnd_toEndOf="@+id/holderActiveDaily_rateDay_mrb"
+                app:layout_constraintStart_toStartOf="@+id/holderActiveDaily_rateDay_mrb"
+                app:layout_constraintTop_toBottomOf="@+id/holderActiveDaily_rateDay_mrb" />
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -114,5 +114,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

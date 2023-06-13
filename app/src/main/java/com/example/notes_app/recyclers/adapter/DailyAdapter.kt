@@ -5,11 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.classes.RegesterHandler
@@ -17,22 +18,23 @@ import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.User
 import com.example.notes_app.ui.fragments.MainFragment
 import com.google.android.material.imageview.ShapeableImageView
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 class DailyAdapter : RecyclerView.Adapter<DailyAdapter.Holder> {
 
     private var m_OnClickListener : MainFragment.DailyAdapterListener
     private var m_accountHandler : RegesterHandler
     private var m_viewModule : MyViewModel
+    private var m_context: Context
     private var m_user : User
     private var m_photoBitmap : Bitmap
 
     constructor(listener : MainFragment.DailyAdapterListener, context : Context, m_viewModule: MyViewModel){
         this.m_OnClickListener = listener
-        this.m_accountHandler  = RegesterHandler(context)
+        m_context = context
+        this.m_accountHandler  = RegesterHandler(m_context)
         var email = m_accountHandler.conn_user()
         this.m_viewModule = m_viewModule
 
@@ -61,9 +63,23 @@ class DailyAdapter : RecyclerView.Adapter<DailyAdapter.Holder> {
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.root.setOnClickListener {
-            m_OnClickListener.onClick()
+
         }
         holder.photo.setImageBitmap(m_photoBitmap)
+        holder.ratingBar.setOnTouchListener(object:OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if (event!!.action === MotionEvent.ACTION_UP) {
+                    // User released the rating bar, handle the action here
+                    val rating: Float = holder.ratingBar.getRating()
+                    // Perform your desired action with the rating value
+
+                    m_OnClickListener.onClick(rating)
+
+                }
+                return false
+            }
+
+        })
 
     }
 
@@ -71,10 +87,12 @@ class DailyAdapter : RecyclerView.Adapter<DailyAdapter.Holder> {
 
         var root  : ConstraintLayout
         var photo : ShapeableImageView
+        var ratingBar : MaterialRatingBar
 
         constructor(itemView : View):super(itemView){
             root = itemView.findViewById(R.id.holderActiveDaily_container_csl)
             photo = itemView.findViewById(R.id.holderActiveDaily_photo_siv)
+            ratingBar = itemView.findViewById(R.id.holderActiveDaily_rateDay_mrb)
         }
     }
 }

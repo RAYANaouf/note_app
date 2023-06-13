@@ -77,8 +77,8 @@ class MainFragment : Fragment() {
 //        })
         var adapter = DailyAdapter(
             object : DailyAdapterListener{
-            override fun onClick() {
-                m_onClickNavigator.onClick_to_addNoteFragment(1)
+            override fun onClick(rating: Float) {
+                m_onClickNavigator.onClick_to_addNoteFragment(rating)
             }
         }
             , requireContext(), m_viewModel)
@@ -91,6 +91,12 @@ class MainFragment : Fragment() {
         setPieChart()
 
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        requireActivity().invalidateOptionsMenu()
     }
 
 
@@ -181,7 +187,7 @@ class MainFragment : Fragment() {
     }
 
     interface DailyAdapterListener{
-        fun onClick()
+        fun onClick(rating: Float)
     }
 
 

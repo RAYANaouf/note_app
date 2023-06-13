@@ -68,12 +68,18 @@ class NotesFragment : Fragment() {
 
         binding.notesFragmentAddFab.setOnClickListener {
 //            m_open_dialog.add_note(m_catId)
-            m_onClickNavigator.onClick_to_addNoteFragment(m_catId)
+            m_onClickNavigator.onClick_to_addNoteFragment(2F)
         }
 
         binding.notesFragmentNotesRv.adapter = NotesAdapter(this , m_ViewModul , m_catId)
         binding.notesFragmentNotesRv.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         binding.notesFragmentNotesRv.addItemDecoration(NoteDecoration(requireContext() , 5f , 5f))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        requireActivity().invalidateOptionsMenu()
+
     }
 
     companion object {

@@ -30,6 +30,11 @@ class ThemeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_theme, container, false)
     }
 
+    override fun onStart() {
+        super.onStart()
+        requireActivity().invalidateOptionsMenu()
+    }
+
     companion object {
 
         @JvmStatic

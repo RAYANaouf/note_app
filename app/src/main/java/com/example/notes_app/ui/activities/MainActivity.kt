@@ -7,15 +7,14 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.view.View.OnTouchListener
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.classes.RegesterHandler
@@ -41,6 +40,9 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     //user email    && user  (get the user using email)
     private  var m_email = ""
     private lateinit var m_user : User
+
+    //my rate
+    private var m_rate=0F
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -173,6 +175,21 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         binding.mainActivityAccountSiv.setOnClickListener {
             binding.mainActivityDrawerDl.openDrawer(GravityCompat.START)
         }
+
+        binding.mainActivityReturnSiv.setOnClickListener {
+            var fm = supportFragmentManager
+            fm.popBackStack()
+        }
+
+        binding.mainActivityDayRateMrb.setOnTouchListener(object: OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                if(event!!.action == MotionEvent.ACTION_UP){
+                    var rating = binding.mainActivityDayRateMrb.rating
+                    changeRate(rating)
+                }
+                return false
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -215,6 +232,36 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         return true
     }
 
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+
+        var theme_item_menu = menu?.findItem(R.id.main_menu_theme)
+        var share_item_menu = menu?.findItem(R.id.main_menu_share)
+
+        var currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        if(currentFragment is AddNoteFragment){
+            theme_item_menu?.isVisible=false
+            share_item_menu?.isVisible=false
+
+            binding.mainActivityAccountSiv.visibility=View.INVISIBLE
+            binding.mainActivityReturnSiv.visibility=View.VISIBLE
+            binding.mainActivityDayRateMrb.isVisible=true
+            binding.mainActivityDayRateMrb.rating=m_rate
+
+        }
+        else{
+            theme_item_menu?.isVisible = true
+            share_item_menu?.isVisible = true
+
+            binding.mainActivityAccountSiv.visibility=View.VISIBLE
+            binding.mainActivityReturnSiv.visibility=View.INVISIBLE
+            binding.mainActivityDayRateMrb.isVisible=false
+
+        }
+
+        return true
+    }
+
     override fun onBackPressed() {
         var fm = supportFragmentManager
         if (fm.backStackEntryCount == 1){
@@ -229,6 +276,14 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         }
     }
 
+    fun changeRate(rating : Float){
+        var fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+        if (fragment is AddNoteFragment){
+            fragment.setRate(rating)
+        }
+    }
+
+
 
     override fun onClick_to_notesFragment(cat_id : Int) {
         m_page="notes"
@@ -238,14 +293,14 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             .commit()
     }
 
-    override fun onClick_to_addNoteFragment(cat_id : Int) {
+    override fun onClick_to_addNoteFragment(rating : Float) {
+        m_rate=rating
         m_page="addNote"
         var fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container , AddNoteFragment.newInstance(cat_id))
+        fragmentTransaction.replace(R.id.fragment_container , AddNoteFragment.newInstance(rating))
             .addToBackStack("add")
             .commit()
     }
-
 
     //dialog viewer
 
