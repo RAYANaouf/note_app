@@ -81,7 +81,7 @@ class MainFragment : Fragment() {
                 m_onClickNavigator.onClick_to_addNoteFragment(rating)
             }
         }
-            , requireContext(), m_viewModel)
+            , requireContext(), m_viewModel,this)
 
         binding.categoryRecycler.adapter = adapter
         binding.categoryRecycler.layoutManager= LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)

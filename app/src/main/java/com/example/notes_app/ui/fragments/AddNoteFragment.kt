@@ -185,7 +185,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
                 var contents = m_adapter.get_all_item()
                 m_cont = contents[0].cont
 
-                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = m_cont)).await()
+                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, rate = m_rating , color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = m_cont)).await()
 
 
                 for (i in 0 until m_adapter.getItemCount()){

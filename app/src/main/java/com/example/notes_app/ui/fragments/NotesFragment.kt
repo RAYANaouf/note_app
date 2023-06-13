@@ -45,8 +45,6 @@ class NotesFragment : Fragment() {
             m_catId = getInt(ARG_CAT_ID)
         }
 
-        Toast.makeText(requireContext() , "${m_catId}" , Toast.LENGTH_LONG).show()
-
     }
 
     override fun onCreateView(
