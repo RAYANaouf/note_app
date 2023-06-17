@@ -16,10 +16,10 @@ interface NoteDAO {
     @Update
     fun updateNote(note : Note)
 
-    @Query("select * from Note")
+    @Query("select * from Note ORDER BY id DESC ")
     fun getAllNotes() : LiveData<List<Note>>
 
-    @Query("select * from Note where cat_id=:cat_id ")
+    @Query("select * from Note where cat_id=:cat_id ORDER BY cat_id DESC ")
     fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>
 
 }

@@ -181,15 +181,9 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             fm.popBackStack()
         }
 
-        binding.mainActivityDayRateMrb.setOnTouchListener(object: OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                if(event!!.action == MotionEvent.ACTION_UP){
-                    var rating = binding.mainActivityDayRateMrb.rating
-                    changeRate(rating)
-                }
-                return false
-            }
-        })
+        binding.mainActivityDayRateMrb.setOnRatingChangeListener { ratingBar, rating ->
+            changeRate(binding.mainActivityDayRateMrb.rating)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

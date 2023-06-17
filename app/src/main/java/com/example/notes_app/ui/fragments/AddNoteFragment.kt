@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -163,10 +162,40 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
     fun setRate(rating : Float){
         m_rating = rating
+        if(rating>6){
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji7)
+            m_icon =  R.drawable.emoji6
+        }
+        else if(rating>5){
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji6)
+            m_icon =  R.drawable.emoji7
+        }
+        else if(rating>4){
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji5)
+            m_icon =  R.drawable.emoji5
+        }
+        else if(rating>3){
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji4)
+            m_icon =  R.drawable.emoji4
+        }
+        else if(rating>2){
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji3)
+            m_icon =  R.drawable.emoji3
+        }
+        else if(rating>1){
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji2)
+            m_icon =  R.drawable.emoji2
+        }
+        else {
+            binding.addNoteFragmentEmojiIv.setImageResource(R.drawable.emoji1)
+            m_icon =  R.drawable.emoji1
+        }
     }
     private fun setView(){
         //set time
         binding.addNoteFragmentTimeTv.setText(m_date)
+        //set imoji
+        this.setRate(m_rating)
 
     }
 

@@ -75,6 +75,7 @@ class MainFragment : Fragment() {
 //                m_onClickNavigator.onClick_to_notesFragment(cat_id)
 //            }
 //        })
+
         var adapter = DailyAdapter(
             object : DailyAdapterListener{
             override fun onClick(rating: Float) {
@@ -85,11 +86,8 @@ class MainFragment : Fragment() {
 
         binding.categoryRecycler.adapter = adapter
         binding.categoryRecycler.layoutManager= LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
-//        binding.categoryRecycler.addItemDecoration(CategoryDecoration(requireContext(),15f , 5f))
-
 
         setPieChart()
-
 
     }
 

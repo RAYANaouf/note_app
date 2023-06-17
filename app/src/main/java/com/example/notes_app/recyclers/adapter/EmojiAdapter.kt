@@ -8,8 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.ui.dialog.AddEmojiDialog
-import com.example.notes_app.ui.dialog.ImageViewer
-import com.example.notes_app.ui.fragments.AddNoteFragment
 
 class EmojiAdapter  : RecyclerView.Adapter<EmojiAdapter.Holder>{
 
@@ -25,12 +23,11 @@ class EmojiAdapter  : RecyclerView.Adapter<EmojiAdapter.Holder>{
         m_emoji.add(R.drawable.emoji3)
         m_emoji.add(R.drawable.emoji4)
         m_emoji.add(R.drawable.emoji5)
-        m_emoji.add(R.drawable.emoji6)
         m_emoji.add(R.drawable.emoji7)
+        m_emoji.add(R.drawable.emoji6)
         m_emoji.add(R.drawable.emoji8)
         m_emoji.add(R.drawable.emoji9)
         m_emoji.add(R.drawable.emoji10)
-        m_emoji.add(R.drawable.emoji11)
         m_emoji.add(R.drawable.emoji12)
         m_emoji.add(R.drawable.emoji13)
         m_emoji.add(R.drawable.emoji14)
@@ -47,6 +44,43 @@ class EmojiAdapter  : RecyclerView.Adapter<EmojiAdapter.Holder>{
         m_emoji.add(R.drawable.emoji25)
         m_emoji.add(R.drawable.emoji26)
         m_emoji.add(R.drawable.emoji27)
+        m_emoji.add(R.drawable.emoji28)
+        m_emoji.add(R.drawable.emoji29)
+        m_emoji.add(R.drawable.emoji30)
+        m_emoji.add(R.drawable.emoji31)
+        m_emoji.add(R.drawable.emoji35)
+        m_emoji.add(R.drawable.emoji100)
+        m_emoji.add(R.drawable.emoji128)
+        m_emoji.add(R.drawable.emoji129)
+        m_emoji.add(R.drawable.emoji130)
+        m_emoji.add(R.drawable.emoji140)
+        m_emoji.add(R.drawable.emoji150)
+        m_emoji.add(R.drawable.emoji160)
+        m_emoji.add(R.drawable.emoji170)
+        m_emoji.add(R.drawable.emoji180)
+        m_emoji.add(R.drawable.emoji190)
+        m_emoji.add(R.drawable.emoji210)
+        m_emoji.add(R.drawable.emoji220)
+        m_emoji.add(R.drawable.emoji230)
+        m_emoji.add(R.drawable.emoji240)
+        m_emoji.add(R.drawable.emoji250)
+        m_emoji.add(R.drawable.emoji260)
+        m_emoji.add(R.drawable.emoji270)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 

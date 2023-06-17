@@ -52,11 +52,11 @@ class SignUpActivity : AppCompatActivity() {
             val imageData = imageStream?.readBytes()
 
             if (imageData!=null){
-//                var imageBitmap = BitmapFactory.decodeByteArray(imageData , 0 , imageData.size)
-//                var imageByteArrayOutputStream = ByteArrayOutputStream()
-//                imageBitmap.compress(Bitmap.CompressFormat.PNG , 20 , imageByteArrayOutputStream)
-//                var imageByteArray = imageByteArrayOutputStream.toByteArray()
-                val base64Image = android.util.Base64.encodeToString(imageData,android.util.Base64.DEFAULT)
+                var imageBitmap = BitmapFactory.decodeByteArray(imageData , 0 , imageData.size)
+                var imageByteArrayOutputStream = ByteArrayOutputStream()
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG , 50 , imageByteArrayOutputStream)
+                var imageByteArray = imageByteArrayOutputStream.toByteArray()
+                val base64Image = android.util.Base64.encodeToString(imageByteArray,android.util.Base64.DEFAULT)
                 m_photo = base64Image
             }
         }

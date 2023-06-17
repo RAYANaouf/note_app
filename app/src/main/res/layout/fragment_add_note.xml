@@ -84,7 +84,7 @@
     <View
         android:id="@+id/addNoteFragment_titleContentSeparetor_v"
         android:layout_width="0dp"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
@@ -115,17 +115,18 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
 
-        android:background="@color/gray5"
+        android:background="@drawable/fragment_add_note_bottom_bar_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <ImageView
             android:id="@+id/addNoteFragment_addNoteContent_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/add_content_icon"
@@ -138,8 +139,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_addCheckBox_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/checklist_icon"
@@ -150,8 +151,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_attachFile_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/attach_file_icon"
@@ -163,8 +164,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_addAlarm_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/add_alarm_icon"
@@ -177,8 +178,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_setStyle_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/style_icon"
@@ -191,8 +192,8 @@
 
         <ImageView
             android:id="@+id/addNoteFragment_setColor_iv"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginLeft="8dp"
 
             android:src="@drawable/color_icon"
