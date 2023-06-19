@@ -55,7 +55,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
 
-                android:focusable="false"
+                android:isIndicator="true"
                 android:numStars="8"
                 android:progressBackgroundTint="@color/gray2"
                 android:progressTint="@color/gray8"

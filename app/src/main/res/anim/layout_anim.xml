@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
-    android:delay="100%"
+    android:delay="20%"
     android:animation="@anim/slide_in"
-    android:animationOrder="random"
+    android:animationOrder="normal"
     >
 
 </layoutAnimation>

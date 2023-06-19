@@ -66,7 +66,7 @@ class NotesAdapter : RecyclerView.Adapter<NotesAdapter.Holder> {
 
         fun bind(position : Int){
             name.setText("${adapter.m_notes[position].title}")
-            content.setText("${adapter.m_notes[position].content}")
+            content.setText("${adapter.m_notes[position].description}")
             date.setText("${adapter.m_notes[position].date}")
             root.setStrokeColor(adapter.m_notes[position].color)
 

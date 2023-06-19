@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/holderCloseDaily_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+
+
+        android:text="mm / dd / yy"
+        android:textColor="@color/gray8"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        android:elevation="2dp"
+
+        app:layout_constraintBottom_toTopOf="@+id/holderCloseDaily_container_mcv"
+        app:layout_constraintEnd_toEndOf="@+id/holderCloseDaily_container_mcv"
+        app:layout_constraintStart_toStartOf="@+id/holderCloseDaily_container_mcv"
+        app:layout_constraintTop_toTopOf="@+id/holderCloseDaily_container_mcv" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/holderCloseDaily_container_mcv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+
+        app:cardCornerRadius="10dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                android:id="@+id/holderCloseDaily_rateDay_mrb"
+                style="@style/Widget.MaterialRatingBar.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+
+                android:isIndicator="true"
+                android:numStars="8"
+                android:progressBackgroundTint="@color/gray2"
+                android:progressTint="@color/gray8"
+                android:secondaryProgressTint="@color/gray5"
+                android:rating="0"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:stepSize="0.5"
+
+                android:transformPivotY="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/holderCloseDaily_emoji_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+
+
+                android:src="@drawable/emoji6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/holderCloseDaily_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="16dp"
+
+                android:layout_marginRight="10dp"
+                android:maxLines="1"
+                android:text="here is the title "
+                android:textColor="@color/gray10"
+                android:textSize="16dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/holderCloseDaily_emoji_iv"
+                app:layout_constraintLeft_toLeftOf="@+id/holderCloseDaily_rateDay_mrb"
+                app:layout_constraintStart_toStartOf="@+id/holderCloseDaily_rateDay_mrb"
+                app:layout_constraintTop_toTopOf="@+id/holderCloseDaily_rateDay_mrb" />
+
+            <FrameLayout
+                android:id="@+id/holderCloseDaily_cover_fl"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="#aaC0C0C0"
+                android:elevation="30dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" >
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+
+                    android:src="@drawable/lock_icon"
+                    android:layout_gravity="center"
+
+                    />
+
+            </FrameLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

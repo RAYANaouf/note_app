@@ -55,7 +55,7 @@ abstract class MyDatabase: RoomDatabase() {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java,
-                        "note_databaseV32"
+                        "note_databaseV41"
                     ).addCallback(sRoomDatabaseCallback).build()
                 INSTANCE = instance
                 }
@@ -69,20 +69,23 @@ abstract class MyDatabase: RoomDatabase() {
 
                 databaseWriteExecutor.execute {
 
-                    var d1 = ContextCompat.getDrawable(m_context , R.drawable.c1)
-                    var d2 = ContextCompat.getDrawable(m_context , R.drawable.c2)
-                    var d3 = ContextCompat.getDrawable(m_context , R.drawable.c3)
+                    var d1 = ContextCompat.getDrawable(m_context , R.drawable.emoji6)
+                    var d2 = ContextCompat.getDrawable(m_context , R.drawable.emoji14)
+                    var d3 = ContextCompat.getDrawable(m_context , R.drawable.emoji24)
+                    var d4 = ContextCompat.getDrawable(m_context , R.drawable.emoji30)
 
                     // Convert the drawable to a Bitmap
                     // Convert the drawable to a Bitmap
                     var bitmap1 = (d1 as BitmapDrawable).bitmap
                     var bitmap2 = (d2 as BitmapDrawable).bitmap
                     var bitmap3 = (d3 as BitmapDrawable).bitmap
+                    var bitmap4 = (d4 as BitmapDrawable).bitmap
 
                     var bitmaps : ArrayList<Bitmap> = ArrayList()
                     bitmaps.add(bitmap1)
                     bitmaps.add(bitmap2)
                     bitmaps.add(bitmap3)
+                    bitmaps.add(bitmap4)
 
 
                     //declaration needed
@@ -101,11 +104,13 @@ abstract class MyDatabase: RoomDatabase() {
                         var categoryDAO = INSTANCE!!.categoryDAO()
 
                         if(i==0)
-                            categoryDAO.addCategory(Category(image = imageString, name = "Goals", description = "you can write notes about your future goals "))
+                            categoryDAO.addCategory(Category(image = imageString, name = "Events", description = "you can write notes about your future goals "))
                         else if(i==1)
-                            categoryDAO.addCategory(Category(image = imageString, name = "to do", description = "write down what you wanna do in the future to remember it later"))
+                            categoryDAO.addCategory(Category(image = imageString, name = "Loves", description = "write down what you wanna do in the future to remember it later"))
+                        else if(i==2)
+                            categoryDAO.addCategory(Category(image = imageString, name = "Sick" , description = "write down what you wanna learn to grow your knowledge in the future"))
                         else
-                            categoryDAO.addCategory(Category(image = imageString, name = "to learn" , description = "write down what you wanna learn to grow your knowledge in the future"))
+                            categoryDAO.addCategory(Category(image = imageString, name = "Huffy" , description = "write down what you wanna learn to grow your knowledge in the future"))
 
                         i++
                     }

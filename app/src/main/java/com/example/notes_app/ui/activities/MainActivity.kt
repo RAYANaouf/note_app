@@ -110,10 +110,10 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     }
 
     fun setMainFragment(){
+        var fragment = MainFragment.newInstance(m_email)
         var fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance())
+        fragmentTransaction.replace(R.id.fragment_container , fragment)
         fragmentTransaction.commit()
-
     }
 
     fun setUser(){
@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
                     }
                     m_page="home"
                     var fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance())
+                    fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance(m_email))
                         .addToBackStack(null)
                         .commit()
                     binding.mainActivityDrawerDl.closeDrawers()
@@ -261,6 +261,9 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         if (fm.backStackEntryCount == 1){
             m_page = "home"
             fm.popBackStack()
+            var fragment =fm.findFragmentById(R.id.fragment_container)
+            if (fragment is MainFragment){
+            }
         }
         else if (fm.backStackEntryCount>0){
             fm.popBackStack()
@@ -294,6 +297,13 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         fragmentTransaction.replace(R.id.fragment_container , AddNoteFragment.newInstance(rating))
             .addToBackStack("add")
             .commit()
+    }
+
+    override fun onClick_to_diaryFragment(diary_id: Int) {
+        var ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragment_container , DiaryFragment.newInstance(diary_id))
+        ft.addToBackStack("dairy")
+        ft.commit()
     }
 
     //dialog viewer

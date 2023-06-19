@@ -49,17 +49,19 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     private lateinit var m_navigator : OnClickNavigator
 
 
-    //cat_id arrayOfContent
+    //cat_id arrayOfContent  &&  color && icon && content  &&  lock
+    private lateinit var m_contents : ArrayList<NoteContent>
     private var cat_id: Int = 0
     private var m_rating : Float = 0F
-    private lateinit var m_contents : ArrayList<NoteContent>
-    //calendar & date
-    private val m_calendar = Calendar.getInstance()
-    private val m_date     = "${m_calendar[Calendar.MONTH]+1}/${m_calendar[Calendar.DAY_OF_MONTH]}/${m_calendar[Calendar.YEAR]}"
-    //color && icon && content
     private var m_color = 0
     private var m_icon = R.drawable.emoji4
     private var m_cont = ""
+    private var m_lock = false
+
+    //calendar & date
+    private val m_calendar = Calendar.getInstance()
+    private val m_date     = "${m_calendar[Calendar.MONTH]+1}/${m_calendar[Calendar.DAY_OF_MONTH]}/${m_calendar[Calendar.YEAR]}"
+
     //the adapter
     private lateinit var m_adapter : NoteContentAdapter
 
@@ -214,7 +216,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
                 var contents = m_adapter.get_all_item()
                 m_cont = contents[0].cont
 
-                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , date = m_date, rate = m_rating , color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , content = m_cont)).await()
+                val noteId = m_viewModel.addNote(Note(cat_id = cat_id , lock = m_lock ,  date = m_date, rate = m_rating , color = m_color, icon = m_icon, title = binding.addNoteFragmentNoteTitleTiet.text.toString() , description = m_cont)).await()
 
 
                 for (i in 0 until m_adapter.getItemCount()){
@@ -223,7 +225,6 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
                 }
 
                 requireActivity().supportFragmentManager.popBackStack()
-
             }
         }
 
@@ -303,6 +304,19 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
         binding.addNoteFragmentSetStyleIv.setOnClickListener {
             ThemeDialog.newInstance().show(childFragmentManager,"themeDialog")
         }
+
+        /*********************************************   lock  icon   *********************************************/
+
+        binding.addNoteFragmentLockSiv.setOnClickListener {
+            m_lock = !m_lock
+            if (m_lock){
+                binding.addNoteFragmentLockSiv.setImageResource(R.drawable.lock_icon)
+            }
+            else{
+                binding.addNoteFragmentLockSiv.setImageResource(R.drawable.lock_open_icon)
+            }
+        }
+
     }
 
 
