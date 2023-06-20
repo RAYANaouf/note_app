@@ -4,10 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.notes_app.modul.room_database.data_classes.Category
-import com.example.notes_app.modul.room_database.data_classes.Note
-import com.example.notes_app.modul.room_database.data_classes.NoteContent
-import com.example.notes_app.modul.room_database.data_classes.User
+import com.example.notes_app.modul.room_database.data_classes.*
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -98,6 +95,29 @@ class MyViewModel : AndroidViewModel {
         m_repo.addUser(user)
     }
 
+    fun addHashtag(hashtag : Hashtag){
+        GlobalScope.launch {
+            m_repo.addHashtag(hashtag)
+        }
+    }
 
+    fun deleteHashtag(hashtag : Hashtag){
+        GlobalScope.launch {
+            m_repo.deleteHashtag(hashtag)
+        }
+    }
+
+    fun getAllHashtags() : List<Hashtag> {
+        return m_repo.getAllHashtags()
+    }
+
+    fun getHashtagsByDiaryId(diaryId : Int ) : List<DiaryHashtagJoin>{
+        return m_repo.getHashtagsByDiaryId(diaryId)
+    }
+
+
+    fun isHashtagExist(hashtag : String): Int{
+        return m_repo.isHashtagExist(hashtag)
+    }
 
 }

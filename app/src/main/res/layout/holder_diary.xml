@@ -73,11 +73,11 @@
                 android:id="@+id/holderDaily_emoji_iv"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
 
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="8dp"
+
                 android:scaleType="fitCenter"
-
                 android:src="@drawable/emoji6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -104,18 +104,29 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="10dp"
 
-                android:text="here is the description"
-                android:maxLines="6"
                 android:maxWidth="130dp"
+                android:maxLines="6"
+                android:text="here is the description"
                 android:textColor="@color/gray8"
 
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/holderDaily_title_tv"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/holderDaily_title_tv"
                 app:layout_constraintTop_toBottomOf="@+id/holderDaily_title_tv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/holderDaily_hashtags_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/holderDaily_emoji_iv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/holderDaily_description_tv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,13 +11,18 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notes_app.R
 import com.example.notes_app.classes.RegesterHandler
 import com.example.notes_app.modul.MyViewModel
+import com.example.notes_app.modul.room_database.data_classes.DiaryHashtagJoin
+import com.example.notes_app.modul.room_database.data_classes.Hashtag
 import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.data_classes.User
+import com.example.notes_app.recyclers.item_decoration.HashtagDicoration
 import com.example.notes_app.ui.dialog.CheckPasswordDialog
 import com.example.notes_app.ui.fragments.MainFragment
 import com.google.android.material.card.MaterialCardView
@@ -68,7 +73,9 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (viewType == 0 ){
             var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_diary , parent , false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT)
-            return HolderDaily(view , this)
+            var holder = HolderDaily(view , HashtagAdapter() ,this)
+            return  holder
+
         }else{
             var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_close_diary , parent , false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -89,7 +96,22 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         else if (holder is HolderDaily)
         {
-            holder.bind(position)
+            
+            
+            GlobalScope.launch {
+                var relation : List<DiaryHashtagJoin> = m_viewModule.getHashtagsByDiaryId(m_content[position].id)
+                var hashtags = ArrayList<Hashtag>()
+
+                for (r in relation){
+                    hashtags.add(Hashtag(r.hashtagId))
+                }
+
+                withContext(Dispatchers.Main){
+                    holder.bind(position , hashtags)
+                }
+            }
+            
+
         }
 
     }
@@ -112,7 +134,7 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         var ratingBar   : MaterialRatingBar
         var m_emoji     : ImageView
 
-        constructor(itemView : View , adapter: DailyAdapter):super(itemView){
+        constructor(itemView : View ,  adapter: DailyAdapter):super(itemView){
             this.m_adapter = adapter
             this.m_container = itemView.findViewById(R.id.holderCloseDaily_container_mcv)
             this.m_date    = itemView.findViewById(R.id.holderCloseDaily_date_tv)
@@ -135,31 +157,44 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
     class HolderDaily : RecyclerView.ViewHolder{
 
-        var m_adapter     : DailyAdapter
-        var m_date        : TextView
-        var m_container     : MaterialCardView
-        var m_ratingBar     : MaterialRatingBar
-        var m_emoji       : ImageView
-        var m_title       : TextView
-        var m_description : TextView
+        var m_adapter          : DailyAdapter
+        var m_recycler         : RecyclerView
+        var m_hashtag_adapter  : HashtagAdapter?
+        var m_date             : TextView
+        var m_container        : MaterialCardView
+        var m_ratingBar        : MaterialRatingBar
+        var m_emoji            : ImageView
+        var m_title            : TextView
+        var m_description      : TextView
 
-        constructor(itemView : View , adapter: DailyAdapter):super(itemView){
-            this.m_adapter = adapter
-            this.m_date    = itemView.findViewById(R.id.holderDaily_date_tv)
-            this.m_container      = itemView.findViewById(R.id.holderDaily_container_mcv)
+        constructor(itemView : View , hashtagAdapter: HashtagAdapter  , adapter: DailyAdapter):super(itemView){
+            this.m_adapter   = adapter
+            this.m_hashtag_adapter = hashtagAdapter
+            this.m_recycler  = itemView.findViewById(R.id.holderDaily_hashtags_rv)
+            this.m_recycler.adapter = m_hashtag_adapter
+            this.m_recycler.layoutManager = StaggeredGridLayoutManager(1 ,StaggeredGridLayoutManager.HORIZONTAL)
+            this.m_recycler.addItemDecoration(HashtagDicoration(m_adapter.m_context , 1f,1f,1f,1f))
+            this.m_date      = itemView.findViewById(R.id.holderDaily_date_tv)
+            this.m_container = itemView.findViewById(R.id.holderDaily_container_mcv)
             m_ratingBar      = itemView.findViewById(R.id.holderDaily_rateDay_mrb)
-            m_emoji        = itemView.findViewById(R.id.holderDaily_emoji_iv)
-            m_title        = itemView.findViewById(R.id.holderDaily_title_tv)
-            m_description  = itemView.findViewById(R.id.holderDaily_description_tv)
+            m_emoji          = itemView.findViewById(R.id.holderDaily_emoji_iv)
+            m_title          = itemView.findViewById(R.id.holderDaily_title_tv)
+            m_description    = itemView.findViewById(R.id.holderDaily_description_tv)
+
         }
 
-        fun bind(pos : Int){
+        fun bind(pos : Int , hashtags: ArrayList<Hashtag>){
 
             m_ratingBar.rating = m_adapter.m_content[pos].rate
             m_date.setText(m_adapter.m_content[pos].date)
             m_emoji.setImageResource(m_adapter.m_content[pos].icon)
             m_title.setText(m_adapter.m_content[pos].title)
-            m_description.setText(m_adapter.m_content[pos].description)
+            if (m_adapter.m_content[pos].description == ""){
+                m_description.visibility = ViewGroup.GONE
+            }
+            else{
+                m_description.setText(m_adapter.m_content[pos].description)
+            }
             if (m_adapter.m_content[pos].color!=0){
                 m_container.setStrokeColor(m_adapter.m_content[pos].color)
                 m_ratingBar.backgroundTintList= ColorStateList.valueOf(m_adapter.m_content[pos].color)
@@ -171,6 +206,8 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             m_container.setOnClickListener {
                 m_adapter.m_OnClickListener.onClickOpened(m_adapter.m_content[pos].id , m_adapter.m_content[pos].rate)
             }
+
+            m_hashtag_adapter?.set_contents(hashtags)
 
 
 

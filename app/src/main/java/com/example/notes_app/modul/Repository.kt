@@ -2,36 +2,30 @@ package com.example.notes_app.modul
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.example.notes_app.modul.room_database.data_classes.Category
-import com.example.notes_app.modul.room_database.data_classes.Note
-import com.example.notes_app.modul.room_database.DAO.CategoryDAO
-import com.example.notes_app.modul.room_database.DAO.NoteContentDAO
-import com.example.notes_app.modul.room_database.DAO.NoteDAO
-import com.example.notes_app.modul.room_database.DAO.UserDAO
+import com.example.notes_app.modul.room_database.DAO.*
 import com.example.notes_app.modul.room_database.MyDatabase
-import com.example.notes_app.modul.room_database.data_classes.NoteContent
-import com.example.notes_app.modul.room_database.data_classes.User
+import com.example.notes_app.modul.room_database.data_classes.*
 import kotlinx.coroutines.*
 
 class Repository {
 
-    private  var m_noteDAO        : NoteDAO
-    private  var m_noteContentDAO : NoteContentDAO
-    private  var m_categoryDAO    : CategoryDAO
-    private  var m_userDAO        : UserDAO
+    private  var m_noteDAO                 : NoteDAO
+    private  var m_noteContentDAO          : NoteContentDAO
+    private  var m_categoryDAO             : CategoryDAO
+    private  var m_userDAO                 : UserDAO
+    private  var m_hashtagDAO              : HashtagDAO
+    private  var m_diaryHashtagJoinDAO     : DiaryHashtagJoinDAO
+
 
     constructor(context: Context){
-        var database     = MyDatabase.getDatabase(context)
-        m_categoryDAO    = database.categoryDAO()
-        m_noteDAO        = database.noteDAO()
-        m_noteContentDAO = database.noteContentDAO()
-        m_userDAO        = database.UserDAO()
+        var database          = MyDatabase.getDatabase(context)
+        m_categoryDAO         = database.categoryDAO()
+        m_noteDAO             = database.noteDAO()
+        m_noteContentDAO      = database.noteContentDAO()
+        m_userDAO             = database.UserDAO()
+        m_hashtagDAO          = database.hashtagDAO()
+        m_diaryHashtagJoinDAO = database.diaryHashtagJoinDAO()
     }
-
-    fun get_noteDao():NoteDAO              =m_noteDAO
-    fun get_noteContenDao():NoteContentDAO =m_noteContentDAO
-    fun get_categoryDAO():CategoryDAO      =m_categoryDAO
-    fun get_UserDAO():UserDAO              =m_userDAO
 
     fun addCategory(category: Category){
         GlobalScope.launch {
@@ -119,6 +113,31 @@ class Repository {
         GlobalScope.launch {
             m_userDAO.addUser(user)
         }
+    }
+
+    fun addHashtag(hashtag : Hashtag){
+        GlobalScope.launch {
+            m_hashtagDAO.addHashtag(hashtag)
+        }
+    }
+
+    fun deleteHashtag(hashtag : Hashtag){
+        GlobalScope.launch {
+            m_hashtagDAO.deleteHashtag(hashtag)
+        }
+    }
+
+    fun getAllHashtags() : List<Hashtag>{
+        return m_hashtagDAO.getAllHashtags()
+    }
+
+    fun getHashtagsByDiaryId(diaryId : Int ) : List<DiaryHashtagJoin>{
+        return m_diaryHashtagJoinDAO.getHashtagsByDiaryId(diaryId)
+    }
+
+
+    fun isHashtagExist(hashtag : String): Int{
+        return m_hashtagDAO.isHashtagExist(hashtag)
     }
 
 }

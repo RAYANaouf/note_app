@@ -15,6 +15,9 @@ import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.NoteContent
 import com.google.android.material.checkbox.MaterialCheckBox
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DiaryContentAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -29,10 +32,11 @@ class DiaryContentAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.m_viewModel = viewModel
 
 
-
-        m_viewModel.getAllNoteContents(id).observe(owner){
-            m_contents.addAll(it)
-            notifyDataSetChanged()
+        GlobalScope.launch(Dispatchers.Main) {
+            m_viewModel.getAllNoteContents(id).observe(owner){
+                m_contents.addAll(it)
+                notifyDataSetChanged()
+            }
         }
 
     }

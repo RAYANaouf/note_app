@@ -3,6 +3,8 @@ package com.example.notes_app.ui.fragments
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -37,6 +39,8 @@ import kotlinx.coroutines.launch
 import me.jfenn.colorpickerdialog.dialogs.ColorPickerDialog
 import me.jfenn.colorpickerdialog.interfaces.OnColorPickedListener
 import me.jfenn.colorpickerdialog.views.picker.ImagePickerView
+import java.io.ByteArrayOutputStream
+import java.io.OutputStream
 import java.util.*
 
 public const val ARG_RATING="rating"
@@ -87,11 +91,21 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     //get picture
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) {
+            //get  image stream  then the byteArray
             val imageStream = requireActivity().contentResolver.openInputStream(uri)
-            val imageData = imageStream?.readBytes()
+            var imageData = imageStream?.readBytes()
 
             if (imageData!=null){
+                //convert the byteArray to bitmap
+                val bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.size)
+                //compress bitmap and convert it to bytearrayOutputstream
+                var image_byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG , 80 , image_byteArrayOutputStream)
+
+                //convert the bytearrayOutputstream to bytearray then string
+                imageData = image_byteArrayOutputStream.toByteArray()
                 val base64Image = android.util.Base64.encodeToString(imageData,android.util.Base64.DEFAULT)
+
                 m_adapter.addItem(NoteContent( type = 2 , cont = base64Image))
             }
 
