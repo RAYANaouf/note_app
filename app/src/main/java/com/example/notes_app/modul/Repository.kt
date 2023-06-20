@@ -102,6 +102,10 @@ class Repository {
         return m_noteDAO.getAllNotes()
     }
 
+    fun getNoteById(id : Int): LiveData<Note>{
+        return m_noteDAO.getNoteById(id)
+    }
+
 
     fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>{
         return m_noteDAO.getNoteByCategory(cat_id)

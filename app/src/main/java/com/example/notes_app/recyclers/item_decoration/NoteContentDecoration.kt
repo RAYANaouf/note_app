@@ -9,11 +9,9 @@ import com.example.notes_app.recyclers.adapter.NoteContentAdapter
 
 class NoteContentDecoration: RecyclerView.ItemDecoration {
     private var m_context : Context
-    private var m_adapter : NoteContentAdapter
 
-    constructor(context: Context , adapter : NoteContentAdapter){
+    constructor(context: Context ){
         this.m_context = context
-        this.m_adapter = adapter
     }
 
     override fun getItemOffsets(
@@ -24,7 +22,7 @@ class NoteContentDecoration: RecyclerView.ItemDecoration {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        if(m_adapter.getItemCount() == 0){
+        if(state.itemCount == 0){
             outRect.left = dpToPx(30f)
             outRect.right = dpToPx(30f)
             outRect.top   = dpToPx(10f)

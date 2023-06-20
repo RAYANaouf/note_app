@@ -145,7 +145,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
         m_adapter = NoteContentAdapter(m_contents , requireContext(),onClickListener)
         binding.fragmentAddNoteNoteContentsRv.adapter = m_adapter
         binding.fragmentAddNoteNoteContentsRv.layoutManager = LinearLayoutManager(requireContext() , LinearLayoutManager.VERTICAL , false)
-        binding.fragmentAddNoteNoteContentsRv.addItemDecoration(NoteContentDecoration(requireContext(),m_adapter))
+        binding.fragmentAddNoteNoteContentsRv.addItemDecoration(NoteContentDecoration(requireContext()))
 
 
 

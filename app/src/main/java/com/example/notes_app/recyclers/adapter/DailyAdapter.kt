@@ -128,7 +128,7 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             m_emoji.setImageResource(m_adapter.m_content[pos].icon)
 
             m_container.setOnClickListener {
-                m_adapter.m_OnClickListener.onClickLocked(m_adapter.m_content[pos].id)
+                m_adapter.m_OnClickListener.onClickLocked(m_adapter.m_content[pos].id , m_adapter.m_content[pos].rate)
             }
 
         }
@@ -169,7 +169,7 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
 
             m_container.setOnClickListener {
-                m_adapter.m_OnClickListener.onClickOpened(m_adapter.m_content[pos].id)
+                m_adapter.m_OnClickListener.onClickOpened(m_adapter.m_content[pos].id , m_adapter.m_content[pos].rate)
             }
 
 

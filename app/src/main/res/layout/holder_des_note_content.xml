@@ -12,9 +12,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
-        android:textSize="20dp"
-        android:hint="des"
-        android:textColor="@color/gray10"
+        android:textSize="16dp"
+        android:hint="description is here"
+        android:textColor="@color/gray9"
         android:background="@android:color/transparent"
         android:textColorHint="@color/gray8"
 

@@ -42,6 +42,9 @@ class MainFragment : Fragment() {
     private  var m_email  = ""
     private lateinit var m_user : User
 
+    //the diary i click
+    private  var m_rate:Float = 0F
+
     // the dalog check
     private lateinit var m_dialog: CheckPasswordDialog
 
@@ -261,7 +264,7 @@ class MainFragment : Fragment() {
                 else{
                     Toast.makeText(requireContext() , "opening note " , Toast.LENGTH_LONG).show()
                     m_dialog.dismiss()
-                    m_onClickNavigator.onClick_to_diaryFragment(m_selected_dairy)
+                    m_onClickNavigator.onClick_to_diaryFragment(m_selected_dairy , m_rate)
                 }
             }
         }
@@ -269,15 +272,16 @@ class MainFragment : Fragment() {
         var adapter = DailyAdapter(
             object : DailyAdapterListener{
 
-                override fun onClickLocked(id : Int) {
+                override fun onClickLocked(id : Int , rate : Float) {
+                    m_rate = rate
                     m_dialog = CheckPasswordDialog.newInstance(m_email , listener)
                     m_dialog.show(childFragmentManager , "")
                     m_selected_dairy = id
                 }
 
-                override fun onClickOpened(id: Int) {
+                override fun onClickOpened(id: Int , rate : Float) {
                     m_selected_dairy = id
-                    m_onClickNavigator.onClick_to_diaryFragment(m_selected_dairy)
+                    m_onClickNavigator.onClick_to_diaryFragment(m_selected_dairy , rate )
                 }
 
             }
@@ -311,8 +315,8 @@ class MainFragment : Fragment() {
     }
 
     interface DailyAdapterListener{
-        fun onClickLocked(id : Int)
-        fun onClickOpened(id : Int)
+        fun onClickLocked(id : Int , rate : Float)
+        fun onClickOpened(id : Int , rate : Float)
     }
 
     interface CheckPasswordDialogListener{

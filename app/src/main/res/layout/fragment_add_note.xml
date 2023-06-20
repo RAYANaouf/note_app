@@ -39,7 +39,7 @@
         app:layout_constraintWidth_percent="0.85"
 
         android:autofillHints="creditCardExpirationDay"
-        android:textColorHint="@color/gray7"
+        android:textColorHint="@color/gray10"
         app:boxBackgroundMode="none"
         app:hintTextColor="@color/gray7"
 
@@ -60,6 +60,7 @@
             android:lines="1"
             android:maxLines="1"
             android:textSize="22dp"
+             android:textColor="@color/gray10"
 
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -72,7 +73,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="0dp"
 
-        android:background="@color/gray8"
+        android:background="@color/gray10"
 
         app:layout_constraintBottom_toBottomOf="@+id/addNoteFragment_noteTitle_til"
         app:layout_constraintStart_toStartOf="@+id/addNoteFragment_noteTitle_til"

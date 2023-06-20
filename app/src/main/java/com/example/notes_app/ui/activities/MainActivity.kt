@@ -241,7 +241,17 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             binding.mainActivityReturnSiv.visibility=View.VISIBLE
             binding.mainActivityDayRateMrb.isVisible=true
             binding.mainActivityDayRateMrb.rating=m_rate
+            binding.mainActivityDayRateMrb.setIsIndicator(false)
 
+        }
+        else if(currentFragment is DiaryFragment){
+            theme_item_menu?.isVisible=false
+            share_item_menu?.isVisible=false
+
+            binding.mainActivityAccountSiv.visibility=View.INVISIBLE
+            binding.mainActivityReturnSiv.visibility=View.VISIBLE
+            binding.mainActivityDayRateMrb.isVisible=true
+            binding.mainActivityDayRateMrb.setIsIndicator(true)
         }
         else{
             theme_item_menu?.isVisible = true
@@ -250,6 +260,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             binding.mainActivityAccountSiv.visibility=View.VISIBLE
             binding.mainActivityReturnSiv.visibility=View.INVISIBLE
             binding.mainActivityDayRateMrb.isVisible=false
+            binding.mainActivityDayRateMrb.setIsIndicator(false)
 
         }
 
@@ -299,11 +310,12 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             .commit()
     }
 
-    override fun onClick_to_diaryFragment(diary_id: Int) {
+    override fun onClick_to_diaryFragment(diary_id: Int , rate : Float) {
         var ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragment_container , DiaryFragment.newInstance(diary_id))
         ft.addToBackStack("dairy")
         ft.commit()
+        binding.mainActivityDayRateMrb.rating = rate
     }
 
     //dialog viewer

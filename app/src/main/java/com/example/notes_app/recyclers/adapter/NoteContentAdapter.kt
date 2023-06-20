@@ -48,12 +48,6 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             var viewholder = DesHoldre(view , this)
             return viewholder
         }
-        else if(viewType == -1 ) {
-            var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_note_content_text,null,false)
-            view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-            var viewholder = TextHolder(view , this)
-            return viewholder
-        }
         else if(viewType == 1){
             var view = LayoutInflater.from(parent.context).inflate(R.layout.holder_note_content_checkbox,null,false)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -83,15 +77,13 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder.bind(position)
 
         }
-        else if (holder is TextHolder){
-            holder.bind(position)
-        }
-
         else if (holder is CheckboxHolder){
             var checkbox = holder.checkbox
             checkbox.text = this.contents[position].cont
+            checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+                contents[position].is_check=isChecked
+            }
         }
-
         else if(holder is ImageHolder){
 
             val imageBytes = Base64.decode(contents[position].cont, 0)
@@ -180,48 +172,6 @@ class NoteContentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             des.removeTextChangedListener(textWatcher)
             des.addTextChangedListener (textWatcher)
-
-        }
-    }
-
-    class TextHolder : RecyclerView.ViewHolder{
-        var text : TextInputEditText
-        var adapter : NoteContentAdapter
-        constructor(itemView : View , adapter : NoteContentAdapter):super(itemView){
-            text = itemView.findViewById(R.id.noteContentTextHolder_text_tiet)
-            this.adapter =adapter
-        }
-
-        fun bind(pos :Int){
-
-
-            if(adapter.contents[pos].cont==""){
-                text.hint = "sentences : $pos"
-            }else{
-                text.setText(adapter.contents[pos].cont)
-            }
-
-
-            var textWatcher = object : TextWatcher{
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-
-                }
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    adapter.contents[adapterPosition].cont=s.toString()
-                }
-
-                override fun afterTextChanged(s: Editable?) {
-                }
-
-            }
-            text.addTextChangedListener (textWatcher)
-
-
 
         }
     }

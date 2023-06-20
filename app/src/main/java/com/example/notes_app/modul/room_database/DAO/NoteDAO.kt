@@ -19,7 +19,10 @@ interface NoteDAO {
     @Query("select * from Note ORDER BY id DESC ")
     fun getAllNotes() : LiveData<List<Note>>
 
-    @Query("select * from Note where cat_id=:cat_id ORDER BY cat_id DESC ")
+    @Query("select * from Note where id=:id ")
+    fun getNoteById(id : Int):LiveData<Note>
+
+    @Query("select * from Note where cat_id=:cat_id ORDER BY id DESC ")
     fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>
 
 }

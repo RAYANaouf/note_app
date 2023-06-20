@@ -60,6 +60,10 @@ class MyViewModel : AndroidViewModel {
         return m_repo.getNoteByCategory(cat_id)
     }
 
+    fun getNoteById(id : Int ) : LiveData<Note>{
+        return m_repo.getNoteById(id)
+    }
+
 
     fun addNoteContent(noteContent: NoteContent){
         GlobalScope.launch{
