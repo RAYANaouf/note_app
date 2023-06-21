@@ -25,12 +25,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() , TimePickerDialog.OnTimeSe
     private
     var m_calendar : Calendar = Calendar.getInstance()
     private var isDateSet = false
-    private var isTimeSet = false ;
-    private var m_hourOfDay = 0
-    private var m_minute = 0
-    private var m_year = 0
-    private var m_month = 0
-    private var m_dayOfMonth = 0
+    private var isTimeSet = false
 
     override fun onCreateView(
         inflater: LayoutInflater,

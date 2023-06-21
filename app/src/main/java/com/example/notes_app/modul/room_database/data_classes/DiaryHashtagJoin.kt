@@ -11,10 +11,10 @@ import androidx.room.ForeignKey
     ]
 )
 class  DiaryHashtagJoin{
-    val diaryId: Int
+    val diaryId: Long
     val hashtagId: String
 
-    constructor(diaryId : Int , hashtagId : String){
+    constructor(diaryId : Long , hashtagId : String){
         this.diaryId = diaryId
         this.hashtagId = hashtagId
     }

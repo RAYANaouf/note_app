@@ -1,3 +1,5 @@
+
+
 package com.example.notes_app.ui.fragments
 
 import android.content.Context
@@ -6,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notes_app.databinding.FragmentNotesBinding
@@ -18,7 +19,7 @@ import com.example.notes_app.ui.interfaces.OnClickNavigator
 
 public const val ARG_CAT_ID="cat_id"
 
-class NotesFragment : Fragment() {
+class DiariesFragment : Fragment() {
 
     private lateinit var binding : FragmentNotesBinding
     private lateinit var m_ViewModul : MyViewModel
@@ -64,14 +65,9 @@ class NotesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.notesFragmentAddFab.setOnClickListener {
-//            m_open_dialog.add_note(m_catId)
-            m_onClickNavigator.onClick_to_addNoteFragment(2F)
-        }
-
-        binding.notesFragmentNotesRv.adapter = NotesAdapter(this , m_ViewModul , m_catId)
-        binding.notesFragmentNotesRv.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        binding.notesFragmentNotesRv.addItemDecoration(NoteDecoration(requireContext() , 5f , 5f))
+        binding.notesFragmentNotesRv.adapter = NotesAdapter(requireContext() , this , m_ViewModul , m_catId)
+        binding.notesFragmentNotesRv.layoutManager = StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL)
+        binding.notesFragmentNotesRv.addItemDecoration(NoteDecoration(requireContext() , 5f , 0f))
     }
 
     override fun onStart() {
@@ -83,7 +79,7 @@ class NotesFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(cat_id : Int) = NotesFragment().apply {
+        fun newInstance(cat_id : Int) = DiariesFragment().apply {
             arguments = Bundle().apply {
                 putInt(ARG_CAT_ID,cat_id)
             }

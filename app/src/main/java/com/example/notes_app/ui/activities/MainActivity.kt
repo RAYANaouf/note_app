@@ -140,22 +140,38 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
             when(itemId){
                 R.id.navMenu_home->{
+                    binding.mainActivityDrawerDl.closeDrawers()
+
                     if (m_page=="home"){
-                        binding.mainActivityDrawerDl.closeDrawers()
                         return@setNavigationItemSelectedListener true
                     }
+
                     m_page="home"
                     var fragmentTransaction = supportFragmentManager.beginTransaction()
                     fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance(m_email))
                         .addToBackStack(null)
                         .commit()
-                    binding.mainActivityDrawerDl.closeDrawers()
                 }
-                R.id.navMenu_calendar->{
-                    if (m_page=="calendar"){
-                        binding.mainActivityDrawerDl.closeDrawers()
+                R.id.navMenu_diary->{
+                    binding.mainActivityDrawerDl.closeDrawers()
+
+                    if (m_page=="diary"){
                         return@setNavigationItemSelectedListener true
                     }
+
+                    m_page="setting"
+                    var fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.fragment_container , DiariesFragment.newInstance(-1))
+                        .addToBackStack(null)
+                    fragmentTransaction.commit()
+                }
+                R.id.navMenu_calendar->{
+                    binding.mainActivityDrawerDl.closeDrawers()
+
+                    if (m_page=="calendar"){
+                        return@setNavigationItemSelectedListener true
+                    }
+
                     Toast.makeText(applicationContext , "calendar" , Toast.LENGTH_LONG).show()
                 }
                 R.id.navMenu_AI->{
@@ -205,12 +221,14 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
                 add_category()
             }
             R.id.main_menu_setting->{
+                m_page="setting"
                 var fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.fragment_container , SettingFragment.newInstance())
                     .addToBackStack(null)
                 fragmentTransaction.commit()
             }
             R.id.main_menu_about_us->{
+                m_page="about_us"
                 var fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.fragment_container , AboutUsFragment.newInstance())
                     .addToBackStack(null)
@@ -296,7 +314,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     override fun onClick_to_notesFragment(cat_id : Int) {
         m_page="notes"
         var fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container , NotesFragment.newInstance(cat_id))
+        fragmentTransaction.replace(R.id.fragment_container , DiariesFragment.newInstance(cat_id))
             .addToBackStack(null)
             .commit()
     }

@@ -25,6 +25,9 @@ import com.example.notes_app.modul.room_database.data_classes.User
 import com.example.notes_app.recyclers.item_decoration.HashtagDicoration
 import com.example.notes_app.ui.dialog.CheckPasswordDialog
 import com.example.notes_app.ui.fragments.MainFragment
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.*
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
@@ -57,7 +60,9 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         CoroutineScope(Dispatchers.Main).launch {
             m_viewModule.getAllNotes().observe(m_owner){
-                m_content.addAll(it)
+                it.forEach {
+                    m_content.add(it)
+                }
                 notifyDataSetChanged()
             }
         }
@@ -97,19 +102,18 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         else if (holder is HolderDaily)
         {
             
-            
-            GlobalScope.launch {
-                var relation : List<DiaryHashtagJoin> = m_viewModule.getHashtagsByDiaryId(m_content[position].id)
+
+
+//                var relation : List<DiaryHashtagJoin> = m_viewModule.getHashtagsByDiaryId(m_content[position].id)
                 var hashtags = ArrayList<Hashtag>()
+//
+//                for (r in relation){
+//                    hashtags.add(Hashtag(r.hashtagId))
+//                }
 
-                for (r in relation){
-                    hashtags.add(Hashtag(r.hashtagId))
-                }
+            holder.bind(position , hashtags)
 
-                withContext(Dispatchers.Main){
-                    holder.bind(position , hashtags)
-                }
-            }
+
             
 
         }
@@ -168,12 +172,20 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         var m_description      : TextView
 
         constructor(itemView : View , hashtagAdapter: HashtagAdapter  , adapter: DailyAdapter):super(itemView){
-            this.m_adapter   = adapter
-            this.m_hashtag_adapter = hashtagAdapter
-            this.m_recycler  = itemView.findViewById(R.id.holderDaily_hashtags_rv)
-            this.m_recycler.adapter = m_hashtag_adapter
-            this.m_recycler.layoutManager = StaggeredGridLayoutManager(1 ,StaggeredGridLayoutManager.HORIZONTAL)
+            this.m_adapter                     = adapter
+            this.m_hashtag_adapter             = hashtagAdapter
+            this.m_recycler                    = itemView.findViewById(R.id.holderDaily_hashtags_rv)
+            this.m_recycler.adapter            = m_hashtag_adapter
+            /*****************       set the flexbox layout manager     &&  item decoration    *************************/
+            var flexBoxLayoutManager           = FlexboxLayoutManager(m_adapter.m_context)
+            flexBoxLayoutManager.flexDirection = FlexDirection.ROW
+            flexBoxLayoutManager.flexWrap      = FlexWrap.WRAP
+            this.m_recycler.layoutManager      = flexBoxLayoutManager
+
+            //item decoration
             this.m_recycler.addItemDecoration(HashtagDicoration(m_adapter.m_context , 1f,1f,1f,1f))
+            /***************************************************************************************/
+
             this.m_date      = itemView.findViewById(R.id.holderDaily_date_tv)
             this.m_container = itemView.findViewById(R.id.holderDaily_container_mcv)
             m_ratingBar      = itemView.findViewById(R.id.holderDaily_rateDay_mrb)

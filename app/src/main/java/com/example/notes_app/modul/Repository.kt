@@ -140,4 +140,8 @@ class Repository {
         return m_hashtagDAO.isHashtagExist(hashtag)
     }
 
+    fun addDiaryHashtagJoin(diaryHashtagJoin : DiaryHashtagJoin){
+        m_diaryHashtagJoinDAO.addDiaryHashtagJoin(diaryHashtagJoin)
+    }
+
 }

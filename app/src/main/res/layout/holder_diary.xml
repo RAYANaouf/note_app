@@ -16,7 +16,7 @@
         android:textColor="@color/gray8"
         android:textSize="13dp"
         android:textStyle="bold"
-        android:background="@color/white"
+        android:background="@drawable/radius20_what_background"
         android:elevation="0.1dp"
 
         app:layout_constraintBottom_toTopOf="@+id/holderDaily_container_mcv"

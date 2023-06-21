@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bottom_sheet_alarm">
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+
+        android:layout_height="30dp"
+        android:scaleType="centerCrop"
+
+        android:src="@drawable/slide_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bottomSheethashtag_send_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+
+        android:src="@drawable/send"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintEnd_toEndOf="@+id/bottomSheethashtag_hashtagrecycler_rv"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout3" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        android:layout_marginTop="16dp"
+        app:hintTextColor="@color/gray8"
+        app:boxStrokeColor="#1976D0"
+        app:startIconTint="@color/gray8"
+
+        app:layout_constraintEnd_toStartOf="@+id/bottomSheethashtag_send_iv"
+        app:layout_constraintStart_toStartOf="@+id/bottomSheethashtag_hashtagrecycler_rv"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:startIconDrawable="@drawable/hashtag_icon">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/bottomSheethashtag_hashtagField_tiet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="40dp"
+        app:layout_constrainedWidth="true"
+
+        android:background="@color/gray3"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
+        app:layout_constraintWidth_percent="0.8" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bottomSheethashtag_hashtagrecycler_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="50dp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

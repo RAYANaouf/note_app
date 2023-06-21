@@ -87,5 +87,7 @@ dependencies {
     //Gson
     implementation 'com.google.code.gson:gson:2.8.8'
 
+    //flex box
+        implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
 }

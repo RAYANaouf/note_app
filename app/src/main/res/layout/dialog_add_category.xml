@@ -109,7 +109,7 @@
             android:layout_height="50dp"
             app:layout_constrainedWidth="true"
 
-            android:textColor="#0024FF"
+            android:textColor="#1976D0"
             android:text="Add"
             android:gravity="center"
             android:textSize="20dp"

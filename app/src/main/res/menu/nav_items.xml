@@ -6,11 +6,12 @@
             <item android:id="@+id/navMenu_home"
                 android:title="Home"
                 android:icon="@drawable/home"/>
-            <item android:title="task"
-                android:icon="@drawable/checked_task"/>
+            <item android:id="@+id/navMenu_diary"
+                android:title="Diary"
+                android:icon="@drawable/diary"/>
             <item android:id="@+id/navMenu_calendar"
                 android:title="Calendar"
-                android:icon="@drawable/calendar"/>
+                android:icon="@drawable/hashtag"/>
         </menu>
     </item>
 
@@ -23,11 +24,14 @@
     </item>
     <item android:title="other">
         <menu>
-            <item android:title="theme"
+            <item android:id="@+id/theme"
+                android:title="theme"
                 android:icon="@drawable/theme"/>
-            <item android:title="contact us"
+            <item android:id="@+id/contact_us"
+                android:title="contact us"
                 android:icon="@drawable/contact"/>
-            <item android:title="about us"
+            <item android:id="@+id/about_us"
+                android:title="about us"
                 android:icon="@drawable/about_us"/>
         </menu>
     </item>

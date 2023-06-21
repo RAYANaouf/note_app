@@ -5,10 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.notes_app.modul.room_database.data_classes.*
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MyViewModel : AndroidViewModel {
 
@@ -95,8 +92,8 @@ class MyViewModel : AndroidViewModel {
         m_repo.addUser(user)
     }
 
-    fun addHashtag(hashtag : Hashtag){
-        GlobalScope.launch {
+    fun addHashtag(hashtag : Hashtag):Job{
+        return GlobalScope.launch {
             m_repo.addHashtag(hashtag)
         }
     }
@@ -118,6 +115,12 @@ class MyViewModel : AndroidViewModel {
 
     fun isHashtagExist(hashtag : String): Int{
         return m_repo.isHashtagExist(hashtag)
+    }
+
+    fun addDiaryHashtagJoin(diaryHashtagJoin : DiaryHashtagJoin){
+        GlobalScope.launch {
+            m_repo.addDiaryHashtagJoin(diaryHashtagJoin)
+        }
     }
 
 }

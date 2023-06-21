@@ -60,9 +60,9 @@
             android:lines="1"
             android:maxLines="1"
             android:textSize="22dp"
-             android:textColor="@color/gray10"
-
+            android:textColor="@color/gray10"
             />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -251,6 +251,20 @@
 
         app:layout_constraintBottom_toBottomOf="@+id/fragmentAddNote_noteContents_rv"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/addNoteFragment_hashtag_siv"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+
+        android:background="@color/gray4"
+        android:scaleType="centerInside"
+        android:src="@drawable/hashtag_icon"
+        app:layout_constraintBottom_toTopOf="@+id/addNoteFragment_lock_siv"
+
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+        app:shapeAppearanceOverlay="@style/Circular" />
 
 
 
