@@ -24,8 +24,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
 
-        android:layout_marginTop="20dp"
         android:paddingStart="15dp"
 
         android:text="Diary categories"
@@ -33,7 +33,7 @@
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainFragment_rateDateContainer_csl" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -61,13 +61,176 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/MainFragment_container_csl"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintHeight_max="170dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/MainFragment_activeDiary_siv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="-5dp"
+
+            android:background="@android:color/holo_green_light"
+            android:elevation="3dp"
+
+            app:layout_constraintEnd_toEndOf="@+id/MainFragment_activeContainer_mcv"
+            app:layout_constraintTop_toTopOf="@+id/MainFragment_activeContainer_mcv"
+            app:shapeAppearanceOverlay="@style/Circular" />
+
+        <TextView
+            android:id="@+id/MainFragment_activeDate_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius20_what_background"
+            android:elevation="0.1dp"
+
+
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="mm / dd / yy"
+            android:textColor="@color/gray8"
+            android:textSize="13dp"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toTopOf="@+id/MainFragment_activeContainer_mcv"
+            app:layout_constraintEnd_toEndOf="@+id/MainFragment_activeContainer_mcv"
+            app:layout_constraintStart_toStartOf="@+id/MainFragment_activeContainer_mcv"
+            app:layout_constraintTop_toTopOf="@+id/MainFragment_activeContainer_mcv" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/MainFragment_activeContainer_mcv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:elevation="0dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeColor="@color/gray2"
+            app:strokeWidth="1.5dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/MainFragment_activeRateDay_mrb"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+
+                    android:isIndicator="true"
+                    android:numStars="8"
+                    android:progressBackgroundTint="@color/gray2"
+                    android:progressTint="@color/gray8"
+                    android:rating="3"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:secondaryProgressTint="@color/gray5"
+                    android:stepSize="0.5"
+
+                    android:transformPivotY="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/MainFragment_activeEmoji_iv"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="20dp"
+
+                    android:layout_marginEnd="8dp"
+
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/emoji6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/MainFragment_activeTitle_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+
+                    android:layout_marginRight="10dp"
+                    android:maxLines="1"
+                    android:text="here is the title "
+                    android:textColor="@color/gray10"
+                    android:textSize="16dp"
+
+                    app:layout_constraintEnd_toStartOf="@+id/MainFragment_activeEmoji_iv"
+                    app:layout_constraintLeft_toLeftOf="@+id/MainFragment_activeRateDay_mrb"
+                    app:layout_constraintStart_toStartOf="@+id/MainFragment_activeRateDay_mrb"
+                    app:layout_constraintTop_toTopOf="@+id/MainFragment_activeRateDay_mrb" />
+
+                <TextView
+                    android:id="@+id/MainActivity_activeDescription_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+
+                    android:maxWidth="130dp"
+                    android:maxLines="6"
+                    android:text="here is the description"
+                    android:textColor="@color/gray8"
+
+                    app:layout_constraintEnd_toEndOf="@+id/MainFragment_activeTitle_tv"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/MainFragment_activeTitle_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/MainFragment_activeTitle_tv" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/holderDaily_hashtags_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constrainedHeight="true"
+                    app:layout_constraintHeight_max="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/MainFragment_activeEmoji_iv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/MainActivity_activeDescription_tv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="visible"
         android:id="@+id/MainFragment_rateDateContainer_csl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:scaleX="1"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.504">
 
         <TextView
             android:id="@+id/MainFragment_date_tv"
@@ -177,6 +340,19 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/MainFragment_active_siv"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginRight="-5dp"
+
+            android:background="@android:color/holo_green_light"
+            android:elevation="3dp"
+
+            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
+            app:layout_constraintTop_toTopOf="@+id/materialCardView"
+            app:shapeAppearanceOverlay="@style/Circular" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

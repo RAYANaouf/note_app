@@ -25,4 +25,7 @@ interface NoteDAO {
     @Query("select * from Note where cat_id=:cat_id ORDER BY id DESC ")
     fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>
 
+    @Query("select * from Note where date= :date")
+    fun getNoteByDate( date : String):Note
+
 }

@@ -11,4 +11,10 @@ pie chart #0024FF
           #81127F
           #C1093F
           #FD0004
-          
+
+
+
+
+color sky_blue  #73caff
+    second_blue #1976D0
+    blue_dark   #00294F

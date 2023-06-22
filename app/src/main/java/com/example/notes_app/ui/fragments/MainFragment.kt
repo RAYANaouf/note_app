@@ -1,5 +1,9 @@
 package com.example.notes_app.ui.fragments
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -16,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.notes_app.R
+import com.example.notes_app.classes.RegesterHandler
 import com.example.notes_app.databinding.FragmentMainBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.User
@@ -38,9 +43,14 @@ class MainFragment : Fragment() {
 
     private lateinit var binding  : FragmentMainBinding
     private lateinit var m_viewModel : MyViewModel
+
+    //accounts handler
+    private lateinit var m_accountHandler : RegesterHandler
+
     private lateinit var m_onClickNavigator : OnClickNavigator
     private  var m_email  = ""
     private lateinit var m_user : User
+    private var is_active = false
 
     //the diary i click
     private  var m_rate:Float = 0F
@@ -66,6 +76,9 @@ class MainFragment : Fragment() {
         //set the view model
         m_viewModel = ViewModelProvider(this).get(MyViewModel::class.java)
 
+        //set up the connection handler
+        m_accountHandler = RegesterHandler(requireContext())
+
         runBlocking {
             launch {
                 m_user = m_viewModel.getUserByEmail(m_email)
@@ -82,6 +95,11 @@ class MainFragment : Fragment() {
 
         //set the view binding
         binding  = FragmentMainBinding.inflate(inflater)
+
+        //to reset each time and when we return back
+        is_active        = m_accountHandler.isActive()
+
+
         return binding.root
 
     }
@@ -102,13 +120,17 @@ class MainFragment : Fragment() {
 
         setViewIn()
 
+        set_animation()
+
         setOnClicks()
+
     }
 
     override fun onStart() {
         super.onStart()
 
         requireActivity().invalidateOptionsMenu()
+
 
         /****************   reset daily rate    ***************/
         binding.MainFragmentRateDayMrb.rating = 3f
@@ -301,6 +323,87 @@ class MainFragment : Fragment() {
         var byteArray = Base64.decode(m_user.photo , Base64.DEFAULT)
         binding.MainFragmentPhotoSiv.setImageBitmap(BitmapFactory.decodeByteArray(byteArray , 0 , byteArray.size))
 
+        /************  active daily rate or not    ************************/
+
+        if (is_active){
+            binding.MainFragmentRateDateContainerCsl.visibility = View.VISIBLE
+            binding.MainFragmentContainerCsl.visibility = View.INVISIBLE
+         }
+        else{
+            binding.MainFragmentRateDateContainerCsl.visibility = View.INVISIBLE
+            binding.MainFragmentContainerCsl.visibility = View.VISIBLE
+
+            GlobalScope.launch {
+
+                var calendar = Calendar.getInstance()
+                var date = "${calendar[Calendar.MONTH]+1}/${calendar[Calendar.DAY_OF_MONTH]}/${calendar[Calendar.YEAR]}"
+
+                var note = m_viewModel.getNoteByDate(date)
+
+
+
+                withContext(Dispatchers.Main){
+              Toast.makeText(requireContext() , "${note}" , Toast.LENGTH_LONG).show()
+                    binding.MainFragmentActiveEmojiIv.setImageResource(note.icon)
+                    binding.MainFragmentActiveTitleTv.setText(note.title)
+                    binding.MainActivityActiveDescriptionTv.setText(note.description)
+                    binding.MainFragmentActiveDateTv.setText(note.date)
+                    binding.MainFragmentActiveRateDayMrb.rating=note.rate
+                }
+            }
+
+        }
+
+
+    }
+
+    fun set_animation(){
+
+        if (is_active){
+            // To make the view appear (fade-in)
+            val fadeInAnimator = ObjectAnimator.ofFloat(binding.MainFragmentActiveSiv, "alpha", 0f, 1f)
+            fadeInAnimator.duration = 1800 // Adjust the duration as desired
+
+            // To make the view disappear (fade-out)
+            val fadeOutAnimator = ObjectAnimator.ofFloat(binding.MainFragmentActiveSiv, "alpha", 1f, 0f)
+            fadeOutAnimator.duration = 1800 // Adjust the duration as desired
+
+            // Set up the infinite loop
+            val animatorSet = AnimatorSet()
+            animatorSet.playSequentially(fadeInAnimator, fadeOutAnimator)
+            animatorSet.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    animatorSet.start() // Restart the animation when it ends
+                }
+            })
+
+            // Start the infinite animation
+            animatorSet.start()
+        }
+
+        else{
+            // To make the view appear (fade-in)
+            val fadeInAnimator2 = ObjectAnimator.ofFloat(binding.MainFragmentActiveDiarySiv, "alpha", 0f, 1f)
+            fadeInAnimator2.duration = 1800 // Adjust the duration as desired
+
+            // To make the view disappear (fade-out)
+            val fadeOutAnimator2 = ObjectAnimator.ofFloat(binding.MainFragmentActiveDiarySiv, "alpha", 1f, 0f)
+            fadeOutAnimator2.duration = 1800 // Adjust the duration as desired
+
+            // Set up the infinite loop
+            val animatorSet2 = AnimatorSet()
+            animatorSet2.playSequentially(fadeInAnimator2, fadeOutAnimator2)
+            animatorSet2.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    super.onAnimationEnd(animation)
+                    animatorSet2.start() // Restart the animation when it ends
+                }
+            })
+
+            // Start the infinite animation
+            animatorSet2.start()
+        }
     }
 
     companion object {

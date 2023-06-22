@@ -11,6 +11,7 @@ private const val USER_DATA="data"
 private const val IS_CONNECTED="is_connected"
 private const val CONN_USERS = "connected_users"
 private const val CONN_USER  = "connected_user"
+private const val IS_ACTIVE  = "active"
 
 class RegesterHandler {
 
@@ -27,6 +28,22 @@ class RegesterHandler {
     fun isLoggin():Boolean{
         return m_data.getBoolean(IS_CONNECTED,false)
     }
+
+    fun isActive():Boolean{
+        return m_data.getBoolean(IS_ACTIVE,true)
+    }
+
+
+    fun activate(){
+        m_editor.putBoolean(IS_ACTIVE,true)
+        m_editor.apply()
+    }
+
+    fun deactivate(){
+        m_editor.putBoolean(IS_ACTIVE,false)
+        m_editor.apply()
+    }
+
 
     fun conn_user():String{
         return m_data.getString(CONN_USER,"") ?: ""

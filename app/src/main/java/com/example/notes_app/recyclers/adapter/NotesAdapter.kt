@@ -22,10 +22,7 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import org.w3c.dom.Text
 
@@ -71,15 +68,15 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 //        holder.bind(position)
 
-        if(holder is DailyAdapter.HolderLockedDaily){
+        if(holder is HolderLockedDaily){
             holder.bind(position)
         }
-        else if (holder is DailyAdapter.HolderDaily)
+        else if (holder is HolderDaily)
         {
 
 
             GlobalScope.launch {
-                var relation : List<DiaryHashtagJoin> = m_viewModel.getHashtagsByDiaryId(m_content[position].id)
+                var relation : List<DiaryHashtagJoin> = async { m_viewModel.getHashtagsByDiaryId(m_content[position].id) }.await()
                 var hashtags = ArrayList<Hashtag>()
 
                 for (r in relation){
@@ -245,13 +242,12 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             else{
                 m_description.setText(m_adapter.m_content[pos].description)
             }
-            if (m_adapter.m_content[pos].color!=0){
+
                 m_container.setStrokeColor(m_adapter.m_content[pos].color)
                 m_ratingBar.backgroundTintList= ColorStateList.valueOf(m_adapter.m_content[pos].color)
                 m_ratingBar.progressTintList = ColorStateList.valueOf(m_adapter.m_content[pos].color)
                 m_ratingBar.secondaryProgressTintList = ColorStateList.valueOf(m_adapter.m_content[pos].color)
 
-            }
 
             m_container.setOnClickListener {
 //                m_adapter.m_OnClickListener.onClickOpened(m_adapter.m_content[pos].id , m_adapter.m_content[pos].rate)

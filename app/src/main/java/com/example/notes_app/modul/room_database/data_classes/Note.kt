@@ -19,7 +19,7 @@ class Note {
     var color   : Int
     var theme   : Int
 
-    constructor(id : Int = 0 , cat_id : Int = 1  , date : String  = "MM/DD/YY", lock : Boolean = false , rate : Float = 0F , color : Int = 0 , icon : Int=0 , theme : Int = 0,  title : String , description : String ){
+    constructor(id : Int = 0 , cat_id : Int = 1  , date : String  = "MM/DD/YY", lock : Boolean = false , rate : Float = 0F , color : Int = -9408400 , icon : Int=0 , theme : Int = 0,  title : String , description : String ){
         this.id          = id
         this.cat_id      = cat_id
         this.date        = date

@@ -1,11 +1,13 @@
 package com.example.notes_app.ui.activities
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Base64
 import android.view.*
 import android.view.View.OnTouchListener
@@ -96,12 +98,15 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         //set the drawer && navigator
         drawer_navigator_setUp()
 
+        //register item with context menu
+        registerItemWithContextMenu()
+
         //set onclicks
         setOnClicks()
 
 
     }
-    
+
 
 
 
@@ -182,10 +187,11 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             return@setNavigationItemSelectedListener true
         }
 
-        LayoutInflater.from(this).inflate(R.layout.navigator_header , null ).findViewById<ImageView>(R.id.navigationHeader_image_iv).setImageResource(R.drawable.emoji1)
-
     }
 
+    fun registerItemWithContextMenu(){
+        registerForContextMenu(binding.mainActivityFilterSiv)
+    }
 
     fun setOnClicks(){
         binding.mainActivityAccountSiv.setOnClickListener {
@@ -200,8 +206,13 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         binding.mainActivityDayRateMrb.setOnRatingChangeListener { ratingBar, rating ->
             changeRate(binding.mainActivityDayRateMrb.rating)
         }
+
+        binding.mainActivityFilterSiv.setOnClickListener {
+            openContextMenu(binding.mainActivityFilterSiv)
+        }
     }
 
+    /*******************************************   set the option menu **********************************************/
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.main_menu,menu)
@@ -250,41 +261,81 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         var theme_item_menu = menu?.findItem(R.id.main_menu_theme)
         var share_item_menu = menu?.findItem(R.id.main_menu_share)
 
-        var currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-        if(currentFragment is AddNoteFragment){
-            theme_item_menu?.isVisible=false
-            share_item_menu?.isVisible=false
+        //*********************  set invisible ************************//
 
-            binding.mainActivityAccountSiv.visibility=View.INVISIBLE
+        //menu
+        theme_item_menu?.isVisible=false
+        share_item_menu?.isVisible=false
+
+        //tools (in the tool-bar)
+        binding.mainActivityReturnSiv.visibility    = View.INVISIBLE
+        binding.mainActivityAccountSiv.visibility   = View.INVISIBLE
+        binding.mainActivityFilterSiv.visibility    = View.INVISIBLE
+        binding.mainActivitySearchBarTil.visibility = View.INVISIBLE
+        binding.mainActivityDayRateMrb.isVisible    = false
+
+        //*************************************************************//
+
+        var currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+        if(currentFragment is MainFragment){
+            //menu
+            share_item_menu?.isVisible=true
+
+            //tools (in the tool-bar)
+            binding.mainActivityAccountSiv.visibility   = View.VISIBLE
+
+        }
+        if(currentFragment is AddNoteFragment){
+
+            //visible
+            binding.mainActivityReturnSiv.visibility=View.VISIBLE
+            binding.mainActivityDayRateMrb.isVisible=true
+            binding.mainActivityDayRateMrb.rating=m_rate
+            binding.mainActivityDayRateMrb.setIsIndicator(false)
+
+
+        }
+        else if(currentFragment is DiaryFragment){
+
+            //visible
             binding.mainActivityReturnSiv.visibility=View.VISIBLE
             binding.mainActivityDayRateMrb.isVisible=true
             binding.mainActivityDayRateMrb.rating=m_rate
             binding.mainActivityDayRateMrb.setIsIndicator(false)
 
         }
-        else if(currentFragment is DiaryFragment){
-            theme_item_menu?.isVisible=false
-            share_item_menu?.isVisible=false
+        else if(currentFragment is DiariesFragment){
 
-            binding.mainActivityAccountSiv.visibility=View.INVISIBLE
             binding.mainActivityReturnSiv.visibility=View.VISIBLE
-            binding.mainActivityDayRateMrb.isVisible=true
-            binding.mainActivityDayRateMrb.setIsIndicator(true)
-        }
-        else{
-            theme_item_menu?.isVisible = true
-            share_item_menu?.isVisible = true
-
-            binding.mainActivityAccountSiv.visibility=View.VISIBLE
-            binding.mainActivityReturnSiv.visibility=View.INVISIBLE
-            binding.mainActivityDayRateMrb.isVisible=false
-            binding.mainActivityDayRateMrb.setIsIndicator(false)
+            binding.mainActivitySearchBarTil.visibility=View.VISIBLE
+            binding.mainActivityFilterSiv.visibility = View.VISIBLE
 
         }
 
         return true
     }
 
+    /****************************************************************************************************************/
+
+    /*******************************************   set the context menu **********************************************/
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        menuInflater.inflate(R.menu.search_filter_menu , menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+
+        return true
+    }
+    /*****************************************************************************************************************/
+
+
+    /***********************************   set the action with  return btn ******************************************/
     override fun onBackPressed() {
         var fm = supportFragmentManager
         if (fm.backStackEntryCount == 1){
@@ -301,13 +352,19 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             finish()
         }
     }
+    /****************************************************************************************************************/
 
+
+
+
+    /*****************************************   edit fragment (response) *******************************************/
     fun changeRate(rating : Float){
         var fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
         if (fragment is AddNoteFragment){
             fragment.setRate(rating)
         }
     }
+    /****************************************************************************************************************/
 
 
 

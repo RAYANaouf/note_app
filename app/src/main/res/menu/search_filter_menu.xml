@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/searchFilterMenu_title_item"
+        app:showAsAction="never"
+        android:title="title" />
+
+    <item android:id="@+id/searchFilterMenu_content_item"
+        app:showAsAction="never"
+        android:title="content" />
+
+    <item android:id="@+id/searchFilterMenu_hashtag_item"
+        app:showAsAction="never"
+        android:title="hashtag" />
+
+    <item android:id="@+id/searchFilterMenu_date_item"
+        app:showAsAction="never"
+        android:title="date" />
+
+
+</menu>

@@ -104,14 +104,18 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             
 
 
-//                var relation : List<DiaryHashtagJoin> = m_viewModule.getHashtagsByDiaryId(m_content[position].id)
-                var hashtags = ArrayList<Hashtag>()
-//
-//                for (r in relation){
-//                    hashtags.add(Hashtag(r.hashtagId))
-//                }
+                GlobalScope.launch {
+                    var relation : List<DiaryHashtagJoin> = m_viewModule.getHashtagsByDiaryId(m_content[position].id)
+                    var hashtags = ArrayList<Hashtag>()
 
-            holder.bind(position , hashtags)
+                    for (r in relation){
+                        hashtags.add(Hashtag(r.hashtagId))
+                    }
+
+                    withContext(Dispatchers.Main){
+                        holder.bind(position , hashtags)
+                    }
+                }
 
 
             
@@ -207,13 +211,10 @@ class DailyAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
             else{
                 m_description.setText(m_adapter.m_content[pos].description)
             }
-            if (m_adapter.m_content[pos].color!=0){
                 m_container.setStrokeColor(m_adapter.m_content[pos].color)
                 m_ratingBar.backgroundTintList= ColorStateList.valueOf(m_adapter.m_content[pos].color)
                 m_ratingBar.progressTintList = ColorStateList.valueOf(m_adapter.m_content[pos].color)
                 m_ratingBar.secondaryProgressTintList = ColorStateList.valueOf(m_adapter.m_content[pos].color)
-
-            }
 
             m_container.setOnClickListener {
                 m_adapter.m_OnClickListener.onClickOpened(m_adapter.m_content[pos].id , m_adapter.m_content[pos].rate)

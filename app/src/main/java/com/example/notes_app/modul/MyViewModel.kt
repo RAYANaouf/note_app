@@ -58,6 +58,10 @@ class MyViewModel : AndroidViewModel {
         return m_repo.getNoteById(id)
     }
 
+    fun getNoteByDate( date : String):Note{
+        return m_repo.getNoteByDate(date)
+    }
+
 
     fun addNoteContent(noteContent: NoteContent){
         GlobalScope.launch{

@@ -101,6 +101,10 @@ class Repository {
     }
 
 
+    fun getNoteByDate( date : String):Note{
+        return m_noteDAO.getNoteByDate(date)
+    }
+
     fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>{
         return m_noteDAO.getNoteByCategory(cat_id)
     }

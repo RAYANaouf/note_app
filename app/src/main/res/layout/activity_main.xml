@@ -57,13 +57,12 @@
                             app:layout_constraintBottom_toBottomOf="@+id/mainActivity_account_siv"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/mainActivity_account_siv"
-                            app:layout_constraintTop_toTopOf="@+id/mainActivity_account_siv"
-                            tools:visibility="visible" />
+                            app:layout_constraintTop_toTopOf="@+id/mainActivity_account_siv" />
 
                         <com.google.android.material.imageview.ShapeableImageView
                             android:id="@+id/mainActivity_account_siv"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
 
                             android:visibility="visible"
 
@@ -82,12 +81,58 @@
 
                             android:visibility="invisible"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/chevron_left_2"
+                            android:src="@drawable/left_arrow"
                             app:shapeAppearanceOverlay="@style/Circular"
                             android:layout_marginStart="25dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/mainActivity_searchBar_til"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="16dp"
+
+                            android:visibility="visible"
+                            app:boxStrokeColor="#1976D0"
+                            app:hintTextColor="#1976D0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+
+                            app:layout_constraintEnd_toStartOf="@+id/mainActivity_filter_siv"
+                            app:layout_constraintStart_toEndOf="@+id/mainActivity_return_siv"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:startIconDrawable="@drawable/search_icon"
+                            app:startIconTint="#1976D0">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+
+                                android:firstBaselineToTopHeight="20dp"
+                                android:hint="search"
+                                android:lastBaselineToBottomHeight="10dp"
+                                android:textSize="10dp" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/mainActivity_filter_siv"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+
+                            android:src="@drawable/filter"
+
+                            android:layout_marginRight="20dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.appbar.MaterialToolbar>
 
@@ -116,4 +161,3 @@
         app:headerLayout="@layout/navigator_header"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
-

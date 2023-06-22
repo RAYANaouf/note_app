@@ -1,7 +1,11 @@
 package com.example.notes_app.ui.fragments
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -20,12 +24,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes_app.R
+import com.example.notes_app.classes.RegesterHandler
 import com.example.notes_app.databinding.FragmentAddNoteBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.DiaryHashtagJoin
 import com.example.notes_app.modul.room_database.data_classes.Hashtag
 import com.example.notes_app.modul.room_database.data_classes.Note
 import com.example.notes_app.modul.room_database.data_classes.NoteContent
+import com.example.notes_app.receivers.ActivateReceiver
 import com.example.notes_app.recyclers.adapter.NoteContentAdapter
 import com.example.notes_app.recyclers.item_decoration.NoteContentDecoration
 import com.example.notes_app.ui.bottomSheet.HashtagBottomSheet
@@ -53,13 +59,14 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
     private lateinit var binding : FragmentAddNoteBinding
     private lateinit var m_viewModel : MyViewModel
     private lateinit var m_navigator : OnClickNavigator
+    private lateinit var m_accountHandler : RegesterHandler
 
 
     //cat_id arrayOfContent  &&  color && icon && content  &&  lock
     private lateinit var m_contents : ArrayList<NoteContent>
     private var cat_id: Int = 0
     private var m_rating : Float = 0F
-    private var m_color = 0
+    private var m_color = -9408400
     private var m_icon = R.drawable.emoji4
     private var m_cont = ""
     private var m_lock = false
@@ -131,6 +138,9 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
         arguments?.let {
             m_rating = it.getFloat(ARG_RATING)
         }
+
+        //create handler
+        m_accountHandler = RegesterHandler(requireContext())
 
     }
 
@@ -216,6 +226,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
         //set imoji
         this.setRate(m_rating)
 
+
     }
 
     private fun setAllOnclicks(){
@@ -271,9 +282,18 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
                     }
                 }
 
+                m_accountHandler.deactivate()
 
+                var alarmManager = requireContext().getSystemService(AlarmManager::class.java)
+                var intent = Intent(requireContext(),ActivateReceiver::class.java)
+                var pendingIntent = PendingIntent.getBroadcast(requireContext() , 0 , intent , 0)
 
-
+                var calendar = Calendar.getInstance()
+//                calendar.set(Calendar.HOUR , 0)
+                calendar.add(Calendar.SECOND , 10)
+//                calendar.set(Calendar.SECOND , 0)
+//                calendar.add(Calendar.DAY_OF_MONTH,1)
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP , calendar.timeInMillis , pendingIntent)
 
             }
         }

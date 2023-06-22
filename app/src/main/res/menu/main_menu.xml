@@ -5,7 +5,7 @@
     <item android:id="@+id/main_menu_theme"
         android:title="theme"
         android:icon="@drawable/theme"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         />
 
     <item android:id="@+id/main_menu_share"
