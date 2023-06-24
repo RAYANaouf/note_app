@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.notes_app.R
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.recyclers.item_decoration.HashtagDicoration
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -68,6 +69,7 @@ class MainCategoriesAdapter : RecyclerView.Adapter<MainCategoriesAdapter.Holder>
             this.m_adapter = adapter
             this.recycler  = itemView.findViewById(R.id.mainCategoryHolder_hashtags_rv)
             this.r_adapter = HashtagAdapter()
+            this.recycler.addItemDecoration(HashtagDicoration(m_adapter.m_context,3f,3f,0f,0f))
             this.recycler.adapter = this.r_adapter
             this.recycler.layoutManager = LinearLayoutManager(m_adapter.m_context , LinearLayoutManager.HORIZONTAL , false)
             this.m_rootView = itemView
@@ -88,6 +90,7 @@ class MainCategoriesAdapter : RecyclerView.Adapter<MainCategoriesAdapter.Holder>
 
             GlobalScope.launch {
                 var relations = m_adapter.m_viewModul.getHashtagsByCategoryId(m_adapter.m_mainCategories[position].id)
+                r_adapter.clear_contents()
                 relations.forEach {
                     var hashtag = m_adapter.m_viewModul.getHashtagById(it.hashtagId)
                     withContext(Dispatchers.Main){

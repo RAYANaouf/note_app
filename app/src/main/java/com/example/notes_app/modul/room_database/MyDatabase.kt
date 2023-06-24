@@ -73,7 +73,7 @@ abstract class MyDatabase: RoomDatabase() {
                     var d3 = ContextCompat.getDrawable(m_context , R.drawable.emoji24)
                     var d4 = ContextCompat.getDrawable(m_context , R.drawable.emoji30)
 
-                    // Convert the drawable to a Bitmap
+
                     // Convert the drawable to a Bitmap
                     var bitmap1 = (d1 as BitmapDrawable).bitmap
                     var bitmap2 = (d2 as BitmapDrawable).bitmap
@@ -100,16 +100,40 @@ abstract class MyDatabase: RoomDatabase() {
                         imageString = Base64.encodeToString(byteArray, Base64.DEFAULT)
 
 
-                        var categoryDAO = INSTANCE!!.categoryDAO()
+                        var categoryDAO             = INSTANCE!!.categoryDAO()
+                        var hashtagDAO              = INSTANCE!!.hashtagDAO()
+                        var categoryHashtagJoinDAO  = INSTANCE!!.categoryHashtagJoinDAO()
 
-                        if(i==0)
-                            categoryDAO.addCategory(Category(image = imageString, name = "Events", description = "you can write notes about your future goals "))
-                        else if(i==1)
-                            categoryDAO.addCategory(Category(image = imageString, name = "Loves", description = "write down what you wanna do in the future to remember it later"))
-                        else if(i==2)
-                            categoryDAO.addCategory(Category(image = imageString, name = "Sick" , description = "write down what you wanna learn to grow your knowledge in the future"))
-                        else
-                            categoryDAO.addCategory(Category(image = imageString, name = "Huffy" , description = "write down what you wanna learn to grow your knowledge in the future"))
+                        if(i==0){
+                            var cat_id = categoryDAO.addCategory(Category(image = imageString, name = "Events", description = "you can write notes about your future goals "))
+                            hashtagDAO.addHashtag(Hashtag("events"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"events"))
+
+                            hashtagDAO.addHashtag(Hashtag("news"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"news"))
+
+                            hashtagDAO.addHashtag(Hashtag("binge"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"binge"))
+
+                        }
+                        else if(i==1){
+                            var cat_id = categoryDAO.addCategory(Category(image = imageString, name = "Loves", description = "write down what you wanna do in the future to remember it later"))
+                            hashtagDAO.addHashtag(Hashtag("Loves"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"Loves"))
+
+                            hashtagDAO.addHashtag(Hashtag("emotion"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"emotion"))
+                        }
+                        else if(i==2){
+                            var cat_id = categoryDAO.addCategory(Category(image = imageString, name = "Sick" , description = "write down what you wanna learn to grow your knowledge in the future"))
+                            hashtagDAO.addHashtag(Hashtag("Sick"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"Sick"))
+                        }
+                        else{
+                            var cat_id = categoryDAO.addCategory(Category(image = imageString, name = "Huffy" , description = "write down what you wanna learn to grow your knowledge in the future"))
+                            hashtagDAO.addHashtag(Hashtag("Huffy"))
+                            categoryHashtagJoinDAO.addCategoryHashtagJoin(CategoryHashtagJoin(cat_id,"Huffy"))
+                        }
 
                         i++
                     }

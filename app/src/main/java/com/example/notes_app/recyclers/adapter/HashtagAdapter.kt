@@ -35,6 +35,12 @@ class HashtagAdapter : RecyclerView.Adapter<HashtagAdapter.Holder>() {
         notifyDataSetChanged()
     }
 
+
+    fun clear_contents(){
+        this.m_hashtags.clear()
+        notifyDataSetChanged()
+    }
+
     fun add_hashtag(hashtag : Hashtag){
         this.m_hashtags.add(hashtag)
         notifyItemInserted(m_hashtags.size)
