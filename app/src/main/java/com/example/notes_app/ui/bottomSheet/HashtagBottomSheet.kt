@@ -89,6 +89,12 @@ class HashtagBottomSheet : BottomSheetDialogFragment() {
         })
 
         m_binding.bottomSheethashtagSendIv.setOnClickListener {
+
+
+            if (m_binding.bottomSheethashtagHashtagFieldTiet.text.toString() == "")
+                return@setOnClickListener
+
+
             m_adapter.add_hashtag(Hashtag(" # ${m_binding.bottomSheethashtagHashtagFieldTiet.text.toString()}"))
             m_binding.bottomSheethashtagHashtagFieldTiet.setText("")
 

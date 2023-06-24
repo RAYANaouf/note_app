@@ -7,12 +7,12 @@ import androidx.room.PrimaryKey
 class Category {
 
     @PrimaryKey(autoGenerate = true)
-    var id : Int
+    var id : Long
     var image : String
     var name  : String
     var description : String
 
-    constructor(id: Int = 0 , image: String, name: String, description : String) {
+    constructor(id: Long = 0 , image: String, name: String, description : String) {
         this.id = id
         this.image = image
         this.name = name

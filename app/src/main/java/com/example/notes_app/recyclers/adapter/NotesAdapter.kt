@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -32,9 +33,9 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
     var m_context  : Context
     var m_viewModel : MyViewModel
     var m_owner : LifecycleOwner
-    var m_cat_id : Int
+    var m_cat_id : Long
 
-    constructor( context : Context , owner : LifecycleOwner , viewModel : MyViewModel , cat_id : Int){
+    constructor( context : Context , owner : LifecycleOwner , viewModel : MyViewModel , cat_id : Long){
         this.m_owner = owner
         this.m_viewModel = viewModel
         this.m_cat_id = cat_id
@@ -92,6 +93,14 @@ class NotesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
     }
+
+    fun setData(data : List<Note>){
+//        Toast.makeText(m_context , "size : ${data.size} \n "  , Toast.LENGTH_SHORT).show()
+        m_content.clear()
+        m_content.addAll(data)
+        this.notifyDataSetChanged()
+    }
+
 
 
     override fun getItemViewType(position: Int): Int {

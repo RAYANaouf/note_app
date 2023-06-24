@@ -20,12 +20,21 @@ interface NoteDAO {
     fun getAllNotes() : LiveData<List<Note>>
 
     @Query("select * from Note where id=:id ")
-    fun getNoteById(id : Int):LiveData<Note>
+    fun getNoteById(id : Long):LiveData<Note>
+
+    @Query("select * from Note where id=:id ")
+    fun getNoteByIdRow(id : Long):Note
+
+    @Query("select * from Note where date=:date ")
+    fun getNoteByDate(date : String):Note
 
     @Query("select * from Note where cat_id=:cat_id ORDER BY id DESC ")
-    fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>
+    fun getNoteByCategory(cat_id : Long):LiveData<List<Note>>
 
-    @Query("select * from Note where date= :date")
-    fun getNoteByDate( date : String):Note
+
+    @Query("select * from Note where title LIKE '%' || :title || '%'")
+    fun getNoteByTitle( title : String):List<Note>
+
+
 
 }

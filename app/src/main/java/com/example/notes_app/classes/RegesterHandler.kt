@@ -49,6 +49,11 @@ class RegesterHandler {
         return m_data.getString(CONN_USER,"") ?: ""
     }
 
+    fun change_user_email(email: String){
+         m_editor.putString(CONN_USER,email)
+        m_editor.apply()
+    }
+
     fun deconnecting(){
         m_editor.putBoolean(IS_CONNECTED,false)
         m_editor.putString(CONN_USER,"")

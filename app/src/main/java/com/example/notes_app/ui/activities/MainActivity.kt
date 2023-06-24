@@ -1,5 +1,6 @@
 package com.example.notes_app.ui.activities
 
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -7,16 +8,21 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.util.Base64
 import android.view.*
 import android.view.View.OnTouchListener
+import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes_app.R
 import com.example.notes_app.classes.RegesterHandler
@@ -28,9 +34,10 @@ import com.example.notes_app.ui.fragments.*
 import com.example.notes_app.ui.interfaces.DialogViewer
 import com.example.notes_app.ui.interfaces.OnClickNavigator
 import kotlinx.coroutines.*
+import java.util.*
 
 
-class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
+class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer , DatePickerDialog.OnDateSetListener{
 
     //view binding && model && page
     private lateinit var binding : ActivityMainBinding
@@ -45,6 +52,14 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
     //my rate
     private var m_rate=0F
+
+    //fragment
+    private lateinit var m_fragment :Fragment
+
+    //for search fragment
+    private var filter = "text"
+
+    private lateinit var m_datePicker :  DatePickerDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,6 +159,20 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             var itemId = it.itemId
 
             when(itemId){
+                R.id.navMenu_profile->{
+                    binding.mainActivityDrawerDl.closeDrawers()
+
+                    if (m_page=="profile"){
+                        return@setNavigationItemSelectedListener true
+                    }
+
+                    m_fragment =ProfileFragment.newInstance()
+                    m_page="profile"
+                    var fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.fragment_container , m_fragment )
+                        .addToBackStack(null)
+                        .commit()
+                }
                 R.id.navMenu_home->{
                     binding.mainActivityDrawerDl.closeDrawers()
 
@@ -151,9 +180,10 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
                         return@setNavigationItemSelectedListener true
                     }
 
+                    m_fragment =MainFragment.newInstance(m_email)
                     m_page="home"
                     var fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.fragment_container , MainFragment.newInstance(m_email))
+                    fragmentTransaction.replace(R.id.fragment_container , m_fragment )
                         .addToBackStack(null)
                         .commit()
                 }
@@ -165,8 +195,11 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
                     }
 
                     m_page="setting"
+
+                    m_fragment = DiariesFragment.newInstance(-1)
+
                     var fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.replace(R.id.fragment_container , DiariesFragment.newInstance(-1))
+                    fragmentTransaction.replace(R.id.fragment_container , m_fragment )
                         .addToBackStack(null)
                     fragmentTransaction.commit()
                 }
@@ -207,9 +240,29 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             changeRate(binding.mainActivityDayRateMrb.rating)
         }
 
-        binding.mainActivityFilterSiv.setOnClickListener {
-            openContextMenu(binding.mainActivityFilterSiv)
-        }
+
+        binding.mainActivitySearchBarTiet.addTextChangedListener ( object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+
+
+//                Toast.makeText(baseContext , "chnge : DiariesFragment" , Toast.LENGTH_LONG).show()
+                var fragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                if (fragment is DiariesFragment){
+                        fragment.search(binding.mainActivitySearchBarTiet.text.toString() , filter)
+                }
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        } )
     }
 
     /*******************************************   set the option menu **********************************************/
@@ -258,6 +311,10 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
 
+        //reset m_email m_user the profile photo ...
+        m_email = m_accountHandler.conn_user()
+        setUser()
+
         var theme_item_menu = menu?.findItem(R.id.main_menu_theme)
         var share_item_menu = menu?.findItem(R.id.main_menu_share)
 
@@ -273,6 +330,7 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         binding.mainActivityFilterSiv.visibility    = View.INVISIBLE
         binding.mainActivitySearchBarTil.visibility = View.INVISIBLE
         binding.mainActivityDayRateMrb.isVisible    = false
+        binding.mainActivityDayRateMrb.setIsIndicator(true)
 
         //*************************************************************//
 
@@ -302,7 +360,6 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
             binding.mainActivityReturnSiv.visibility=View.VISIBLE
             binding.mainActivityDayRateMrb.isVisible=true
             binding.mainActivityDayRateMrb.rating=m_rate
-            binding.mainActivityDayRateMrb.setIsIndicator(false)
 
         }
         else if(currentFragment is DiariesFragment){
@@ -329,7 +386,27 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.searchFilterMenu_title_item->{
+                filter="title"
+                Toast.makeText(baseContext , "search by title" , Toast.LENGTH_SHORT).show()
+            }
+            R.id.searchFilterMenu_hashtag_item->{
+                filter="hashtag"
+                Toast.makeText(baseContext , "search by hashtag" , Toast.LENGTH_SHORT).show()
+            }
+            R.id.searchFilterMenu_content_item->{
+                filter="content"
+                Toast.makeText(baseContext , "search by content" , Toast.LENGTH_SHORT).show()
+            }
+            R.id.searchFilterMenu_date_item->{
+//                Toast.makeText(baseContext , "search by date" , Toast.LENGTH_SHORT).show()
+                var calendar = Calendar.getInstance()
+                m_datePicker = DatePickerDialog(this@MainActivity , this , calendar[Calendar.YEAR] , calendar[Calendar.MONDAY] , calendar[Calendar.DAY_OF_MONTH])
+                m_datePicker.show()
 
+            }
+        }
         return true
     }
     /*****************************************************************************************************************/
@@ -340,9 +417,9 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
         var fm = supportFragmentManager
         if (fm.backStackEntryCount == 1){
             m_page = "home"
-            fm.popBackStack()
-            var fragment =fm.findFragmentById(R.id.fragment_container)
-            if (fragment is MainFragment){
+            m_fragment =fm.findFragmentById(R.id.fragment_container) ?: MainFragment()
+            if ( m_fragment !is MainFragment){
+                fm.popBackStack()
             }
         }
         else if (fm.backStackEntryCount>0){
@@ -368,10 +445,13 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
 
 
 
-    override fun onClick_to_notesFragment(cat_id : Int) {
+    override fun onClick_to_notesFragment(cat_id : Long) {
         m_page="notes"
+
+        m_fragment = DiariesFragment.newInstance(cat_id)
+
         var fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container , DiariesFragment.newInstance(cat_id))
+        fragmentTransaction.replace(R.id.fragment_container , m_fragment)
             .addToBackStack(null)
             .commit()
     }
@@ -379,15 +459,21 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     override fun onClick_to_addNoteFragment(rating : Float) {
         m_rate=rating
         m_page="addNote"
+
+        m_fragment =AddNoteFragment.newInstance(rating)
+
         var fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.fragment_container , AddNoteFragment.newInstance(rating))
+        fragmentTransaction.replace(R.id.fragment_container , m_fragment)
             .addToBackStack("add")
             .commit()
     }
 
-    override fun onClick_to_diaryFragment(diary_id: Int , rate : Float) {
+    override fun onClick_to_diaryFragment(diary_id: Long , rate : Float) {
+
+        m_fragment = DiaryFragment.newInstance(diary_id)
+
         var ft = supportFragmentManager.beginTransaction()
-        ft.replace(R.id.fragment_container , DiaryFragment.newInstance(diary_id))
+        ft.replace(R.id.fragment_container , m_fragment )
         ft.addToBackStack("dairy")
         ft.commit()
         binding.mainActivityDayRateMrb.rating = rate
@@ -398,6 +484,15 @@ class MainActivity : AppCompatActivity() , OnClickNavigator, DialogViewer {
     override fun add_category() {
         var dialogFragment = AddCategoryDialogFragment.newInstance()
         dialogFragment.show(supportFragmentManager,null)
+    }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        binding.mainActivitySearchBarTiet.setText("${month+1}/${dayOfMonth}/${year}")
+        var fm = supportFragmentManager
+        var fragment = fm.findFragmentById(R.id.fragment_container)
+        if (fragment is DiariesFragment){
+            fragment.search("${month+1}/${dayOfMonth}/${year}" , "date")
+        }
     }
 
 }

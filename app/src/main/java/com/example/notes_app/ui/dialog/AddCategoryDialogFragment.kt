@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -22,7 +24,15 @@ import com.example.notes_app.R
 import com.example.notes_app.databinding.DialogAddCategoryBinding
 import com.example.notes_app.modul.MyViewModel
 import com.example.notes_app.modul.room_database.data_classes.Category
+import com.example.notes_app.modul.room_database.data_classes.CategoryHashtagJoin
+import com.example.notes_app.modul.room_database.data_classes.Hashtag
+import com.example.notes_app.recyclers.adapter.HashtagAdapter
+import com.example.notes_app.recyclers.item_decoration.HashtagDicoration
 import com.example.notes_app.ui.interfaces.OnClickNavigator
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import kotlinx.coroutines.*
 import java.io.ByteArrayOutputStream
 
 
@@ -36,6 +46,9 @@ class AddCategoryDialogFragment : DialogFragment() {
     private lateinit var m_onClickNavigator : OnClickNavigator
     //set initial state for the dialog (normal =1 / error = 0)
     private var state = 1
+
+    private lateinit var m_adapter  : HashtagAdapter
+    private  var m_hashtags = ArrayList<Hashtag>()
 
     //permission
     private var external_storage_permission = registerForActivityResult(ActivityResultContracts.RequestPermission()){
@@ -81,7 +94,25 @@ class AddCategoryDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setView()
         setOnClicks()
+
+    }
+
+    fun setView(){
+        m_adapter = HashtagAdapter()
+        binding.recyclerView.adapter = m_adapter
+
+        var flexBoxLayoutManager           = FlexboxLayoutManager(requireContext())
+        flexBoxLayoutManager.flexDirection = FlexDirection.ROW
+        flexBoxLayoutManager.flexWrap      = FlexWrap.WRAP
+        binding.recyclerView.layoutManager      = flexBoxLayoutManager
+
+        //item decoration
+        binding.recyclerView.addItemDecoration(HashtagDicoration(requireContext() , 4f,4f,3f,3f))
+
+        m_adapter.set_contents(m_hashtags)
+
 
     }
 
@@ -98,6 +129,7 @@ class AddCategoryDialogFragment : DialogFragment() {
         }
 
         binding.addCategoryDialogAddTv.setOnClickListener {
+            binding.progress.visibility=View.VISIBLE
             if (state == 1){
                 if (binding.addCategoryDialogCategoryTitleTv.text.toString().equals("") || binding.addCategoryDialogCategoryDescriptionTv.text.toString().equals("")){
                     //set the error icon change : icon + background
@@ -118,8 +150,36 @@ class AddCategoryDialogFragment : DialogFragment() {
                     bitmap_img.compress(Bitmap.CompressFormat.JPEG , 25 , byteArrayOutputStream)
                     var byteArray = byteArrayOutputStream.toByteArray()
                     var img_string = android.util.Base64.encodeToString(byteArray , android.util.Base64.DEFAULT)
-                    m_viewModel.addCategory(Category(name=binding.addCategoryDialogCategoryTitleTv.text.toString() , description = binding.addCategoryDialogCategoryDescriptionTv.text.toString() , image = img_string ))
-                    this.dialog?.dismiss()
+
+                    var i =0
+                    var j =0
+                    GlobalScope.launch {
+
+                    var cat_id = m_viewModel.addCategory(Category(name=binding.addCategoryDialogCategoryTitleTv.text.toString() , description = binding.addCategoryDialogCategoryDescriptionTv.text.toString() , image = img_string ))
+
+                    m_hashtags.forEach {
+                        j++
+                        var is_exist = m_viewModel.isHashtagExist(it.hashtag)
+
+                        var job1 : Job? = null
+                        if (is_exist==0){
+                            job1 = m_viewModel.addHashtag(it)
+                            i++
+                        }
+
+                        job1?.join()
+
+                        var relation = CategoryHashtagJoin(cat_id , it.hashtag)
+                        m_viewModel.addCategoryHashtagJoin(relation)
+
+                        }
+
+                     withContext(Dispatchers.Main){
+                         Toast.makeText(requireContext() , "i=$i \nj=$j" , Toast.LENGTH_LONG).show()
+                         this@AddCategoryDialogFragment.dialog?.dismiss()
+                     }
+
+                    }
                 }
             }
             else{
@@ -150,6 +210,41 @@ class AddCategoryDialogFragment : DialogFragment() {
                 }
             }
         }
+
+
+        binding.addCategoryDialogHashtagFieldTiet.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                var origin = s.toString()
+                var updated = origin.replace(" ","_")
+                if(origin != updated){
+                    binding.addCategoryDialogHashtagFieldTiet.setText("$updated")
+                    binding.addCategoryDialogHashtagFieldTiet.setSelection(updated.length)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+        binding.addCategoryDialogSendIv.setOnClickListener {
+
+
+            if (binding.addCategoryDialogHashtagFieldTiet.text.toString() == "")
+                return@setOnClickListener
+
+
+            m_adapter.add_hashtag(Hashtag(" # ${binding.addCategoryDialogHashtagFieldTiet.text.toString()}"))
+            binding.addCategoryDialogHashtagFieldTiet.setText("")
+
+        }
+
+
     }
 
 }

@@ -15,22 +15,24 @@ class Repository {
     private  var m_userDAO                 : UserDAO
     private  var m_hashtagDAO              : HashtagDAO
     private  var m_diaryHashtagJoinDAO     : DiaryHashtagJoinDAO
+    private  var m_categoryHashtagJoinDAO  : CategoryHashtagJoinDAO
 
 
     constructor(context: Context){
-        var database          = MyDatabase.getDatabase(context)
-        m_categoryDAO         = database.categoryDAO()
-        m_noteDAO             = database.noteDAO()
-        m_noteContentDAO      = database.noteContentDAO()
-        m_userDAO             = database.UserDAO()
-        m_hashtagDAO          = database.hashtagDAO()
-        m_diaryHashtagJoinDAO = database.diaryHashtagJoinDAO()
+        var database             = MyDatabase.getDatabase(context)
+        m_categoryDAO            = database.categoryDAO()
+        m_noteDAO                = database.noteDAO()
+        m_noteContentDAO         = database.noteContentDAO()
+        m_userDAO                = database.UserDAO()
+        m_hashtagDAO             = database.hashtagDAO()
+        m_diaryHashtagJoinDAO    = database.diaryHashtagJoinDAO()
+        m_categoryHashtagJoinDAO = database.categoryHashtagJoinDAO()
     }
 
-    fun addCategory(category: Category){
-        GlobalScope.launch {
-            m_categoryDAO.addCategory(category)
-        }
+     fun addCategory(category: Category):Long{
+
+        return  m_categoryDAO.addCategory(category)
+
     }
 
     fun deleteCategory(category : Category){
@@ -68,9 +70,14 @@ class Repository {
         }
     }
 
-    fun getAllNoteContents(note_id:Int) : LiveData<List<NoteContent>>{
+    fun getAllNoteContents(note_id:Long) : List<NoteContent>{
         return m_noteContentDAO.getAllNoteContents(note_id )
     }
+
+    fun getNoteContentsByText(text : String) :List<NoteContent>{
+        return m_noteContentDAO.getNoteContentsByText(text)
+    }
+
 
 
     suspend fun addNote(note: Note) : Long{
@@ -96,8 +103,12 @@ class Repository {
         return m_noteDAO.getAllNotes()
     }
 
-    fun getNoteById(id : Int): LiveData<Note>{
+    fun getNoteById(id : Long): LiveData<Note>{
         return m_noteDAO.getNoteById(id)
+    }
+
+    fun getNoteByIdRow(id : Long): Note{
+        return m_noteDAO.getNoteByIdRow(id)
     }
 
 
@@ -105,7 +116,11 @@ class Repository {
         return m_noteDAO.getNoteByDate(date)
     }
 
-    fun getNoteByCategory(cat_id : Int):LiveData<List<Note>>{
+    fun getNoteByTitle(title : String):List<Note>{
+        return m_noteDAO.getNoteByTitle( title )
+    }
+
+    fun getNoteByCategory(cat_id : Long):LiveData<List<Note>>{
         return m_noteDAO.getNoteByCategory(cat_id)
     }
 
@@ -113,16 +128,20 @@ class Repository {
         return m_userDAO.getUserByMail(userEmail)
     }
 
-    fun addUser(user : User){
-        GlobalScope.launch {
+    fun addUser(user : User):Job{
+        return GlobalScope.launch {
             m_userDAO.addUser(user)
         }
     }
 
+    fun updateUser(user : User):Job{
+       return GlobalScope.launch {
+           m_userDAO.updateUser(user)
+       }
+    }
+
     fun addHashtag(hashtag : Hashtag){
-        GlobalScope.launch {
             m_hashtagDAO.addHashtag(hashtag)
-        }
     }
 
     fun deleteHashtag(hashtag : Hashtag){
@@ -135,10 +154,13 @@ class Repository {
         return m_hashtagDAO.getAllHashtags()
     }
 
-    fun getHashtagsByDiaryId(diaryId : Int ) : List<DiaryHashtagJoin>{
+    fun getHashtagsByDiaryId(diaryId : Long ) : List<DiaryHashtagJoin>{
         return m_diaryHashtagJoinDAO.getHashtagsByDiaryId(diaryId)
     }
 
+    fun getHashtagById(hashtag: String) : Hashtag{
+        return m_hashtagDAO.getHashtagById(hashtag)
+    }
 
     fun isHashtagExist(hashtag : String): Int{
         return m_hashtagDAO.isHashtagExist(hashtag)
@@ -146,6 +168,22 @@ class Repository {
 
     fun addDiaryHashtagJoin(diaryHashtagJoin : DiaryHashtagJoin){
         m_diaryHashtagJoinDAO.addDiaryHashtagJoin(diaryHashtagJoin)
+    }
+
+    fun getDiaryHashtagRelationByHashtag(hashtag : String ) : List<DiaryHashtagJoin>{
+        return m_diaryHashtagJoinDAO.getDiaryHashtagRelationByHashtag(hashtag)
+    }
+
+    fun addCategoryHashtagJoin(categoryHashtagJoin: CategoryHashtagJoin){
+        return m_categoryHashtagJoinDAO.addCategoryHashtagJoin(categoryHashtagJoin)
+    }
+
+    fun getHashtagsByCategoryId(categoryId : Long ) : List<CategoryHashtagJoin>{
+        return m_categoryHashtagJoinDAO.getHashtagsByCategoryId(categoryId)
+    }
+
+    fun getCategoryHashtagRelationByHashtag(hashtag : String ) : List<CategoryHashtagJoin>{
+        return m_categoryHashtagJoinDAO.getCategoryHashtagRelationByHashtag(hashtag)
     }
 
 }

@@ -90,7 +90,7 @@ class Categories_adaptes : RecyclerView.Adapter<Categories_adaptes.Holder> {
             shapeableImageView.setImageBitmap(bitmap_img)
         }
 
-        fun set_onClickListener(cat_id : Int){
+        fun set_onClickListener(cat_id : Long){
             m_root.setOnClickListener {
                 m_adapter.m_onClickListener.onClick_category(cat_id)
             }
@@ -99,7 +99,7 @@ class Categories_adaptes : RecyclerView.Adapter<Categories_adaptes.Holder> {
 
 
     interface OnClickListener{
-        fun onClick_category(cat_id : Int)
+        fun onClick_category(cat_id : Long)
     }
 
 }

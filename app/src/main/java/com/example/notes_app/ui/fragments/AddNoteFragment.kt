@@ -64,7 +64,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
     //cat_id arrayOfContent  &&  color && icon && content  &&  lock
     private lateinit var m_contents : ArrayList<NoteContent>
-    private var cat_id: Int = 0
+    private var cat_id: Long = 0
     private var m_rating : Float = 0F
     private var m_color = -9408400
     private var m_icon = R.drawable.emoji4
@@ -242,7 +242,7 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 
             CoroutineScope(Dispatchers.Default).launch {
 
-                coroutineScope {
+
 
                     var contents = m_adapter.get_all_item()
                     m_cont = contents[0].cont
@@ -255,32 +255,30 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
                     }
 
 
-                    var job0 = launch {
+
                         m_hashtags.forEach {hashtag ->
 
-                            val job = if (m_viewModel.isHashtagExist(hashtag.hashtag) == 0) {
+                            var is_exist = async { m_viewModel.isHashtagExist(hashtag.hashtag) }.await()
+
+                            val job = if ( is_exist == 0) {
                                     m_viewModel.addHashtag(hashtag)
                                 }
                             else{
                                 null
                             }
 
+                            // Wait for job to complete before proceeding
+                            job?.join()
+
                             val job1 = launch {
-                                job?.join() // Wait for job to complete before proceeding
-                                val relationTable = DiaryHashtagJoin(noteId, hashtag.hashtag)
-                                m_viewModel.addDiaryHashtagJoin(relationTable)
+                                m_viewModel.addDiaryHashtagJoin(DiaryHashtagJoin(noteId, hashtag.hashtag))
                             }
 
                             job1.join()
 
                         }
-                    }
 
-                    job0.join()
-                    withContext(Dispatchers.Main){
-                        requireActivity().supportFragmentManager.popBackStack()
-                    }
-                }
+
 
                 m_accountHandler.deactivate()
 
@@ -294,6 +292,10 @@ class AddNoteFragment : Fragment() , AddTaskInterface , OnColorPickedListener<Co
 //                calendar.set(Calendar.SECOND , 0)
 //                calendar.add(Calendar.DAY_OF_MONTH,1)
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP , calendar.timeInMillis , pendingIntent)
+
+                withContext(Dispatchers.Main){
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
 
             }
         }

@@ -108,16 +108,52 @@ class SignUpActivity : AppCompatActivity() {
             if (!validation()){
                 return@setOnClickListener
             }
+
+            var user : User? = null
+
+            var job = GlobalScope.launch {
+                user = m_viewModul.getUserByEmail(m_binding.SignUpActivityEmailTiet.text.toString())
+
+            }
+
+
+
             var first_name = m_binding.SignUpActivityFirstNameTiet.text.toString()
             var last_name = m_binding.SignUpActivityLastNameTiet.text.toString()
             var email     = m_binding.SignUpActivityEmailTiet.text.toString()
             var password = m_binding.SignUpActivityPasswordTiet.text.toString()
-            m_viewModul.addUser(User(f_name = first_name , l_name = last_name , email =  email , password = password , photo = m_photo))
-            m_connHandler.connecting(email)
 
-            var intent  = Intent (applicationContext , MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            GlobalScope.launch {
+
+                job.join()
+
+                if (user==null){
+                    var add_user_job = m_viewModul.addUser(User(f_name = first_name , l_name = last_name , email =  email , password = password , photo = m_photo))
+                    m_connHandler.connecting(email)
+
+                    add_user_job.join()
+
+                    withContext(Dispatchers.Main){
+                        var intent  = Intent (applicationContext , MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
+                else{
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(applicationContext , "the email is already exist" , Toast.LENGTH_LONG).show()
+                    }
+                }
+
+
+
+
+
+
+            }
+
+
+
 
         }
 
@@ -157,6 +193,7 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this,"enter an image " , Toast.LENGTH_LONG).show()
             return false
         }
+
 
         return true
     }

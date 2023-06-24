@@ -14,6 +14,9 @@ interface DiaryHashtagJoinDAO {
     fun addDiaryHashtagJoin(diaryHashtagJoin : DiaryHashtagJoin)
 
     @Query("select * from  DiaryHashtagJoin where diaryId = :diaryId")
-    fun getHashtagsByDiaryId(diaryId : Int ) : List<DiaryHashtagJoin>
+    fun getHashtagsByDiaryId(diaryId : Long ) : List<DiaryHashtagJoin>
+
+    @Query("select * from  DiaryHashtagJoin where hashtagId LIKE '%' || :hashtag || '%'")
+    fun getDiaryHashtagRelationByHashtag(hashtag : String ) : List<DiaryHashtagJoin>
 
 }

@@ -3,6 +3,9 @@
 
     <item android:title="profile">
         <menu >
+            <item android:id="@+id/navMenu_profile"
+                android:title="Profil"
+                android:icon="@drawable/user"/>
             <item android:id="@+id/navMenu_home"
                 android:title="Home"
                 android:icon="@drawable/home"/>

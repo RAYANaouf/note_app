@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.notes_app.modul.room_database.DAO.CategoryHashtagJoinDAO
 import com.example.notes_app.modul.room_database.data_classes.*
 import kotlinx.coroutines.*
 
@@ -15,8 +16,8 @@ class MyViewModel : AndroidViewModel {
         m_repo = Repository(application.baseContext)
     }
 
-    fun addCategory(category: Category){
-        m_repo.addCategory(category)
+    suspend fun addCategory(category: Category):Long{
+        return  GlobalScope.async { m_repo.addCategory(category) }.await()
     }
 
     fun deleteCategory(category : Category){
@@ -50,16 +51,24 @@ class MyViewModel : AndroidViewModel {
     }
 
 
-    fun getNoteByCategory(cat_id : Int): LiveData<List<Note>> {
+    fun getNoteByCategory(cat_id : Long): LiveData<List<Note>> {
         return m_repo.getNoteByCategory(cat_id)
     }
 
-    fun getNoteById(id : Int ) : LiveData<Note>{
+    fun getNoteById(id : Long ) : LiveData<Note>{
         return m_repo.getNoteById(id)
+    }
+
+    fun getNoteByIdRow(id : Long ) : Note{
+        return m_repo.getNoteByIdRow(id)
     }
 
     fun getNoteByDate( date : String):Note{
         return m_repo.getNoteByDate(date)
+    }
+
+    fun getNoteByTitle(title : String):List<Note>{
+        return m_repo.getNoteByTitle( title )
     }
 
 
@@ -81,8 +90,12 @@ class MyViewModel : AndroidViewModel {
         }
     }
 
-    fun getAllNoteContents(noteId : Int): LiveData<List<NoteContent>>{
+    fun getAllNoteContents(noteId : Long): List<NoteContent>{
         return m_repo.getAllNoteContents(noteId)
+    }
+
+    fun getNoteContentsByText(text : String) :List<NoteContent>{
+        return m_repo.getNoteContentsByText(text)
     }
 
     suspend fun getUserByEmail( userEmail : String): User {
@@ -92,8 +105,12 @@ class MyViewModel : AndroidViewModel {
         return user;
     }
 
-    fun addUser(user : User){
-        m_repo.addUser(user)
+    fun addUser(user : User):Job{
+        return m_repo.addUser(user)
+    }
+
+    fun updateUser(user : User):Job{
+        return m_repo.updateUser(user)
     }
 
     fun addHashtag(hashtag : Hashtag):Job{
@@ -112,10 +129,13 @@ class MyViewModel : AndroidViewModel {
         return m_repo.getAllHashtags()
     }
 
-    fun getHashtagsByDiaryId(diaryId : Int ) : List<DiaryHashtagJoin>{
+    fun getHashtagsByDiaryId(diaryId : Long ) : List<DiaryHashtagJoin>{
         return m_repo.getHashtagsByDiaryId(diaryId)
     }
 
+    suspend fun getHashtagById(hashtag: String) : Hashtag{
+        return GlobalScope.async { m_repo.getHashtagById(hashtag) }.await()
+    }
 
     fun isHashtagExist(hashtag : String): Int{
         return m_repo.isHashtagExist(hashtag)
@@ -126,5 +146,25 @@ class MyViewModel : AndroidViewModel {
             m_repo.addDiaryHashtagJoin(diaryHashtagJoin)
         }
     }
+
+    fun getDiaryHashtagRelationByHashtag(hashtag : String ) : List<DiaryHashtagJoin>{
+        return m_repo.getDiaryHashtagRelationByHashtag(hashtag)
+    }
+
+
+    fun addCategoryHashtagJoin(categoryHashtagJoin: CategoryHashtagJoin):Job{
+        return GlobalScope.launch {
+            m_repo.addCategoryHashtagJoin(categoryHashtagJoin)
+        }
+    }
+
+    suspend fun getHashtagsByCategoryId(categoryId : Long ) : List<CategoryHashtagJoin>{
+        return GlobalScope.async { m_repo.getHashtagsByCategoryId(categoryId) }.await()
+    }
+
+    suspend fun getCategoryHashtagRelationByHashtag(hashtag : String ) : List<CategoryHashtagJoin>{
+        return GlobalScope.async { m_repo.getCategoryHashtagRelationByHashtag(hashtag) }.await()
+    }
+
 
 }

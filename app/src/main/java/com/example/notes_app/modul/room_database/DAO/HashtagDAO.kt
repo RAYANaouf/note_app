@@ -16,6 +16,9 @@ interface HashtagDAO {
     @Delete
     fun deleteHashtag(hashtag: Hashtag)
 
+    @Query("select * from Hashtag WHERE  hashtag =:hashtag ")
+    fun getHashtagById(hashtag: String) : Hashtag
+
     @Query("select * from Hashtag ORDER BY hashtag ")
     fun getAllHashtags() : List<Hashtag>
 

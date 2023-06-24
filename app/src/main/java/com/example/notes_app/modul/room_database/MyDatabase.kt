@@ -12,12 +12,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.notes_app.R
 import com.example.notes_app.modul.room_database.DAO.*
 import com.example.notes_app.modul.room_database.data_classes.*
+import com.example.notes_app.modul.room_database.data_classes.CategoryHashtagJoin
 import java.io.ByteArrayOutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-@Database(entities = arrayOf(Category::class , Note::class , NoteContent::class , User::class , Hashtag::class , DiaryHashtagJoin::class) , version = 1 , exportSchema = false)
+@Database(entities = arrayOf(Category::class , Note::class , NoteContent::class , User::class , Hashtag::class , DiaryHashtagJoin::class , CategoryHashtagJoin::class) , version = 1 , exportSchema = false)
 abstract class MyDatabase: RoomDatabase() {
 
 
@@ -29,6 +30,7 @@ abstract class MyDatabase: RoomDatabase() {
     abstract fun hashtagDAO(): HashtagDAO
 
     abstract fun diaryHashtagJoinDAO(): DiaryHashtagJoinDAO
+    abstract fun categoryHashtagJoinDAO(): CategoryHashtagJoinDAO
 
     companion object{
         // Singleton prevents multiple instances of database opening at the
@@ -52,7 +54,7 @@ abstract class MyDatabase: RoomDatabase() {
                     val instance = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java,
-                        "note_databaseV49"
+                        "note_databaseV51"
                     ).addCallback(sRoomDatabaseCallback).build()
                 INSTANCE = instance
                 }

@@ -26,13 +26,13 @@ class DiaryFragment : Fragment() {
     private lateinit var m_viewModel : MyViewModel
 
     //my info id && note (get it by its id)
-    private var m_id : Int = 0
+    private var m_id : Long = 0L
     private lateinit var m_note : Note
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            m_id = it.getInt(ARG_ID)
+            m_id = it.getLong(ARG_ID)
         }
 
         //viewModel
@@ -86,10 +86,10 @@ class DiaryFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(id: Int) =
+        fun newInstance(id: Long) =
             DiaryFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_ID, id)
+                    putLong(ARG_ID, id)
                 }
             }
     }

@@ -12,7 +12,7 @@ import com.example.notes_app.modul.room_database.data_classes.Category
 interface CategoryDAO {
 
     @Insert
-    fun addCategory(category: Category)
+    fun addCategory(category: Category):Long
 
     @Delete
     fun deleteCategory(category : Category)

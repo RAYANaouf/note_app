@@ -98,7 +98,7 @@
                             android:layout_marginBottom="5dp"
                             android:layout_marginRight="16dp"
 
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             app:boxStrokeColor="#1976D0"
                             app:hintTextColor="#1976D0"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -111,6 +111,7 @@
                             app:startIconTint="#1976D0">
 
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/mainActivity_searchBar_tiet"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
 
@@ -126,6 +127,7 @@
                             android:layout_width="25dp"
                             android:layout_height="25dp"
 
+                            android:visibility="invisible"
                             android:src="@drawable/filter"
 
                             android:layout_marginRight="20dp"

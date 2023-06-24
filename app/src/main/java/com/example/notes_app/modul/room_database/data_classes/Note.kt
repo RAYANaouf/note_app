@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
 class Note {
 
     @PrimaryKey(autoGenerate = true)
-    var id      : Int
-    var cat_id  :Int
+    var id      : Long
+    var cat_id  :Long
     var date    : String
     var lock    : Boolean
     var rate    : Float
@@ -19,7 +19,7 @@ class Note {
     var color   : Int
     var theme   : Int
 
-    constructor(id : Int = 0 , cat_id : Int = 1  , date : String  = "MM/DD/YY", lock : Boolean = false , rate : Float = 0F , color : Int = -9408400 , icon : Int=0 , theme : Int = 0,  title : String , description : String ){
+    constructor(id : Long = 0 , cat_id : Long = 1  , date : String  = "MM/DD/YY", lock : Boolean = false , rate : Float = 0F , color : Int = -9408400 , icon : Int=0 , theme : Int = 0,  title : String , description : String ){
         this.id          = id
         this.cat_id      = cat_id
         this.date        = date

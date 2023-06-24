@@ -18,6 +18,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
             android:id="@+id/addCategoryDialog_categoryTitle_tv"
             android:layout_width="0dp"
@@ -54,19 +66,86 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryTitle_tv" />
 
+
+        <ImageView
+            android:id="@+id/addCategoryDialog_send_iv"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:src="@drawable/send"
+
+
+            app:layout_constraintBottom_toBottomOf="@+id/textInputLayout3"
+            app:layout_constraintEnd_toEndOf="@+id/addCategoryDialog_categoryDescription_tv"
+            app:layout_constraintTop_toTopOf="@+id/textInputLayout3" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout3"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+
+            app:boxStrokeColor="#1976D0"
+            app:hintTextColor="@color/gray8"
+            app:layout_constraintEnd_toStartOf="@+id/addCategoryDialog_send_iv"
+
+            app:layout_constraintStart_toStartOf="@+id/addCategoryDialog_categoryDescription_tv"
+            app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryDescription_tv"
+            app:startIconDrawable="@drawable/hashtag_icon"
+            app:startIconTint="@color/gray8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addCategoryDialog_hashtagField_tiet"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fieldHashtagSeparator" />
+
+
+
+
+
+
         <!-- **************************            separator              ***********************  -->
+
+
+        <View
+            android:id="@+id/fieldHashtagSeparator"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintWidth_percent="0.8"
+
+            android:background="@color/gray3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
 
         <View
             android:id="@+id/contentButtonsSeparator"
             android:layout_width="0dp"
             android:layout_height="1dp"
-
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
 
             android:background="@color/gray3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addCategoryDialog_categoryDescription_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
         <!-- ************************************************************************************  -->
 

@@ -58,7 +58,7 @@ class MainFragment : Fragment() {
     // the dalog check
     private lateinit var m_dialog: CheckPasswordDialog
 
-    private var m_selected_dairy=0
+    private var m_selected_dairy = 0L
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -70,7 +70,8 @@ class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            m_email = it?.getString("email" ) ?: ""
+//            m_email = it?.getString("email" ) ?: ""
+
         }
 
         //set the view model
@@ -78,10 +79,14 @@ class MainFragment : Fragment() {
 
         //set up the connection handler
         m_accountHandler = RegesterHandler(requireContext())
+        m_email          = m_accountHandler.conn_user()
+
+        Toast.makeText(requireContext() , "$m_email" , Toast.LENGTH_LONG).show()
 
         runBlocking {
             launch {
                 m_user = m_viewModel.getUserByEmail(m_email)
+
             }
         }
 
@@ -267,8 +272,8 @@ class MainFragment : Fragment() {
     fun setViewIn(){
 
         /***********     set the main category adapter   *****************/
-        var main_category_adapter = MainCategoriesAdapter(this , m_viewModel , object : MainCategoriesAdapter.OnClickListener{
-            override fun onClick_mainCategory(cat_id : Int) {
+        var main_category_adapter = MainCategoriesAdapter(requireContext() ,this , m_viewModel , object : MainCategoriesAdapter.OnClickListener{
+            override fun onClick_mainCategory(cat_id : Long) {
                 m_onClickNavigator.onClick_to_notesFragment(cat_id)
             }
         })
@@ -294,14 +299,14 @@ class MainFragment : Fragment() {
         var adapter = DailyAdapter(
             object : DailyAdapterListener{
 
-                override fun onClickLocked(id : Int , rate : Float) {
+                override fun onClickLocked(id : Long , rate : Float) {
                     m_rate = rate
-                    m_dialog = CheckPasswordDialog.newInstance(m_email , listener)
+                    m_dialog = CheckPasswordDialog.newInstance(CheckPasswordDialog.CHECK_PASSWORD,m_email , listener)
                     m_dialog.show(childFragmentManager , "")
                     m_selected_dairy = id
                 }
 
-                override fun onClickOpened(id: Int , rate : Float) {
+                override fun onClickOpened(id: Long , rate : Float) {
                     m_selected_dairy = id
                     m_onClickNavigator.onClick_to_diaryFragment(m_selected_dairy , rate )
                 }
@@ -342,13 +347,14 @@ class MainFragment : Fragment() {
 
 
 
-                withContext(Dispatchers.Main){
-              Toast.makeText(requireContext() , "${note}" , Toast.LENGTH_LONG).show()
-                    binding.MainFragmentActiveEmojiIv.setImageResource(note.icon)
-                    binding.MainFragmentActiveTitleTv.setText(note.title)
-                    binding.MainActivityActiveDescriptionTv.setText(note.description)
-                    binding.MainFragmentActiveDateTv.setText(note.date)
-                    binding.MainFragmentActiveRateDayMrb.rating=note.rate
+                if (note!=null){
+                    withContext(Dispatchers.Main){
+                        binding.MainFragmentActiveEmojiIv.setImageResource(note.icon)
+                        binding.MainFragmentActiveTitleTv.setText(note.title)
+                        binding.MainActivityActiveDescriptionTv.setText(note.description)
+                        binding.MainFragmentActiveDateTv.setText(note.date)
+                        binding.MainFragmentActiveRateDayMrb.rating=note.rate
+                    }
                 }
             }
 
@@ -418,8 +424,8 @@ class MainFragment : Fragment() {
     }
 
     interface DailyAdapterListener{
-        fun onClickLocked(id : Int , rate : Float)
-        fun onClickOpened(id : Int , rate : Float)
+        fun onClickLocked(id : Long , rate : Float)
+        fun onClickOpened(id : Long , rate : Float)
     }
 
     interface CheckPasswordDialogListener{

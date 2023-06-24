@@ -22,5 +22,8 @@ interface NoteContentDAO {
     fun deleteNoteContent(content: NoteContent)
 
     @Query("Select * from NoteContent where note_id=:noteId")
-    fun getAllNoteContents(noteId : Int) : LiveData<List<NoteContent>>
+    fun getAllNoteContents(noteId : Long) :List<NoteContent>
+
+    @Query("Select * from NoteContent where cont like '%' || :text || '%'")
+    fun getNoteContentsByText(text : String) :List<NoteContent>
 }
