@@ -23,6 +23,15 @@
 
 
 
-| empty fields |
+| main screen |
 |-------|
 | ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/cec7fdc8-7e50-4e3b-888c-9c6f83564e8d) |
+
+
+<h3>4. create note screen </h3>
+
+
+
+| for creating |
+|-------|
+| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/ae6bdcbe-9dc5-4209-9e8a-c557a3a6f839) |
