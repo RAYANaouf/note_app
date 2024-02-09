@@ -35,3 +35,17 @@
 | for creating |
 |-------|
 | ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/ae6bdcbe-9dc5-4209-9e8a-c557a3a6f839) |
+
+
+
+
+<h3>5. Profile screen </h3>
+
+
+
+| profile info |
+|-------|
+| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/7d64f9db-2a2c-4f2a-8e68-343b0bc6c12f) |
+
+
+
