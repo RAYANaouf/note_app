@@ -4,9 +4,16 @@
     application screens
 </h1>
 
-<h3>1. Home screen </h3>
+<h3>1. Log in Screen </h3>
 
-| up | scroll down |
+| empty field | fullfilled |
 |-------|-------|
-|![up](https://github.com/RAYANaouf/note_app/assets/120733474/2c63b13c-01c2-4fca-b176-1950c530a62a) |![scroll down](https://github.com/RAYANaouf/Daracademy/assets/120733474/ad7fb64e-6c23-463a-afe0-b7d181b51c3d) |
+|![up](https://github.com/RAYANaouf/note_app/assets/120733474/2c63b13c-01c2-4fca-b176-1950c530a62a) |![scroll down]() |
 
+
+<h3>2. Sign in screen </h3>
+
+
+| empty fields | fullfilled |
+|-------|-------|
+| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/1511595c-b91b-421b-8e9f-58f829d2fd4a) | ![filled]() |
