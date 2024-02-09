@@ -8,7 +8,7 @@
 
 | empty field | fullfilled |
 |-------|-------|
-|![up](https://github.com/RAYANaouf/note_app/assets/120733474/2c63b13c-01c2-4fca-b176-1950c530a62a) |![scroll down]() |
+|![up](https://github.com/RAYANaouf/note_app/assets/120733474/2c63b13c-01c2-4fca-b176-1950c530a62a) |![scroll down](https://github.com/RAYANaouf/note_app/assets/120733474/e17dc8c6-aa75-43b7-bbe3-094b7c9ca347) |
 
 
 <h3>2. Sign in screen </h3>
@@ -16,4 +16,13 @@
 
 | empty fields | fullfilled |
 |-------|-------|
-| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/1511595c-b91b-421b-8e9f-58f829d2fd4a) | ![filled]() |
+| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/1511595c-b91b-421b-8e9f-58f829d2fd4a) | ![filled](https://github.com/RAYANaouf/note_app/assets/120733474/c7835f0c-e981-4405-99b7-31df737cd4c7) |
+
+
+<h3>3. Homme screen </h3>
+
+
+
+| empty fields |
+|-------|
+| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/cec7fdc8-7e50-4e3b-888c-9c6f83564e8d) |
