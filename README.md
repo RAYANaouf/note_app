@@ -53,11 +53,3 @@
 <h3>5. search screen </h3>
 
 
-
-| search for note |
-|-------|
-| ![empty field](https://github.com/RAYANaouf/note_app/assets/120733474/f7cf9456-3f26-44de-9528-fbb87bccc3d2) |
-
-
-
-
